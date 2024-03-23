@@ -1,2 +1,4 @@
 # STM32_watch_NFC
-We are making revolutionary NFC/RFID watch
+We are making revolutionary NFC/RFID watch.
+
+HolTyc

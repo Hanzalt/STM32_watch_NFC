@@ -1,0 +1,18 @@
+!SESSION 2024-03-23 16:40:25.019 -----------------------------------------------
+eclipse.buildId=Version 1.13.1
+java.version=17.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-03-23 16:40:47.070
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-03-23 16:40:47.070
+!MESSAGE Log4j2 initialized with config file /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-03-23 16:40:48.825
+!MESSAGE Started RMI Server, listening on port 41338
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-03-23 16:42:08.145
+!MESSAGE Indexed 'Watch' (20 sources, 81 headers) in 1.34 sec: 4,279 declarations; 23,871 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0071%)

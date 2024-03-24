@@ -1300,3 +1300,41 @@
 2024-03-24 12:32:01,152 [INFO] ProjectBuilder:4626 - Time for Generating toolchain IDE Files: 746mS.
 2024-03-24 12:32:01,153 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.
 2024-03-24 12:32:01,153 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.
+2024-03-24 12:35:03,655 [INFO] Gpio:273 - dependency for GPIO [RCC, SYS]
+2024-03-24 12:35:04,452 [INFO] Gpio:273 - dependency for GPIO [RCC, SYS]
+2024-03-24 12:49:44,249 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 596562400 Bytes (901775360)
+2024-03-24 12:49:46,978 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 617504096 Bytes (901775360)
+2024-03-24 12:49:48,098 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 649287040 Bytes (901775360)
+2024-03-24 12:49:48,205 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RTC
+2024-03-24 12:49:48,205 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2024-03-24 12:49:48,205 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2024-03-24 12:49:48,205 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2024-03-24 12:49:48,205 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2024-03-24 12:49:48,205 [INFO] CodeGenerator:799 - code generatio: config db path: /opt/st/stm32cubeide_1.13.1/plugins/com.st.stm32cube.common.mx_6.9.1.202307191849//db/
+2024-03-24 12:49:48,315 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/license.tmp_save
+2024-03-24 12:49:48,383 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/license.tmp
+2024-03-24 12:49:48,387 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/gpio.tmp_save
+2024-03-24 12:49:48,426 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/gpio.tmp
+2024-03-24 12:49:48,441 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_it.c_save
+2024-03-24 12:49:48,515 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_it.c
+2024-03-24 12:49:48,516 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_it.h_save
+2024-03-24 12:49:48,552 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_it.h
+2024-03-24 12:49:48,554 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_hal_msp.c_save
+2024-03-24 12:49:48,612 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_hal_msp.c
+2024-03-24 12:49:48,613 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/system.tmp_save
+2024-03-24 12:49:48,649 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/system.tmp
+2024-03-24 12:49:48,651 [INFO] CodeEngine:311 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_hal_conf.h_save
+2024-03-24 12:49:48,689 [INFO] CodeEngine:335 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_hal_conf.h
+2024-03-24 12:49:48,697 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/main.h_save
+2024-03-24 12:49:48,744 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/main.h
+2024-03-24 12:49:48,745 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/main.c_save
+2024-03-24 12:49:48,811 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/main.c
+2024-03-24 12:49:49,022 [INFO] ProjectBuilder:3064 - Time for Copy HAL[1] : 25mS.
+2024-03-24 12:49:49,023 [INFO] ProjectBuilder:4404 - Project Generator version: 4.1.0
+2024-03-24 12:49:49,119 [INFO] ConfigFileManager:1457 - The Die is : DIE425
+2024-03-24 12:49:49,728 [INFO] ProjectBuilder:4626 - Time for Generating toolchain IDE Files: 704mS.
+2024-03-24 12:49:49,728 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.
+2024-03-24 12:49:49,728 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.
+2024-03-24 16:06:06,583 [INFO] WebAppUi:1035 - Web application message: WebGL: CONTEXT_LOST_WEBGL: loseContext: context lost
+2024-03-24 16:06:06,583 [INFO] WebAppUi:1035 - Web application message: THREE.WebGLRenderer: Context Lost.
+2024-03-24 16:06:09,352 [INFO] WebAppUi:1035 - Web application message: Reloading CAD

@@ -1214,3 +1214,89 @@
 2024-03-24 11:18:07,138 [INFO] ProjectBuilder:4626 - Time for Generating toolchain IDE Files: 806mS.
 2024-03-24 11:18:07,138 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.
 2024-03-24 11:18:07,139 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.
+2024-03-24 12:09:14,194 [INFO] CADModel:198 - CPN selected (Project mode): STM32L031G6U6
+2024-03-24 12:09:14,195 [INFO] CADModel:200 - Internet connection configuration mode: 1
+2024-03-24 12:09:14,195 [INFO] CADModel:203 - rpn retrievedSTM32L031G6
+2024-03-24 12:09:14,211 [INFO] JxBrowserEngine:151 - Initiate JxBrowser Engine with user profile folder
+2024-03-24 12:09:14,628 [INFO] WebAppUi:272 - Instantiating new browser for Project
+2024-03-24 12:09:14,959 [INFO] WebAppUi:1170 - Register for checkConnection events
+2024-03-24 12:09:14,959 [INFO] WebAppUi:1205 - Apply proxy settings
+2024-03-24 12:09:14,960 [INFO] WebAppUi:1243 - Chromium requires no authentication
+2024-03-24 12:09:14,963 [INFO] WebAppUi:1229 - Direct internet connection detected
+2024-03-24 12:09:15,029 [INFO] WebAppUi:297 - Starting web application
+2024-03-24 12:09:15,029 [INFO] WebAppUi:1101 - Web application path used /opt/st/stm32cubeide_1.13.1/plugins/com.st.stm32cube.common.mx_6.9.1.202307191849/db/plugins/mcufinder/reactClient/index.html
+2024-03-24 12:09:15,055 [INFO] WebAppUi:870 - Path where api_config.json is located /home/vakhaib/.stmcufinder/plugins/mcufinder//mcu/api_config.json
+2024-03-24 12:09:15,055 [INFO] WebAppUi:871 - Setting api config in window object
+2024-03-24 12:09:15,101 [WARN] WebAppUi:908 - Cannot access cad_preferences.json
+2024-03-24 12:09:15,101 [WARN] WebAppUi:911 - Fallback to default consent
+2024-03-24 12:09:15,102 [INFO] WebAppUi:879 - Path where cad_preferences.json is located /home/vakhaib/.stm32cubeide/
+2024-03-24 12:09:15,102 [INFO] WebAppUi:880 - Setting consent info in window object
+2024-03-24 12:09:15,374 [INFO] WebAppUi:775 - Allow Downloads
+2024-03-24 12:09:15,375 [INFO] WebAppUi:272 - Instantiating new browser for Finder
+2024-03-24 12:09:15,453 [INFO] WebAppUi:1170 - Register for checkConnection events
+2024-03-24 12:09:15,453 [INFO] WebAppUi:1205 - Apply proxy settings
+2024-03-24 12:09:15,453 [INFO] WebAppUi:1243 - Chromium requires no authentication
+2024-03-24 12:09:15,453 [INFO] WebAppUi:1229 - Direct internet connection detected
+2024-03-24 12:09:15,456 [INFO] WebAppUi:297 - Starting web application
+2024-03-24 12:09:15,456 [INFO] WebAppUi:1101 - Web application path used /opt/st/stm32cubeide_1.13.1/plugins/com.st.stm32cube.common.mx_6.9.1.202307191849/db/plugins/mcufinder/reactClient/index.html
+2024-03-24 12:09:15,464 [INFO] WebAppUi:870 - Path where api_config.json is located /home/vakhaib/.stmcufinder/plugins/mcufinder//mcu/api_config.json
+2024-03-24 12:09:15,464 [INFO] WebAppUi:871 - Setting api config in window object
+2024-03-24 12:09:15,471 [INFO] WebAppUi:879 - Path where cad_preferences.json is located /home/vakhaib/.stm32cubeide/
+2024-03-24 12:09:15,471 [INFO] WebAppUi:880 - Setting consent info in window object
+2024-03-24 12:09:15,671 [INFO] WebAppUi:1035 - Web application message: [UlApiManager component] Connecting to SSO
+2024-03-24 12:09:15,693 [INFO] WebAppUi:775 - Allow Downloads
+2024-03-24 12:09:15,693 [INFO] WebAppUi:596 - RPN selected STM32L031G6
+2024-03-24 12:09:15,693 [INFO] WebAppUi:597 - RefName selected STM32L031G6Ux
+2024-03-24 12:09:15,693 [INFO] WebAppUi:598 - CPN selected STM32L031G6U6
+2024-03-24 12:09:15,695 [INFO] WebAppUi:761 - Which Bigleton in use 2 and which CPN is about STM32L031G6U6
+2024-03-24 12:09:15,696 [INFO] WebAppUi:635 - Have injected Javascript into web application
+2024-03-24 12:09:15,696 [INFO] WebAppUiContainer:153 - Web application run mode: Project CPN: STM32L031G6U6
+2024-03-24 12:09:16,021 [INFO] WebAppUi:1035 - Web application message: [UlApiManager component] Connecting to SSO
+2024-03-24 12:09:16,382 [INFO] WebAppUi:1035 - Web application message: [UlApiManager component] Connected to Ultra Librarian SSO
+2024-03-24 12:09:16,383 [INFO] WebAppUi:1035 - Web application message: [UlApiManager component] Connected to Ultra Librarian API
+2024-03-24 12:09:16,500 [INFO] WebAppUi:1035 - Web application message: [UlApiManager component] Connected to Ultra Librarian SSO
+2024-03-24 12:09:16,502 [INFO] WebAppUi:1035 - Web application message: [UlApiManager component] Connected to Ultra Librarian API
+2024-03-24 12:09:17,200 [INFO] WebAppUi:1035 - Web application message: CAD resources feature launch attempt
+2024-03-24 12:09:18,276 [INFO] WebAppUi:1035 - Web application message: Project naming
+2024-03-24 12:09:18,768 [INFO] WebAppUi:870 - Path where api_config.json is located /home/vakhaib/.stmcufinder/plugins/mcufinder//mcu/api_config.json
+2024-03-24 12:09:18,768 [INFO] WebAppUi:871 - Setting api config in window object
+2024-03-24 12:09:18,776 [INFO] WebAppUi:879 - Path where cad_preferences.json is located /home/vakhaib/.stm32cubeide/
+2024-03-24 12:09:18,776 [INFO] WebAppUi:880 - Setting consent info in window object
+2024-03-24 12:09:19,615 [INFO] WebAppUi:1035 - Web application message: THREE.WebGLRenderer 101
+2024-03-24 12:09:21,081 [INFO] WebAppUi:241 - Path where cad_preferences.json is located /home/vakhaib/.stm32cubeide/
+2024-03-24 12:09:21,081 [INFO] WebAppUi:242 - Updating consent from JSON file
+2024-03-24 12:09:21,082 [INFO] WebAppUi:241 - Path where cad_preferences.json is located /home/vakhaib/.stm32cubeide/
+2024-03-24 12:09:21,082 [INFO] WebAppUi:242 - Updating consent from JSON file
+2024-03-24 12:11:53,643 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 579708784 Bytes (717225984)
+2024-03-24 12:31:56,913 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 549837072 Bytes (717225984)
+2024-03-24 12:31:58,203 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 250237448 Bytes (717225984)
+2024-03-24 12:31:59,371 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 250075152 Bytes (717225984)
+2024-03-24 12:31:59,575 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2024-03-24 12:31:59,575 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2024-03-24 12:31:59,575 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2024-03-24 12:31:59,575 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2024-03-24 12:31:59,575 [INFO] CodeGenerator:799 - code generatio: config db path: /opt/st/stm32cubeide_1.13.1/plugins/com.st.stm32cube.common.mx_6.9.1.202307191849//db/
+2024-03-24 12:31:59,639 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/license.tmp_save
+2024-03-24 12:31:59,701 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/license.tmp
+2024-03-24 12:31:59,706 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/gpio.tmp_save
+2024-03-24 12:31:59,755 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/gpio.tmp
+2024-03-24 12:31:59,759 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_it.c_save
+2024-03-24 12:31:59,860 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_it.c
+2024-03-24 12:31:59,861 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_it.h_save
+2024-03-24 12:31:59,904 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_it.h
+2024-03-24 12:31:59,907 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_hal_msp.c_save
+2024-03-24 12:31:59,968 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/stm32l0xx_hal_msp.c
+2024-03-24 12:31:59,969 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/system.tmp_save
+2024-03-24 12:32:00,007 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/MXTmpFiles/system.tmp
+2024-03-24 12:32:00,009 [INFO] CodeEngine:311 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_hal_conf.h_save
+2024-03-24 12:32:00,053 [INFO] CodeEngine:335 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/stm32l0xx_hal_conf.h
+2024-03-24 12:32:00,063 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/main.h_save
+2024-03-24 12:32:00,114 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Inc/main.h
+2024-03-24 12:32:00,115 [INFO] CodeEngine:255 - oldGeneratedFile, /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/main.c_save
+2024-03-24 12:32:00,201 [INFO] CodeEngine:279 - Generated code: /home/vakhaib/Desktop/aplikace/STM32_watch_NFC/Code/Watch/Core/Src/main.c
+2024-03-24 12:32:00,405 [INFO] ProjectBuilder:3064 - Time for Copy HAL[1] : 18mS.
+2024-03-24 12:32:00,406 [INFO] ProjectBuilder:4404 - Project Generator version: 4.1.0
+2024-03-24 12:32:00,504 [INFO] ConfigFileManager:1457 - The Die is : DIE425
+2024-03-24 12:32:01,152 [INFO] ProjectBuilder:4626 - Time for Generating toolchain IDE Files: 746mS.
+2024-03-24 12:32:01,153 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.
+2024-03-24 12:32:01,153 [INFO] ProjectBuilder:2935 - Time for Copy CMSIS : 0mS.

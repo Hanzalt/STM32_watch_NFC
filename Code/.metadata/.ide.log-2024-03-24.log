@@ -1,0 +1,5 @@
+2024-03-26 15:56:38,666 [INFO] WebAppUi:1035 - Web application message: Reloading CAD
+2024-03-26 15:58:41,209 [INFO] WebAppUi:241 - Path where cad_preferences.json is located /home/vakhaib/.stm32cubeide/
+2024-03-26 15:58:41,209 [INFO] WebAppUi:242 - Updating consent from JSON file
+2024-03-26 15:58:41,314 [INFO] WebAppUi:430 - JxBrowser engine has been closed 
+2024-03-26 15:58:41,314 [INFO] WebAppUi:467 - Close the Jxbrowser engine manually

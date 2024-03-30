@@ -471,6 +471,14 @@
     [
       "e445874f-c7a3-43dd-b930-6bce1d4fa2ef",
       ""
+    ],
+    [
+      "282b593a-b5a6-4e14-bd95-457030278cb7",
+      "NFC_RFID"
+    ],
+    [
+      "d8aa51ff-304a-4e1d-85d0-2fbe17bc154e",
+      "Power"
     ]
   ],
   "text_variables": {}

@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Din_LED.h"
+#include "stdbool.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,20 +43,21 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
 
-RTC_HandleTypeDef hrtc;
-
 SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim2;
+DMA_HandleTypeDef hdma_tim2_ch1;
 
 /* USER CODE BEGIN PV */
-
+#define MAX_LED 12
+LEDs leds [MAX_LED + 3];
+rgb_color led_pattern[MAX_LED];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_RTC_Init(void);
+static void MX_DMA_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_ADC_Init(void);
@@ -65,7 +67,11 @@ static void MX_ADC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint16_t minutes = 0;
+uint16_t hours = 0;
+uint8_t am = 0;
+uint16_t shifted_hours = 0;
+uint16_t shifted_minutes = 6;
 /* USER CODE END 0 */
 
 /**
@@ -76,7 +82,10 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	rgb_color hour_color = {125, 20, 0, 4};
+	rgb_color minut_color = {0, 100, 100, 4};
+	rgb_color red = {250, 0, 10, 4};
+	rgb_color none = {0, 0, 0, 0};
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -97,18 +106,107 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_RTC_Init();
+  MX_DMA_Init();
   MX_SPI1_Init();
   MX_TIM2_Init();
   MX_ADC_Init();
   /* USER CODE BEGIN 2 */
-
+  //int x = 0;
+  //bool isPressed = false;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  for (int i = 0; i < 12; i++) {
+		  led_pattern[i] = none;
+		  if (i%3==0) {
+			  led_pattern[i] = hour_color;
+		  } else if (i%3==1) {
+			  led_pattern[i] = none;
+		  } else {
+			  led_pattern[i] = red;
+		  }
+
+	  }
+
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10)) {
+		  shifted_hours = (hours<6) ? hours+6 : hours-6;
+
+		  led_pattern[shifted_hours] = hour_color;
+		  led_pattern[shifted_minutes] = minut_color;
+		  if (shifted_hours==shifted_minutes) {
+			  for (int i = 0; i < 4; i++) {
+				  if (i%2==0) {
+					  led_pattern[shifted_hours] = hour_color;
+					  led_pattern[shifted_minutes] = none;
+				  } else {
+					  led_pattern[shifted_minutes] = minut_color;
+					  led_pattern[shifted_hours] = none;
+				  }
+				  turn_spec_LEDs(leds, led_pattern);
+				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+				  HAL_Delay(1000);
+			  }
+		  } else {
+			  turn_spec_LEDs(leds, led_pattern);
+			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+		  }
+	  }
+	  /**
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) || HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) {
+		  clear_LEDs(leds, MAX_LED);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  }
+	  **/
+
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)) {
+		  hours++;
+		  if (hours >= 12) {
+			  hours = 0;
+		  }
+		  minutes++;
+		  if (minutes >= 60) {
+			  minutes = 0;
+		  }
+		  if (minutes%10==2 || minutes%10==7) {
+			  shifted_minutes ++;
+			  if (shifted_minutes >= 12) {
+				  shifted_minutes = 0;
+			  }
+		  }
+		  HAL_Delay(200);
+	  }
+
+	  /*
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)) {
+		  turn_LEDs(leds, MAX_LED);
+		  //set_LED(leds, 1, led_pattern);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  } else {
+		  clear_LEDs(leds, MAX_LED);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  }
+	  /*
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)) {
+		  set_LED(leds, 7, led_pattern);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (7 * 24) + 72);
+	  }
+
+	  /*
+	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) && isPressed == false) {
+		  if (x<=11) {
+			  x++;
+		  } else {
+			  x=0;
+		  }
+		  isPressed = true;
+	  } else if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) {
+		  isPressed = false;
+	  }
+	  */
+	  HAL_Delay(1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -124,25 +222,21 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Configure the main internal regulator output voltage
   */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /** Configure LSE Drive Capability
-  */
-  HAL_PWR_EnableBkUpAccess();
-  __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
-
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE;
-  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLLMUL_4;
+  RCC_OscInitStruct.PLL.PLLDIV = RCC_PLLDIV_2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -152,18 +246,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -226,42 +314,6 @@ static void MX_ADC_Init(void)
 }
 
 /**
-  * @brief RTC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_RTC_Init(void)
-{
-
-  /* USER CODE BEGIN RTC_Init 0 */
-
-  /* USER CODE END RTC_Init 0 */
-
-  /* USER CODE BEGIN RTC_Init 1 */
-
-  /* USER CODE END RTC_Init 1 */
-
-  /** Initialize RTC Only
-  */
-  hrtc.Instance = RTC;
-  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
-  hrtc.Init.AsynchPrediv = 127;
-  hrtc.Init.SynchPrediv = 255;
-  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
-  hrtc.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
-  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-  if (HAL_RTC_Init(&hrtc) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN RTC_Init 2 */
-
-  /* USER CODE END RTC_Init 2 */
-
-}
-
-/**
   * @brief SPI1 Initialization Function
   * @param None
   * @retval None
@@ -311,6 +363,7 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 0 */
 
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
@@ -318,11 +371,20 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 8-1;
+  htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 400;
+  htim2.Init.Period = 40;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
   {
     Error_Handler();
@@ -336,7 +398,7 @@ static void MX_TIM2_Init(void)
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
@@ -345,6 +407,22 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 2 */
   HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel4_5_6_7_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel4_5_6_7_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel4_5_6_7_IRQn);
 
 }
 

@@ -29,7 +29,7 @@ void clear_LEDs(LEDs* leds, uint16_t num_LEDs) {
 	//memset(leds -> pause, 0x00, 35);
 }
 
-void set_LED(LEDs* leds, uint16_t pos_LED, rgb_color* color) {
+void set_LED(LEDs* leds, uint16_t pos_LED, rgb_color color) {
 	for (int i = 0; i < pos_LED; i++) {
 		for (int j = 0; j < 8; j++) {
 			if (i==(pos_LED-1)) {

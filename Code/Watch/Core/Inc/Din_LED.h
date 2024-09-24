@@ -25,12 +25,12 @@ typedef struct {
 	//uint16_t pause[65];
 } LEDs;
 
-#define T1H  18
-#define T0H  7
+#define T1H  30
+#define T0H  15
 
 //USABLE
 void clear_LEDs(LEDs* leds, uint16_t num_LEDs);
-void set_LED(LEDs* leds, uint16_t pos_LED, rgb_color* color);
+void set_LED(LEDs* leds, uint16_t pos_LED, rgb_color color);
 void turn_spec_LEDs(LEDs* leds, rgb_color* colors);
 
 //DEBUG

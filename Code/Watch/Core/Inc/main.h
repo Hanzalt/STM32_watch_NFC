@@ -61,10 +61,13 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define Button_LT_Pin GPIO_PIN_0
 #define Button_LT_GPIO_Port GPIOA
+#define Button_LT_EXTI_IRQn EXTI0_1_IRQn
 #define Button_LB_Pin GPIO_PIN_1
 #define Button_LB_GPIO_Port GPIOA
+#define Button_LB_EXTI_IRQn EXTI0_1_IRQn
 #define SPI1_IRQ_Pin GPIO_PIN_3
 #define SPI1_IRQ_GPIO_Port GPIOA
+#define SPI1_IRQ_EXTI_IRQn EXTI2_3_IRQn
 #define BATT_Pin GPIO_PIN_1
 #define BATT_GPIO_Port GPIOB
 #define CHRG_Pin GPIO_PIN_8
@@ -73,6 +76,7 @@ void Error_Handler(void);
 #define DONE_GPIO_Port GPIOA
 #define Button_R_Pin GPIO_PIN_10
 #define Button_R_GPIO_Port GPIOA
+#define Button_R_EXTI_IRQn EXTI4_15_IRQn
 #define DIN_Pin GPIO_PIN_15
 #define DIN_GPIO_Port GPIOA
 

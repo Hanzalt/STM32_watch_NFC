@@ -9,31 +9,33 @@
 
 void clear_LEDs(LEDs* leds, uint16_t num_LEDs) {
 
-	for (int i = 0; i < num_LEDs; i++) {
+	for (int i = 0; i < 12; i++) {
+
 		for (int j = 0; j < 8; j++) {
 			(leds + i) ->r[j] = T0H;
 			(leds + i) ->g[j] = T0H;
 			(leds + i) ->b[j] = T0H;
 			if (i >= 0 && i <= 2) {
-				(leds + num_LEDs + i) ->r[j] = 0;
-				(leds + num_LEDs + i) ->g[j] = 0;
-				(leds + num_LEDs + i) ->b[j] = 0;
+				(leds + 12 + i) ->r[j] = 0;
+				(leds + 12 + i) ->g[j] = 0;
+				(leds + 12 + i) ->b[j] = 0;
 			}
 		}
 	}
+}
 	/*
 	leds -> pause[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0,0,0,0};
 	*/
 	//memset(leds -> pause, 0x00, 35);
-}
+
 
 void set_LED(LEDs* leds, uint16_t pos_LED, rgb_color color) {
 	for (int i = 0; i < pos_LED; i++) {
 		for (int j = 0; j < 8; j++) {
 			if (i==(pos_LED-1)) {
-				(leds + i) ->r[j] = T0H;
+				(leds + i) ->r[j] = T1H;
 				(leds + i) ->g[j] = T1H;
 				(leds + i) ->b[j] = T1H;
 			} else {
@@ -78,7 +80,7 @@ void turn_LEDs(LEDs* leds, uint16_t num_LEDs) {
 	for (int i = 0; i < num_LEDs; i++) {
 		for (int j = 0; j < 8; j++) {
 			if (j>=2) {
-				(leds + i) ->r[j] = T0H;
+				(leds + i) ->r[j] = T1H;
 				(leds + i) ->g[j] = T1H;
 				(leds + i) ->b[j] = T1H;
 				if (i==0) {

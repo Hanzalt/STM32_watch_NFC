@@ -55,8 +55,10 @@ DMA_HandleTypeDef hdma_tim2_ch1;
 LEDs leds [MAX_LED + 3];
 rgb_color led_pattern[MAX_LED];
 rgb_color time_pattern[MAX_LED];
+rgb_color all_pattern[MAX_LED];
 rgb_color null_pattern[MAX_LED];
 rgb_color none = {0, 0, 0, 0};
+rgb_color all = {255, 255, 255, 0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -127,6 +129,7 @@ int main(void)
 	  led_pattern[i] = none;
 	  time_pattern[i] = none;
 	  null_pattern[i] = none;
+	  all_pattern[i] = all;
 	  if (i%3==0) {
 		  led_pattern[i] = blue;
 	  } else if (i%3==1) {
@@ -165,7 +168,7 @@ int main(void)
 	  if (showingLeds) {
 		  int x = 0;
 		  bool shouldExitIf = false;
-
+		  /*
 		  while (HAL_GPIO_ReadPin(Button_R_GPIO_Port, Button_R_Pin)) {
 			  x++;
 			  if (x >= 200) {
@@ -175,6 +178,7 @@ int main(void)
 			  }
 			  HAL_Delay(10);
 		  }
+		  */
 		  if (!shouldExitIf) {
 			  if (shifted_hours==shifted_minutes) {
 				  for (int i = 0; i < 5; i++) {
@@ -184,21 +188,29 @@ int main(void)
 						  time_pattern[shifted_minutes] = minut_color;
 					  }
 					  toggler = !toggler;
+					  /*
 					  turn_spec_LEDs(leds, time_pattern);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 					  HAL_Delay(500);
 					  turn_spec_LEDs(leds, null_pattern);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 					  HAL_Delay(500);
+					  */
+					  clear_LEDs(leds, MAX_LED);
+					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 				  }
 			  } else {
 				  time_pattern[shifted_hours] = hour_color;
 				  time_pattern[shifted_minutes] = minut_color;
+
+
 				  turn_spec_LEDs(leds, time_pattern);
 				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-				  HAL_Delay(5000);
+				  HAL_Delay(1000);
+
 				  turn_spec_LEDs(leds, null_pattern);
 				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+				  HAL_Delay(20);
 			  }
 		  	  showingLeds = false;
 		  }
@@ -221,7 +233,6 @@ int main(void)
 		  clear_LEDs(leds, MAX_LED);
 		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 		  HAL_Delay(500);
-
 	  }
 	  // Enter Stop Mode
 	  HAL_SuspendTick();
@@ -229,95 +240,6 @@ int main(void)
 	  HAL_PWR_EnableSleepOnExit();
 
 	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
-	  /** Enable the WakeUp */
-	  /*
-	  if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 59, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
-	  {
-		  Error_Handler();
-	  }
-/*
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10)) {
-		  shifted_hours = (hours<6) ? hours+6 : hours-6;
-		  if (minutes%10==2 || minutes%10==7) {
-			  shifted_minutes ++;
-			  if (shifted_minutes >= 12) {
-				  shifted_minutes = 0;num_LEDs
-			  }
-		  }
-		  led_pattern[shifted_hours] = hour_color;
-		  led_pattern[shifted_minutes] = minut_color;
-		  if (shifted_hours==shifted_minutes) {
-			  for (int i = 0; i < 4; i++) {
-				  if (i%2==0) {
-					  led_pattern[shifted_hours] = hour_color;
-				  } else {
-					  led_pattern[shifted_minutes] = minut_color;
-				  }
-				  turn_spec_LEDs(leds, led_pattern);
-				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-				  HAL_Delay(1000);
-			  }
-		  } else {
-			  turn_spec_LEDs(leds, led_pattern);
-			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-		  }
-	  }
-	  /*
-	  HAL_Delay(10000);
-	  clear_LEDs(leds, MAX_LED);
-	  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-	  /**
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1) || HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) {
-		  clear_LEDs(leds, MAX_LED);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-	  }
-	  **/
-	  /*
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)) {
-		  hours++;
-		  if (hours >= 12) {
-			  hours = 0;
-		  }
-		  minutes++;
-		  if (minutes >= 60) {
-			  minutes = 0;
-		  }
-		  if (minutes%10==2 || minutes%10==7) {
-			  shifted_minutes ++;
-			  if (shifted_minutes >= 12) {
-				  shifted_minutes = 0;
-			  }
-		  }
-		  HAL_Delay(200);
-	  }
-		*/
-	  /*
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)) {
-		  turn_LEDs(leds, MAX_LED);
-		  //set_LED(leds, 1, led_pattern);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-	  } else {
-		  clear_LEDs(leds, MAX_LED);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-	  }
-	  /*
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)) {
-		  set_LED(leds, 7, led_pattern);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (7 * 24) + 72);
-	  }
-
-	  /*
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) && isPressed == false) {
-		  if (x<=11) {
-			  x++;
-		  } else {
-			  x=0;
-		  }
-		  isPressed = true;
-	  } else if (!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) {
-		  isPressed = false;
-	  }
-	  */
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -468,7 +390,12 @@ static void MX_RTC_Init(void)
     Error_Handler();
   }
 
-
+  /** Enable the WakeUp
+  */
+  if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 59, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN RTC_Init 2 */
 
   /* USER CODE END RTC_Init 2 */
@@ -535,7 +462,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 40;
+  htim2.Init.Period = 60;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -558,13 +485,14 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 30000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
+  __HAL_TIM_DISABLE_OCxPRELOAD(&htim2, TIM_CHANNEL_1);
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
@@ -631,51 +559,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void EnterStopMode(void) {
-	GPIO_InitTypeDef GPIO_InitStruct;
-	__HAL_RCC_GPIOC_CLK_ENABLE();
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-
-    /* Configure all GPIO port pins in Analog Input mode (floating input trigger OFF) */
-    GPIO_InitStruct.Pin = GPIO_PIN_All;
-    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-    /* Disable GPIOs clock */
-    __HAL_RCC_GPIOA_CLK_DISABLE();
-    __HAL_RCC_GPIOB_CLK_DISABLE();
-    __HAL_RCC_GPIOC_CLK_DISABLE();
-
-    HAL_TIM_Base_Stop_IT(&htim2);
-    HAL_ADC_Stop_IT(&hadc);
-
-    /* Enter Stop Mode */
-
-    HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
-
-    /* init the SYS Clocks */
-    SystemClock_Config();
-
-    /*Init IO's */
-    MX_GPIO_Init();
-
-    /* Clear Peripheral States for MspInit */
-    hrtc.State   = HAL_RTC_STATE_RESET;
-    hspi1.State	= HAL_SPI_STATE_RESET;
-    htim2.State	= HAL_TIM_STATE_RESET;
-    hadc.State    = HAL_ADC_STATE_RESET;
-
-    MX_GPIO_Init();
-    MX_DMA_Init();
-    MX_SPI1_Init();
- 	MX_TIM2_Init();
- 	MX_ADC_Init();
- 	MX_RTC_Init();
-}
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	//SystemClock_Config();
 	//HAL_ResumeTick();
@@ -690,10 +573,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				hours = 0;
 			}
 			shifted_hours = (hours<6) ? hours+6 : hours-6;
-
-			time_pattern[shifted_hours-1] = none;
 			if (shifted_hours == 0) {
 				time_pattern[11] = none;
+			} else {
+				time_pattern[shifted_hours-1] = none;
 			}
 		}
     }
@@ -705,9 +588,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				minutes = 0;
 			}
 			shifted_minutes = minutes/5;
-			time_pattern[shifted_minutes-1] = none;
 			if (shifted_minutes == 0) {
 				time_pattern[11] = none;
+			} else {
+				time_pattern[shifted_minutes-1] = none;
 			}
 		}
 	}
@@ -716,7 +600,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     	if (changeTime) {
     		changeTime = false;
     		showingLeds = false;
-    		if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 300, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
+    		if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 30, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
     		{
     			Error_Handler();
     		}
@@ -729,22 +613,35 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc) {
 	SystemClock_Config();
 	HAL_ResumeTick();
-	HAL_PWR_DisableSleepOnExit();
+	//HAL_PWR_DisableSleepOnExit();
     minutes+=5;
 	if (minutes >= 60) {
 		minutes = 0;
+
+	} else if (minutes == 30) {
 		hours++;
+		if (hours >= 12) {
+			hours = 0;
+		}
+		shifted_hours = (hours<6) ? hours+6 : hours-6;
+		if (shifted_hours == 0) {
+			time_pattern[11] = none;
+		} else {
+			time_pattern[shifted_hours-1] = none;
+		}
 	}
-	if (hours >= 12) {
-		hours = 0;
-	}
-	shifted_minutes = minutes/5;
-	shifted_hours = (hours<6) ? hours+6 : hours-6;
-	time_pattern[shifted_minutes-1] = none;
-	time_pattern[shifted_hours-1] = none;
-	if (shifted_minutes == 0 || shifted_hours == 0) {
+
+
+
+	if (minutes == 0) {
 		time_pattern[11] = none;
+		shifted_minutes = 0;
+	} else {
+		shifted_minutes = minutes/5;
+		time_pattern[shifted_minutes-1] = none;
 	}
+	HAL_SuspendTick();
+	HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 }
 /* USER CODE END 4 */
 

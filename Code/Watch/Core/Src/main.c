@@ -79,6 +79,7 @@ uint16_t minutes = 30;
 uint16_t hours = 6;
 uint8_t am = 0;
 uint16_t shifted_hours = 0;
+uint16_t batteryVal = 0;
 uint16_t shifted_minutes = 6;
 bool showingLeds = false;
 bool changeTime = false;
@@ -148,8 +149,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  HAL_ADC_Start(&hadc);
 
+	  HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
 
+	  batteryVal = HAL_ADC_GetValue(&hadc);
+
+	  HAL_ADC_Stop(&hadc);
 
 	 /* HAL_SuspendTick();
 	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
@@ -165,6 +171,8 @@ int main(void)
 			  if (x >= 200) {
 				  changeTime = true;
 				  shouldExitIf = true;
+				  HAL_RTCEx_DeactivateWakeUpTimer(&hrtc);
+				  __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(&hrtc, RTC_FLAG_WUTF);
 				  break;
 			  }
 			  HAL_Delay(10);
@@ -324,7 +332,7 @@ static void MX_ADC_Init(void)
   hadc.Init.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
   hadc.Init.ScanConvMode = ADC_SCAN_DIRECTION_FORWARD;
   hadc.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc.Init.ContinuousConvMode = DISABLE;
+  hadc.Init.ContinuousConvMode = ENABLE;
   hadc.Init.DiscontinuousConvMode = DISABLE;
   hadc.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc.Init.ExternalTrigConv = ADC_SOFTWARE_START;
@@ -384,6 +392,12 @@ static void MX_RTC_Init(void)
     Error_Handler();
   }
 
+  /** Enable the WakeUp
+
+  if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 259, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN RTC_Init 2 */
 
   /* USER CODE END RTC_Init 2 */
@@ -413,7 +427,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -588,7 +602,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     	if (changeTime) {
     		changeTime = false;
     		showingLeds = false;
-    		if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 300, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
+    		/** Enable the WakeUp
+    		 */
+    		if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 299, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
     		{
     			Error_Handler();
     		}

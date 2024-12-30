@@ -1,6 +1,5 @@
-../Core/Src/Din_LED.c:10:6:clear_LEDs	5
-../Core/Src/Din_LED.c:34:6:set_LED	6
-../Core/Src/Din_LED.c:55:6:turn_spec_LEDs	8
-../Core/Src/Din_LED.c:78:6:turn_LEDs	9
-../Core/Src/Din_LED.c:108:12:decToBinary	5
-../Core/Src/Din_LED.c:129:13:led_manager	1
+../Core/Src/Din_LED.c:108:12:decToBinary	4
+../Core/Src/Din_LED.c:10:6:clear_LEDs	3
+../Core/Src/Din_LED.c:34:6:set_LED	9
+../Core/Src/Din_LED.c:55:6:turn_spec_LEDs	10
+../Core/Src/Din_LED.c:78:6:turn_LEDs	8

@@ -21888,7 +21888,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C2927283"
+		(property "LCSC" " C2927027"
 			(at 278.187554 19.268676 0)
 			(layer "B.Fab")
 			(hide yes)
@@ -34046,7 +34046,7 @@
 		(attr smd)
 		(fp_line
 			(start -2.45 -0.274999)
-			(end -2.45 0.274999)
+			(end -2.45 0.274998)
 			(stroke
 				(width 0.12)
 				(type solid)
@@ -34075,7 +34075,7 @@
 			(uuid "d7e62958-a8b6-4d15-89bf-ff60fbff7081")
 		)
 		(fp_line
-			(start 2.45 -0.274999)
+			(start 2.45 -0.274998)
 			(end 2.45 0.274999)
 			(stroke
 				(width 0.12)
@@ -34095,7 +34095,7 @@
 			(uuid "3191cc02-66a0-471c-8bdc-cc744dffbaa7")
 		)
 		(fp_line
-			(start -3.900001 -2.25)
+			(start -3.900002 -2.25)
 			(end -3.9 3.25)
 			(stroke
 				(width 0.05)
@@ -34116,7 +34116,7 @@
 		)
 		(fp_line
 			(start 3.9 -2.25)
-			(end -3.900001 -2.25)
+			(end -3.900002 -2.25)
 			(stroke
 				(width 0.05)
 				(type solid)
@@ -36299,7 +36299,7 @@
 		(attr smd)
 		(fp_line
 			(start -2.45 -0.274999)
-			(end -2.45 0.274999)
+			(end -2.45 0.274998)
 			(stroke
 				(width 0.12)
 				(type solid)
@@ -36328,7 +36328,7 @@
 			(uuid "8ce56e49-1a35-43b2-a578-90ca3db5103c")
 		)
 		(fp_line
-			(start 2.45 -0.274999)
+			(start 2.45 -0.274998)
 			(end 2.45 0.274999)
 			(stroke
 				(width 0.12)
@@ -36348,7 +36348,7 @@
 			(uuid "ceb5d07c-5ada-4335-a108-55bb30025a37")
 		)
 		(fp_line
-			(start -3.900001 -2.25)
+			(start -3.900002 -2.25)
 			(end -3.9 3.25)
 			(stroke
 				(width 0.05)
@@ -36369,7 +36369,7 @@
 		)
 		(fp_line
 			(start 3.9 -2.25)
-			(end -3.900001 -2.25)
+			(end -3.900002 -2.25)
 			(stroke
 				(width 0.05)
 				(type solid)
@@ -43605,7 +43605,7 @@
 			)
 		)
 		(property "LCSC" "C5267436"
-			(at 139.884021 -117.068486 0)
+			(at 139.884021 -117.068487 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "ae9b3086-b63a-4267-9715-1fc8a1c2ad9d")
@@ -46841,8 +46841,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C2927283"
-			(at 240.122627 -40.481291 0)
+		(property "LCSC" " C2927027"
+			(at 240.122627 -40.48129 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "9ebc897a-a664-480f-93af-80567bc49e25")
@@ -60845,7 +60845,7 @@
 			)
 		)
 		(property "LCSC" "C7393837"
-			(at -11.726157 41.312038 0)
+			(at -11.726156 41.312038 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b416c790-8dc5-4938-a81b-29cf1d417ee5")

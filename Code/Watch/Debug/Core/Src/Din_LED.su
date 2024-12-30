@@ -1,6 +1,5 @@
-../Core/Src/Din_LED.c:10:6:clear_LEDs	24	static
-../Core/Src/Din_LED.c:34:6:set_LED	32	static
-../Core/Src/Din_LED.c:55:6:turn_spec_LEDs	40	static
-../Core/Src/Din_LED.c:78:6:turn_LEDs	24	static
-../Core/Src/Din_LED.c:108:12:decToBinary	4040	static
-../Core/Src/Din_LED.c:129:13:led_manager	8	static
+../Core/Src/Din_LED.c:108:12:decToBinary	4016	static
+../Core/Src/Din_LED.c:10:6:clear_LEDs	8	static
+../Core/Src/Din_LED.c:34:6:set_LED	40	static
+../Core/Src/Din_LED.c:55:6:turn_spec_LEDs	48	static
+../Core/Src/Din_LED.c:78:6:turn_LEDs	32	static

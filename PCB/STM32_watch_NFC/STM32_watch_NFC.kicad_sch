@@ -4821,50 +4821,6 @@
 		)
 		(uuid "f030be81-4858-4879-befc-0d91129260d2")
 	)
-	(global_label "SPI_MISO_STM"
-		(shape input)
-		(at 247.65 98.425 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "14a5320d-6217-4c47-9dce-24223fb6cea1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 231.4206 98.425 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI_IRQ_STM"
-		(shape input)
-		(at 93.98 137.795 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "15b5842b-5e78-4706-8359-cd6097275955")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 108.8185 137.795 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "DIN_STM"
 		(shape input)
 		(at 46.99 48.895 270)
@@ -4909,28 +4865,6 @@
 			)
 		)
 	)
-	(global_label "SPI_CS_STM"
-		(shape input)
-		(at 247.65 103.505 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "34a77a03-0603-4e61-bb48-59b3ad1bc897")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 233.5373 103.505 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "CHRG_STM"
 		(shape input)
 		(at 243.205 159.385 180)
@@ -4949,28 +4883,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI_SCL_STM"
-		(shape input)
-		(at 93.98 142.875 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "3a2cdc78-9e6e-4f52-a832-e3c784c05f1c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 109.1208 142.875 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -5010,28 +4922,6 @@
 		(uuid "42bc2400-9391-4027-a931-c589b7dc3e84")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 108.7748 76.835 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI_SCL_STM"
-		(shape input)
-		(at 247.65 95.885 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "4cbd3dbe-e2e7-47fd-bf98-910f3f00fee4")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 232.5092 95.885 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5195,28 +5085,6 @@
 			)
 		)
 	)
-	(global_label "SPI_MISO_STM"
-		(shape input)
-		(at 93.98 145.415 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "9c2cfa1a-77ca-4d03-ab8b-a46833628737")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 110.2094 145.415 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "Button_LB"
 		(shape input)
 		(at 93.98 132.715 0)
@@ -5235,94 +5103,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI_IRQ_STM"
-		(shape input)
-		(at 247.65 106.045 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a531d56d-c3a7-448b-8bff-97b734c1d45d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 232.8115 106.045 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI_CS_STM"
-		(shape input)
-		(at 93.98 140.335 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "ad0d1d91-fdb4-415d-b363-81a42e2f208e")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 108.0927 140.335 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI_MOSI_STM"
-		(shape input)
-		(at 93.98 147.955 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "b1a6e77f-f942-4e78-91b2-2b57eaa0e6eb")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 110.2094 147.955 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "SPI_MOSI_STM"
-		(shape input)
-		(at 247.65 100.965 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "c643e8ad-35af-4d59-9c84-2b131e6b2445")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 231.4206 100.965 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
@@ -13930,8 +13710,8 @@
 		)
 	)
 	(sheet
-		(at 247.65 93.98)
-		(size 24.13 36.195)
+		(at 252.73 104.14)
+		(size 12.7 22.86)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -13940,9 +13720,9 @@
 		(fill
 			(color 0 0 0 0.0000)
 		)
-		(uuid "282b593a-b5a6-4e14-bd95-457030278cb7")
-		(property "Sheetname" "NFC_RFID"
-			(at 247.65 93.2684 0)
+		(uuid "88effd89-3120-4d43-a17e-caa30e216b86")
+		(property "Sheetname" "Led_matrix"
+			(at 252.73 103.4284 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13950,64 +13730,14 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "nfc_rfid.kicad_sch"
-			(at 247.65 130.7596 0)
+		(property "Sheetfile" "led_matrix.kicad_sch"
+			(at 252.73 127.5846 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left top)
 			)
-		)
-		(pin "SPI_SCL" input
-			(at 247.65 95.885 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "6d7817a6-9dfc-42b9-a55d-f5ca8b81a6a9")
-		)
-		(pin "SPI_MISO" input
-			(at 247.65 98.425 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "65b1df33-06fe-49ec-a0d3-09fd3a985b68")
-		)
-		(pin "SPI_CS" input
-			(at 247.65 103.505 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "9388c26f-f032-48b0-88bc-b70a89350fe1")
-		)
-		(pin "SPI_IRQ" input
-			(at 247.65 106.045 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "fd35959e-ff0f-439b-bf89-254bb28b415a")
-		)
-		(pin "SPI_MOSI" input
-			(at 247.65 100.965 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "fc9eb011-a7f1-40ff-8303-70d2174bbf73")
 		)
 		(instances
 			(project "STM32_watch_NFC"

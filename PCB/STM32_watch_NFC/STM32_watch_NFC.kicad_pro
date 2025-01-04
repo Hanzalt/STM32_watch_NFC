@@ -438,7 +438,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "similar_labels": "warning",
       "simulation_model_issue": "ignore",
@@ -602,8 +602,8 @@
       "Root"
     ],
     [
-      "282b593a-b5a6-4e14-bd95-457030278cb7",
-      "NFC_RFID"
+      "88effd89-3120-4d43-a17e-caa30e216b86",
+      "Led_matrix"
     ],
     [
       "d8aa51ff-304a-4e1d-85d0-2fbe17bc154e",

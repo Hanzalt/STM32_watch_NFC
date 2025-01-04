@@ -13710,8 +13710,8 @@
 		)
 	)
 	(sheet
-		(at 252.73 104.14)
-		(size 12.7 22.86)
+		(at 238.76 102.235)
+		(size 31.75 25.4)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -13720,9 +13720,9 @@
 		(fill
 			(color 0 0 0 0.0000)
 		)
-		(uuid "88effd89-3120-4d43-a17e-caa30e216b86")
-		(property "Sheetname" "Led_matrix"
-			(at 252.73 103.4284 0)
+		(uuid "344922ed-d383-4ffb-b2e5-9b445ce9961f")
+		(property "Sheetname" "nfc_rfig"
+			(at 238.76 101.5234 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13730,8 +13730,8 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "led_matrix.kicad_sch"
-			(at 252.73 127.5846 0)
+		(property "Sheetfile" "nfc_rfid.kicad_sch"
+			(at 238.76 128.2196 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13742,7 +13742,7 @@
 		(instances
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
-					(page "2")
+					(page "3")
 				)
 			)
 		)

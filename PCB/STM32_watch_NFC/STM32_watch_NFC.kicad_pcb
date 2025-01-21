@@ -11705,7 +11705,7 @@
 	(footprint "BH1750FVI-TR:XDCR_BH1750FVI-TR"
 		(layer "F.Cu")
 		(uuid "e35c3317-f6ae-4b60-89cf-2212c2375874")
-		(at 148.5 93.5)
+		(at 148.5 110.1)
 		(property "Reference" "U5"
 			(at 1.226565 -1.937485 0)
 			(layer "F.SilkS")

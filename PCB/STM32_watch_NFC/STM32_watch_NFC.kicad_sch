@@ -6,11 +6,183 @@
 	(paper "A4")
 	(title_block
 		(title "NFC watch")
-		(date "2024-03-24")
-		(rev "0")
+		(date "2025-01-20")
+		(rev "1")
 		(company "HolTyc")
 	)
 	(lib_symbols
+		(symbol "74xGxx:74AHCT1G125"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -2.54 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "74AHCT1G125"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Single Buffer Gate Tri-State, Low-Voltage CMOS"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "Single Gate Buff Tri-State LVC CMOS"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOT* SG-*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "74AHCT1G125_0_1"
+				(polyline
+					(pts
+						(xy -7.62 6.35) (xy -7.62 -6.35) (xy 5.08 0) (xy -7.62 6.35)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "74AHCT1G125_1_1"
+				(pin input inverted
+					(at 0 10.16 270)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 0 0)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -5.08 -10.16 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin tri_state line
+					(at 12.7 0 180)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -5.08 10.16 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "BH1750FVI-TR:BH1750FVI-TR"
 			(pin_names
 				(offset 1.016)
@@ -3454,6 +3626,12 @@
 		(uuid "010f806b-49ba-4c6d-8df8-f3fff89db4cf")
 	)
 	(junction
+		(at 36.83 23.495)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "038a1270-fefe-4daa-b13a-7e5f28552eea")
+	)
+	(junction
 		(at 49.53 114.935)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3466,10 +3644,22 @@
 		(uuid "0d87b9c6-c420-4c16-9dc8-213b2cfca275")
 	)
 	(junction
+		(at 36.83 52.705)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1214dfea-9831-46b2-84b8-a8fb93b080ce")
+	)
+	(junction
 		(at 269.24 53.975)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "13f4dd36-e1f9-43b4-9d43-067cd6ddd9a4")
+	)
+	(junction
+		(at 167.64 32.385)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "17d77c1e-7d17-46a8-8de5-4c050b8544e1")
 	)
 	(junction
 		(at 241.935 80.645)
@@ -3488,12 +3678,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "21160108-2c9d-436f-bcb0-4102159c6243")
-	)
-	(junction
-		(at 46.99 47.625)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "222c826a-d8d1-4f81-889b-b5ebf75ce452")
 	)
 	(junction
 		(at 78.74 125.095)
@@ -3524,6 +3708,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "35367b3e-a1d3-4297-880d-308f314ca095")
+	)
+	(junction
+		(at 160.02 140.97)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3a853a9b-edfb-4516-b28b-6f13a41152f0")
 	)
 	(junction
 		(at 86.36 43.18)
@@ -3706,12 +3896,6 @@
 		(uuid "d058c613-2d11-47b2-b064-945690bb2f71")
 	)
 	(junction
-		(at 46.99 30.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d2612fc2-9216-4b5e-b130-0845871a1371")
-	)
-	(junction
 		(at 34.925 160.02)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3754,6 +3938,18 @@
 		(uuid "e9eef620-c3d4-4273-8368-87532cbd1db1")
 	)
 	(junction
+		(at 165.1 140.335)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ecd2a28b-560a-4748-8233-125a31beddf6")
+	)
+	(junction
+		(at 168.275 34.925)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ee23d839-e7a8-490a-b366-965c83010083")
+	)
+	(junction
 		(at 90.805 57.15)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3764,12 +3960,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f234bb16-0d85-45b6-b88a-888191c2e83c")
-	)
-	(junction
-		(at 31.115 48.895)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "fe13896e-e397-418e-ac66-5608d38d56d8")
 	)
 	(no_connect
 		(at 170.18 102.235)
@@ -3857,6 +4047,16 @@
 	)
 	(wire
 		(pts
+			(xy 36.83 23.495) (xy 36.83 24.765)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "092bdf9a-5c29-4067-a75d-a50c9f1b5879")
+	)
+	(wire
+		(pts
 			(xy 212.725 69.215) (xy 212.725 67.31)
 		)
 		(stroke
@@ -3874,6 +4074,16 @@
 			(type default)
 		)
 		(uuid "0fabdf4e-9660-4dae-9fdf-dec496460ee3")
+	)
+	(wire
+		(pts
+			(xy 167.64 32.385) (xy 171.45 32.385)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "113f0d34-9047-450f-b756-ff062f943ef6")
 	)
 	(wire
 		(pts
@@ -3967,16 +4177,6 @@
 	)
 	(wire
 		(pts
-			(xy 31.115 48.895) (xy 33.655 48.895)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1d671b5a-07f0-4a25-8c53-c28e07046b28")
-	)
-	(wire
-		(pts
 			(xy 88.9 123.19) (xy 99.695 123.19)
 		)
 		(stroke
@@ -3994,26 +4194,6 @@
 			(type default)
 		)
 		(uuid "1fc082f3-ddda-45f8-8da1-b6e1bdcca3a2")
-	)
-	(wire
-		(pts
-			(xy 46.99 34.925) (xy 46.99 30.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "20627470-037f-4bad-b6a3-064457406c2c")
-	)
-	(wire
-		(pts
-			(xy 46.99 45.085) (xy 46.99 47.625)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "223f14da-ccbc-4917-99bd-6ddc62c11ac4")
 	)
 	(wire
 		(pts
@@ -4087,6 +4267,16 @@
 	)
 	(wire
 		(pts
+			(xy 165.1 140.335) (xy 165.1 137.795)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c46c7e4-cba9-49cf-acd5-b941fa9e48de")
+	)
+	(wire
+		(pts
 			(xy 223.52 50.165) (xy 223.52 53.975)
 		)
 		(stroke
@@ -4147,6 +4337,16 @@
 	)
 	(wire
 		(pts
+			(xy 165.1 142.875) (xy 165.1 140.335)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39b66820-03bb-42ce-aa16-e5696328ce53")
+	)
+	(wire
+		(pts
 			(xy 116.84 123.19) (xy 116.84 124.46)
 		)
 		(stroke
@@ -4164,16 +4364,6 @@
 			(type default)
 		)
 		(uuid "3b9068fb-54a6-44b8-9f76-36b26b32ac57")
-	)
-	(wire
-		(pts
-			(xy 27.94 48.895) (xy 31.115 48.895)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3c5967c6-ea8b-49ff-90ba-d80b53cb6ddf")
 	)
 	(wire
 		(pts
@@ -4387,6 +4577,16 @@
 	)
 	(wire
 		(pts
+			(xy 168.275 34.925) (xy 171.45 34.925)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "61657de5-e3cf-4f53-9dc0-2caf02df4f54")
+	)
+	(wire
+		(pts
 			(xy 135.255 17.78) (xy 140.97 17.78)
 		)
 		(stroke
@@ -4407,6 +4607,16 @@
 	)
 	(wire
 		(pts
+			(xy 160.02 140.97) (xy 160.02 137.795)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6640526d-0a8f-47d0-9134-791a8d5ef52a")
+	)
+	(wire
+		(pts
 			(xy 46.99 130.175) (xy 66.04 130.175)
 		)
 		(stroke
@@ -4414,16 +4624,6 @@
 			(type default)
 		)
 		(uuid "690bb42d-ed6d-457d-9000-844880a12a7c")
-	)
-	(wire
-		(pts
-			(xy 46.99 47.625) (xy 46.99 48.895)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6a65d05a-c9b5-459d-b8cb-4416f96c9302")
 	)
 	(wire
 		(pts
@@ -4514,16 +4714,6 @@
 			(type default)
 		)
 		(uuid "73c67f0e-189c-407d-bdd4-945d50fba197")
-	)
-	(wire
-		(pts
-			(xy 41.275 48.895) (xy 46.99 48.895)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "76b0916e-aad8-489a-b09b-e6bfaeed6c4a")
 	)
 	(wire
 		(pts
@@ -4637,6 +4827,16 @@
 	)
 	(wire
 		(pts
+			(xy 46.99 42.545) (xy 53.34 42.545)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a923a18-0bd4-4e3e-8c9d-72936b780fac")
+	)
+	(wire
+		(pts
 			(xy 88.9 115.57) (xy 99.695 115.57)
 		)
 		(stroke
@@ -4654,6 +4854,16 @@
 			(type default)
 		)
 		(uuid "8bf7f00a-1700-4056-bb76-649195c67959")
+	)
+	(wire
+		(pts
+			(xy 36.83 52.705) (xy 36.83 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8c0eada2-1c79-48b4-aeeb-1b8a9c677f35")
 	)
 	(wire
 		(pts
@@ -4737,16 +4947,6 @@
 	)
 	(wire
 		(pts
-			(xy 46.99 28.575) (xy 42.545 28.575)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "95b3e0cf-8ec1-4a62-8680-7a08867c96d8")
-	)
-	(wire
-		(pts
 			(xy 39.37 140.335) (xy 66.04 140.335)
 		)
 		(stroke
@@ -4767,6 +4967,16 @@
 	)
 	(wire
 		(pts
+			(xy 160.02 142.875) (xy 160.02 140.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99312d8a-29cc-4ab6-81ec-cbfc21d6c64e")
+	)
+	(wire
+		(pts
 			(xy 260.35 80.645) (xy 269.24 80.645)
 		)
 		(stroke
@@ -4774,16 +4984,6 @@
 			(type default)
 		)
 		(uuid "9fcc6b57-95cf-48a2-9b99-530291cdcbff")
-	)
-	(wire
-		(pts
-			(xy 46.99 30.48) (xy 46.99 28.575)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a1c38557-0060-4c9b-9de0-c17b2ab1691c")
 	)
 	(wire
 		(pts
@@ -4894,16 +5094,6 @@
 			(type default)
 		)
 		(uuid "b32b0ea7-5705-4f57-8e3d-2ec9e6cf5374")
-	)
-	(wire
-		(pts
-			(xy 39.37 40.005) (xy 31.115 40.005)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b372f04b-9e1c-429f-a086-114cf1db1e57")
 	)
 	(wire
 		(pts
@@ -5087,6 +5277,26 @@
 	)
 	(wire
 		(pts
+			(xy 167.005 34.925) (xy 168.275 34.925)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c8063706-490d-4efe-9796-fa8918392b05")
+	)
+	(wire
+		(pts
+			(xy 171.45 41.91) (xy 171.45 37.465)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca5363b7-16dd-49a6-a2a5-5e3ccc43f1aa")
+	)
+	(wire
+		(pts
 			(xy 29.845 160.02) (xy 29.845 146.05)
 		)
 		(stroke
@@ -5127,6 +5337,16 @@
 	)
 	(wire
 		(pts
+			(xy 20.955 42.545) (xy 26.67 42.545)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d180a425-03fe-4bbd-b621-15028eb7d782")
+	)
+	(wire
+		(pts
 			(xy 78.74 112.395) (xy 78.74 114.935)
 		)
 		(stroke
@@ -5134,16 +5354,6 @@
 			(type default)
 		)
 		(uuid "d1f28a58-262d-476e-a629-3370475c1cdf")
-	)
-	(wire
-		(pts
-			(xy 31.115 40.005) (xy 31.115 48.895)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d2bb54f4-ef9f-4e4c-ba2a-f08fe4b45a31")
 	)
 	(wire
 		(pts
@@ -5224,6 +5434,16 @@
 			(type default)
 		)
 		(uuid "e117bd63-e8d4-48d0-9b1e-7da290b913f6")
+	)
+	(wire
+		(pts
+			(xy 166.37 32.385) (xy 167.64 32.385)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1da6396-fe14-46a5-bfb5-9d45c60ac975")
 	)
 	(wire
 		(pts
@@ -5327,13 +5547,13 @@
 	)
 	(wire
 		(pts
-			(xy 165.735 37.465) (xy 171.45 37.465)
+			(xy 22.225 37.465) (xy 26.67 37.465)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f752b091-fe36-42f3-9ad5-9535923c5e7a")
+		(uuid "faf2da82-18c4-44e8-84a9-5357a792d7a5")
 	)
 	(wire
 		(pts
@@ -5364,6 +5584,16 @@
 			(type default)
 		)
 		(uuid "fc4a3815-10cc-4fd1-a697-4b680c3adfcf")
+	)
+	(wire
+		(pts
+			(xy 36.83 20.955) (xy 36.83 23.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fd399efc-d690-4826-85b7-42bb74edaea6")
 	)
 	(rectangle
 		(start 12.065 12.065)
@@ -5597,7 +5827,7 @@
 	)
 	(global_label "DIN_STM"
 		(shape input)
-		(at 46.99 48.895 270)
+		(at 36.83 53.34 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5607,7 +5837,7 @@
 		)
 		(uuid "160f2cd5-ea94-4fdb-9b50-388f31531917")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 46.99 59.6816 90)
+			(at 36.83 64.1266 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5683,6 +5913,50 @@
 			)
 		)
 	)
+	(global_label "DIN_LED"
+		(shape input)
+		(at 249.555 113.03 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1fb1acf6-df0f-4178-a030-10b2b350b8db")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 238.9498 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "DIO_TM"
+		(shape input)
+		(at 66.04 147.955 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "246385ce-33cb-4d06-82d4-846119a25a41")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 56.4629 147.955 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "GRID2"
 		(shape input)
 		(at 162.56 102.235 90)
@@ -5751,7 +6025,7 @@
 	)
 	(global_label "SCL_LIGHT"
 		(shape input)
-		(at 171.45 32.385 180)
+		(at 166.37 32.385 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5761,7 +6035,7 @@
 		)
 		(uuid "2f7a6a3c-06d1-47db-90ec-37422e4ac3a9")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 158.7886 32.385 0)
+			(at 153.7086 32.385 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5817,7 +6091,7 @@
 	)
 	(global_label "DIN_LED"
 		(shape input)
-		(at 46.99 28.575 90)
+		(at 36.83 20.955 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5827,12 +6101,34 @@
 		)
 		(uuid "3c3cd0fe-f75c-4d9a-804a-51aaebce01e5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 46.99 17.9698 90)
+			(at 47.4352 20.955 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "CLK_TM"
+		(shape input)
+		(at 160.02 142.875 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3f152cb3-869e-4326-84f4-6e303b02f049")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 160.02 152.8149 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -5947,6 +6243,28 @@
 			)
 		)
 	)
+	(global_label "CLK_TM"
+		(shape input)
+		(at 93.98 147.955 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5e2c36be-f848-497a-acd2-756537b241e6")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 103.9199 147.955 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "GRID4"
 		(shape input)
 		(at 167.64 102.235 90)
@@ -5965,28 +6283,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "DIN_STM"
-		(shape input)
-		(at 249.555 113.03 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "64f72194-a3aa-459a-98d1-7b320b9639ac")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 238.7684 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
@@ -6563,6 +6859,28 @@
 			)
 		)
 	)
+	(global_label "DIO_TM"
+		(shape input)
+		(at 165.1 142.875 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c2dd64d6-f814-4ba8-b446-60d29812c152")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 165.1 152.4521 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "F"
 		(shape input)
 		(at 166.37 80.645 270)
@@ -6631,7 +6949,7 @@
 	)
 	(global_label "SDA_LIGHT"
 		(shape input)
-		(at 171.45 34.925 180)
+		(at 167.005 34.925 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6641,7 +6959,7 @@
 		)
 		(uuid "d146f33f-ecf7-49b8-8425-05720b8d7972")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 158.7281 34.925 0)
+			(at 154.2831 34.925 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7848,6 +8166,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 53.34 42.545 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1fd82498-c15d-4138-a47b-23d90c8b56d4")
+		(property "Reference" "#PWR01"
+			(at 59.69 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 57.15 42.545 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 53.34 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 53.34 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 53.34 42.545 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1ce4ff0c-a40c-43f6-bff3-60a8afae5e2a")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
+					(reference "#PWR01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:Conn_01x06_Socket")
 		(at 130.81 153.035 0)
 		(unit 1)
@@ -7933,6 +8319,72 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
 					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 165.1 140.335 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "213234d1-1d82-49d9-aa8f-56017db30681")
+		(property "Reference" "DIO_T1"
+			(at 168.91 141.605 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 169.545 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 165.1 145.415 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 165.1 145.415 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 140.335 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "07d31254-c8e8-4f91-be6e-71e1eb084c87")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
+					(reference "DIO_T1")
 					(unit 1)
 				)
 			)
@@ -8216,83 +8668,6 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
 					(reference "#PWR08")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 38.735 28.575 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3080eca8-f794-4440-8e17-f624f81a00d3")
-		(property "Reference" "R2"
-			(at 38.735 22.86 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10K"
-			(at 38.735 25.4 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 38.735 30.353 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 38.735 28.575 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 38.735 28.575 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C308028"
-			(at 38.735 28.575 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "8ec752f3-f341-4641-ab82-2bb23c480cbb")
-		)
-		(pin "1"
-			(uuid "9a007a35-7f0b-4d40-8588-4b924d4d03eb")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
-					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -8658,6 +9033,72 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
 					(reference "#PWR069")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 160.02 140.97 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3b6f4a57-c139-49bd-98fc-31dc8c4a7067")
+		(property "Reference" "CLK_T1"
+			(at 157.48 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 155.575 150.495 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 160.02 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 160.02 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 160.02 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9a476a89-c473-4f6f-86c2-c2fe4d6f6d16")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
+					(reference "CLK_T1")
 					(unit 1)
 				)
 			)
@@ -10390,15 +10831,15 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 46.99 30.48 270)
+		(at 36.83 23.495 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "81a95b29-d9d4-421b-adc3-cec05e4c9d11")
-		(property "Reference" "DINSTM2"
-			(at 51.435 29.21 90)
+		(property "Reference" "DINLED2"
+			(at 39.37 25.4 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10407,7 +10848,7 @@
 			)
 		)
 		(property "Value" "~"
-			(at 51.435 20.955 0)
+			(at 41.275 13.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10416,7 +10857,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 46.99 35.56 0)
+			(at 36.83 28.575 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10425,7 +10866,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 46.99 35.56 0)
+			(at 36.83 28.575 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10434,7 +10875,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 46.99 30.48 0)
+			(at 36.83 23.495 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10448,7 +10889,7 @@
 		(instances
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
-					(reference "DINSTM2")
+					(reference "DINLED2")
 					(unit 1)
 				)
 			)
@@ -10456,7 +10897,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 34.925 28.575 90)
+		(at 20.955 42.545 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10465,7 +10906,7 @@
 		(fields_autoplaced yes)
 		(uuid "83872efd-e847-4f13-9925-0511a48552fd")
 		(property "Reference" "#PWR02"
-			(at 38.735 28.575 0)
+			(at 24.765 42.545 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10474,7 +10915,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 31.75 28.575 90)
+			(at 17.78 42.545 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10483,7 +10924,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 34.925 28.575 0)
+			(at 20.955 42.545 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10492,7 +10933,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 34.925 28.575 0)
+			(at 20.955 42.545 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10501,7 +10942,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 34.925 28.575 0)
+			(at 20.955 42.545 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11254,7 +11695,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 165.735 37.465 0)
+		(at 171.45 41.91 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11263,7 +11704,7 @@
 		(fields_autoplaced yes)
 		(uuid "936a9b02-a7b0-48be-bcf8-c08d8a40f707")
 		(property "Reference" "#PWR077"
-			(at 165.735 43.815 0)
+			(at 171.45 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11272,7 +11713,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 165.735 42.545 0)
+			(at 171.45 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11281,7 +11722,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 165.735 37.465 0)
+			(at 171.45 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11290,7 +11731,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 165.735 37.465 0)
+			(at 171.45 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11299,7 +11740,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 165.735 37.465 0)
+			(at 171.45 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11697,6 +12138,72 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
 					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 168.275 34.925 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ae0152ff-ac3f-4000-af17-55fe1f030ddc")
+		(property "Reference" "SDA_L1"
+			(at 167.005 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 177.8 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 163.195 34.925 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 163.195 34.925 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 168.275 34.925 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "033bca57-3ff8-4f4f-b7aa-20940152e814")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
+					(reference "SDA_L1")
 					(unit 1)
 				)
 			)
@@ -13074,6 +13581,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 22.225 37.465 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d0d279a3-61d6-450e-9124-22726d9b8909")
+		(property "Reference" "#PWR059"
+			(at 15.875 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 18.415 37.465 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 22.225 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 22.225 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 22.225 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2eeff0c2-4239-4267-94d5-7341e8dc487e")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
+					(reference "#PWR059")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 116.84 124.46 270)
 		(unit 1)
@@ -13357,83 +13932,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 37.465 48.895 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e3859508-0f72-4c8a-9d43-5d7c5927d1cf")
-		(property "Reference" "R1"
-			(at 37.465 43.18 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10K"
-			(at 37.465 45.72 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 37.465 50.673 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 37.465 48.895 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 37.465 48.895 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C308028"
-			(at 37.465 48.895 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9f66af8a-e193-4752-9353-a0a680dd5bf6")
-		)
-		(pin "2"
-			(uuid "168ca4cd-ac27-47bc-9615-c548d24e978a")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
-					(reference "R1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5V")
 		(at 154.94 97.155 90)
 		(unit 1)
@@ -13502,15 +14000,15 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 46.99 47.625 270)
+		(at 36.83 52.705 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "e5bde5e3-1eab-4e14-8fbd-e828650ca803")
-		(property "Reference" "DINLED1"
-			(at 51.435 46.355 90)
+		(property "Reference" "DINSTM1"
+			(at 41.275 51.435 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13519,7 +14017,7 @@
 			)
 		)
 		(property "Value" "~"
-			(at 51.435 38.1 0)
+			(at 41.275 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13528,7 +14026,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 46.99 52.705 0)
+			(at 36.83 57.785 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13537,7 +14035,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 46.99 52.705 0)
+			(at 36.83 57.785 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13546,7 +14044,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 46.99 47.625 0)
+			(at 36.83 52.705 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13560,7 +14058,73 @@
 		(instances
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
-					(reference "DINLED1")
+					(reference "DINSTM1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 167.64 32.385 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e83144e2-7468-433b-9c7a-e789623a7e76")
+		(property "Reference" "SCL_L1"
+			(at 168.91 29.845 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 158.115 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 172.72 32.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 172.72 32.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 167.64 32.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5aab6029-466f-457c-b019-557c497cc3ff")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
+					(reference "SCL_L1")
 					(unit 1)
 				)
 			)
@@ -13698,73 +14262,6 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
 					(reference "3V3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 27.94 48.895 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ed1cf9ba-e6d5-448f-a2f4-7bf639a3b16d")
-		(property "Reference" "#PWR01"
-			(at 31.75 48.895 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 24.13 48.895 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 27.94 48.895 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 27.94 48.895 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 27.94 48.895 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "47578a23-1917-4fc9-9f97-dc1550a54f0c")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
-					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -14136,6 +14633,92 @@
 			)
 		)
 	)
+	(symbol
+		(lib_id "74xGxx:74AHCT1G125")
+		(at 36.83 37.465 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f7e40d11-81aa-4fad-868f-e58c840f4327")
+		(property "Reference" "U7"
+			(at 30.5114 24.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74AHCT1G125"
+			(at 33.0514 24.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-353_SC-70-5"
+			(at 36.83 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf"
+			(at 36.83 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Single Buffer Gate Tri-State, Low-Voltage CMOS"
+			(at 36.83 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C151417"
+			(at 36.83 37.465 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ed320433-0671-4310-bfc8-582994c9de4c")
+		)
+		(pin "4"
+			(uuid "a71dc159-4dfd-49ea-9c75-82330766ff98")
+		)
+		(pin "2"
+			(uuid "474e23c3-4066-455c-9066-e69656ec9679")
+		)
+		(pin "3"
+			(uuid "5d45e534-19e4-423d-94fc-0ea43ea370c3")
+		)
+		(pin "5"
+			(uuid "95121a90-2113-4fa2-af1b-5b6650384b43")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef"
+					(reference "U7")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(sheet
 		(at 252.73 104.14)
 		(size 12.7 22.86)
@@ -14214,16 +14797,6 @@
 				(justify left top)
 			)
 		)
-		(pin "CHRG" input
-			(at 243.205 159.385 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "68f7e157-720c-4ada-b376-08af94e6c3f2")
-		)
 		(pin "DONE" input
 			(at 243.205 156.21 180)
 			(effects
@@ -14232,7 +14805,7 @@
 				)
 				(justify left)
 			)
-			(uuid "4876adfe-355a-4e2e-9248-ba250da70fd7")
+			(uuid "ae39e982-a003-4852-a994-6a0e5bc6d071")
 		)
 		(pin "BATT" input
 			(at 243.205 153.035 180)
@@ -14242,7 +14815,17 @@
 				)
 				(justify left)
 			)
-			(uuid "fad6c800-dd10-4c4e-bfc9-f6c1576aa1b9")
+			(uuid "67526eaf-bc83-44c2-9b57-46ae816837c6")
+		)
+		(pin "CHRG_STM32" input
+			(at 243.205 159.385 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "f490dd10-b85f-4e80-9ac8-045e84fe4862")
 		)
 		(instances
 			(project "STM32_watch_NFC"

@@ -4253,7 +4253,7 @@
 			)
 		)
 	)
-	(hierarchical_label "CHRG_STM"
+	(hierarchical_label "CHRG_STM32"
 		(shape input)
 		(at 210.82 89.535 90)
 		(effects

@@ -1798,28 +1798,27 @@
 				)
 			)
 		)
-		(symbol "Regulator_Linear:MIC5365-3.3YC5"
+		(symbol "Regulator_Linear:LP5912-3.3DRV"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "U"
-				(at -6.35 6.35 0)
+				(at -3.81 6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "MIC5365-3.3YC5"
-				(at 0 6.35 0)
+			(property "Value" "LP5912-3.3DRV"
+				(at 6.35 6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
-			(property "Footprint" "Package_TO_SOT_SMD:SOT-353_SC-70-5"
+			(property "Footprint" "Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm_ThermalVias"
 				(at 0 8.89 0)
 				(effects
 					(font
@@ -1828,8 +1827,8 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/mic5365.pdf"
-				(at -7.62 20.32 0)
+			(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lp5912.pdf"
+				(at 0 12.7 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1837,7 +1836,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "150mA Low-dropout Voltage Regulator, Vout 3.3V, Vin up to 5.5V, SC-70-5"
+			(property "Description" "500-mA Ultra-Low-Noise Low-IQ LDO, 3.3V, WSON-6"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1846,7 +1845,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "Micrel LDO voltage regulator"
+			(property "ki_keywords" "Single Output LDO Low-Noise"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1855,7 +1854,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "SOT*353*SC*70*"
+			(property "ki_fp_filters" "WSON*1EP*2x2mm*P0.65mm*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1864,7 +1863,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "MIC5365-3.3YC5_0_1"
+			(symbol "LP5912-3.3DRV_0_1"
 				(rectangle
 					(start -7.62 -5.08)
 					(end 7.62 5.08)
@@ -1876,12 +1875,10 @@
 						(type background)
 					)
 				)
-			)
-			(symbol "MIC5365-3.3YC5_1_1"
-				(pin power_in line
-					(at -10.16 2.54 0)
+				(pin power_out line
+					(at 10.16 2.54 180)
 					(length 2.54)
-					(name "VIN"
+					(name "OUT"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1896,10 +1893,10 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 0 -7.62 90)
-					(length 2.54)
-					(name "GND"
+				(pin no_connect line
+					(at 7.62 0 180)
+					(length 2.54) hide
+					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1924,24 +1921,6 @@
 							)
 						)
 					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin no_connect line
-					(at 7.62 -2.54 180)
-					(length 2.54) hide
-					(name "NC"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
 					(number "4"
 						(effects
 							(font
@@ -1950,10 +1929,10 @@
 						)
 					)
 				)
-				(pin power_out line
-					(at 10.16 2.54 180)
+				(pin power_in line
+					(at 0 -7.62 90)
 					(length 2.54)
-					(name "VOUT"
+					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1961,6 +1940,62 @@
 						)
 					)
 					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -10.16 2.54 0)
+					(length 2.54)
+					(name "IN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "LP5912-3.3DRV_1_1"
+				(pin open_collector line
+					(at 10.16 -2.54 180)
+					(length 2.54)
+					(name "PG"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -7.62 90)
+					(length 2.54)
+					(name "EP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2163,7 +2198,7 @@
 				)
 			)
 		)
-		(symbol "Transistor_FET:BSS138"
+		(symbol "Transistor_FET:AO3400A"
 			(pin_names hide)
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -2177,7 +2212,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "BSS138"
+			(property "Value" "AO3400A"
 				(at 5.08 0 0)
 				(effects
 					(font
@@ -2197,7 +2232,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
+			(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
 				(at 5.08 -3.81 0)
 				(effects
 					(font
@@ -2207,7 +2242,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
+			(property "Description" "30V Vds, 5.7A Id, N-Channel MOSFET, SOT-23"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2234,7 +2269,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "BSS138_0_1"
+			(symbol "AO3400A_0_1"
 				(polyline
 					(pts
 						(xy 0.254 0) (xy -2.54 0)
@@ -2401,7 +2436,7 @@
 					)
 				)
 			)
-			(symbol "BSS138_1_1"
+			(symbol "AO3400A_1_1"
 				(pin input line
 					(at -5.08 0 0)
 					(length 2.54)
@@ -3042,6 +3077,12 @@
 		(uuid "07d98b3a-003a-418b-aa83-a9017e3fc623")
 	)
 	(junction
+		(at 210.82 109.855)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0b58e81f-ce9b-42aa-a59c-16f1d6419ab2")
+	)
+	(junction
 		(at 42.545 120.015)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3052,12 +3093,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0caf6b79-a5d4-443b-907d-f1bbf277db53")
-	)
-	(junction
-		(at 105.41 34.925)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "1188501d-5680-42f8-b609-22c03ee49456")
 	)
 	(junction
 		(at 71.755 120.015)
@@ -3076,6 +3111,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "2041be96-b99a-40f2-acba-08c4904f9bf0")
+	)
+	(junction
+		(at 130.81 48.895)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2b616eb5-2481-4cf7-8753-05f92978d3fa")
 	)
 	(junction
 		(at 71.755 109.22)
@@ -3180,10 +3221,10 @@
 		(uuid "e3b4652e-03af-4770-a130-fcbefcb42073")
 	)
 	(junction
-		(at 76.835 40.005)
+		(at 138.43 48.895)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "ee9299ff-7fa2-459c-bd25-a107a521f178")
+		(uuid "eb6c8063-c4be-4216-8660-c1d0f0c6d9ac")
 	)
 	(junction
 		(at 128.27 48.895)
@@ -3202,12 +3243,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f4312d53-1325-4e90-b7e4-e4685fe33c25")
-	)
-	(junction
-		(at 210.82 109.855)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f674268c-87ad-40e2-95a3-654fee122cf5")
 	)
 	(wire
 		(pts
@@ -3308,6 +3343,16 @@
 			(type default)
 		)
 		(uuid "31285b79-90c5-4fe9-b73f-4ef35218744a")
+	)
+	(wire
+		(pts
+			(xy 130.81 47.625) (xy 130.81 48.895)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3284c7df-ceb2-4cbd-9501-95dfc71dfcb2")
 	)
 	(wire
 		(pts
@@ -3461,6 +3506,16 @@
 	)
 	(wire
 		(pts
+			(xy 130.81 48.895) (xy 128.27 48.895)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6442d9b1-8cd6-45d9-999d-1937ef34d0e6")
+	)
+	(wire
+		(pts
 			(xy 42.545 104.14) (xy 42.545 109.22)
 		)
 		(stroke
@@ -3531,16 +3586,6 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 34.29) (xy 105.41 34.925)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "75f9b398-f2ec-468f-83c0-7b2bf0af9b1b")
-	)
-	(wire
-		(pts
 			(xy 147.955 113.03) (xy 147.955 114.3)
 		)
 		(stroke
@@ -3581,6 +3626,16 @@
 	)
 	(wire
 		(pts
+			(xy 210.82 109.855) (xy 210.82 111.125)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "859c1220-e204-4878-8d39-715b1cbb6ca5")
+	)
+	(wire
+		(pts
 			(xy 191.77 109.855) (xy 194.945 109.855)
 		)
 		(stroke
@@ -3601,7 +3656,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 34.925) (xy 105.41 37.465)
+			(xy 105.41 34.29) (xy 105.41 37.465)
 		)
 		(stroke
 			(width 0)
@@ -3638,6 +3693,16 @@
 			(type default)
 		)
 		(uuid "99dfe49a-472b-42c7-8ca8-8f5f4111a063")
+	)
+	(wire
+		(pts
+			(xy 148.59 34.925) (xy 148.59 37.465)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a3dee8fb-8903-4803-a338-b5dbe03311d7")
 	)
 	(wire
 		(pts
@@ -3781,6 +3846,16 @@
 	)
 	(wire
 		(pts
+			(xy 138.43 48.895) (xy 130.81 48.895)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cb8e0d67-3e3f-4305-8824-583b11ca1b09")
+	)
+	(wire
+		(pts
 			(xy 197.485 41.275) (xy 200.025 41.275)
 		)
 		(stroke
@@ -3871,6 +3946,16 @@
 	)
 	(wire
 		(pts
+			(xy 138.43 42.545) (xy 138.43 48.895)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e6214fe1-5b9f-4f33-bd5c-5b01f8e611e8")
+	)
+	(wire
+		(pts
 			(xy 148.59 45.085) (xy 148.59 48.895)
 		)
 		(stroke
@@ -3901,16 +3986,6 @@
 	)
 	(wire
 		(pts
-			(xy 76.835 41.91) (xy 76.835 40.005)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ef6ffbce-7cf7-44e9-8c11-0183d479dba4")
-	)
-	(wire
-		(pts
 			(xy 50.165 69.215) (xy 50.165 65.405)
 		)
 		(stroke
@@ -3918,16 +3993,6 @@
 			(type default)
 		)
 		(uuid "efa7f997-51b9-4e9c-99ae-f7c5cd88c372")
-	)
-	(wire
-		(pts
-			(xy 210.82 109.855) (xy 210.82 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f1ed95c1-0999-4101-90f1-f68fe069bcf7")
 	)
 	(wire
 		(pts
@@ -3971,7 +4036,7 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 48.895) (xy 128.27 48.895)
+			(xy 148.59 48.895) (xy 138.43 48.895)
 		)
 		(stroke
 			(width 0)
@@ -4136,7 +4201,7 @@
 		)
 		(uuid "9c0f30a1-ca60-4a06-b874-382392c859e7")
 	)
-	(text "150mA"
+	(text "500mA"
 		(exclude_from_sim no)
 		(at 147.955 54.61 0)
 		(effects
@@ -4187,72 +4252,6 @@
 		)
 		(uuid "fbff4109-e57b-4008-b7ab-7d5d7552eeab")
 	)
-	(global_label "CHRG"
-		(shape input)
-		(at 76.835 41.91 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "0c2b38a9-9b4c-430b-abb1-1ac10e0ec7c8")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 76.835 50.0357 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "CHRG"
-		(shape input)
-		(at 210.82 111.76 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "75ad2a76-91d4-47b1-b85f-155bebed7636")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 210.82 119.8857 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Vbus_1"
-		(shape input)
-		(at 137.795 85.09 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "96a86021-65bc-486f-afef-f8cf66ec810b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 137.795 75.513 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(hierarchical_label "CHRG_STM32"
 		(shape input)
 		(at 210.82 89.535 90)
@@ -4285,6 +4284,72 @@
 			(justify right)
 		)
 		(uuid "c1afc4ce-b91f-43e1-af56-a201ca23efdc")
+	)
+	(symbol
+		(lib_id "power:VBUS")
+		(at 137.795 85.09 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "05f6a9fd-361c-45a3-b268-a61abc5f8361")
+		(property "Reference" "#PWR095"
+			(at 137.795 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VBUS"
+			(at 137.795 80.645 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 137.795 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 137.795 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 137.795 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "85002196-e69b-491a-b7a1-bb5fbedd2c83")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "#PWR095")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "power:+BATT")
@@ -4723,6 +4788,89 @@
 		)
 	)
 	(symbol
+		(lib_id "Regulator_Linear:LP5912-3.3DRV")
+		(at 128.27 40.005 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1dcc0062-3f52-4732-b89f-51c8bfae3378")
+		(property "Reference" "U10"
+			(at 128.27 29.845 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LP5912-3.3DRV"
+			(at 128.27 32.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm_ThermalVias"
+			(at 128.27 31.115 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/lp5912.pdf"
+			(at 128.27 27.305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "500-mA Ultra-Low-Noise Low-IQ LDO, 3.3V, WSON-6"
+			(at 128.27 40.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "2a20cc21-a151-4dba-acb6-c49c9989214a")
+		)
+		(pin "6"
+			(uuid "4d10ff1e-d6d6-45cb-b680-b7d497e58b68")
+		)
+		(pin "7"
+			(uuid "7d6411c8-b5a3-420f-9abe-bc6d560e4f3f")
+		)
+		(pin "2"
+			(uuid "b9c4c9b0-8580-45ff-b588-8fc2cef17a33")
+		)
+		(pin "3"
+			(uuid "3ed4e210-b9c9-445d-adb8-0a0999bad7fb")
+		)
+		(pin "4"
+			(uuid "4895fba1-304e-416f-acff-9a1319a201ac")
+		)
+		(pin "1"
+			(uuid "51686387-bc47-4d50-ae50-52ba1ab79e3d")
+		)
+		(instances
+			(project ""
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "U10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 42.545 116.205 0)
 		(unit 1)
@@ -5020,6 +5168,73 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "#PWR066")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 210.82 111.125 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "32429a08-c33e-49c5-b181-a9a472278b96")
+		(property "Reference" "#PWR096"
+			(at 210.82 117.475 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.82 116.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 210.82 111.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 111.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 111.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4ddebec4-6844-4778-a76b-05c8e2e04d54")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "#PWR096")
 					(unit 1)
 				)
 			)
@@ -5494,7 +5709,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Components:SLW3015"
+		(property "Footprint" "Inductor_SMD:L_Sunlord_SWPA3015S"
 			(at 48.895 95.25 0)
 			(effects
 				(font
@@ -5521,7 +5736,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C206322"
+		(property "LCSC" "C167761"
 			(at 48.895 95.25 90)
 			(effects
 				(font
@@ -6368,7 +6583,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 148.59 37.465 0)
+		(at 148.59 34.925 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6377,7 +6592,7 @@
 		(fields_autoplaced yes)
 		(uuid "8ee49c85-1ea4-48e4-9335-2d26813f78f5")
 		(property "Reference" "#PWR017"
-			(at 148.59 41.275 0)
+			(at 148.59 38.735 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6386,7 +6601,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 148.59 33.02 0)
+			(at 148.59 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6394,7 +6609,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 148.59 37.465 0)
+			(at 148.59 34.925 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6403,7 +6618,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 148.59 37.465 0)
+			(at 148.59 34.925 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6412,7 +6627,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 148.59 37.465 0)
+			(at 148.59 34.925 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7082,158 +7297,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 105.41 34.925 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b6fa8479-b053-4a0c-8da2-46e954cbfda3")
-		(property "Reference" "5V1"
-			(at 110.49 33.655 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "5V"
-			(at 110.49 36.195 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
-			(at 105.41 40.005 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 105.41 40.005 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 105.41 34.925 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4f8aae29-6933-45eb-8e2f-4eec16b9b337")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
-					(reference "5V1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_FET:BSS138")
-		(at 208.28 100.965 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "bccebb6b-3482-42e5-9ece-02620f5f3cd7")
-		(property "Reference" "Q1"
-			(at 213.995 99.6949 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BSS138"
-			(at 213.995 102.2349 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 213.36 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
-			(at 213.36 104.775 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
-			(at 208.28 100.965 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C78284"
-			(at 208.28 100.965 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8f6d68f0-dffa-42b9-bedf-85acf75beafa")
-		)
-		(pin "3"
-			(uuid "45d14dda-30fc-46fa-a8c3-6bbc708c8d4e")
-		)
-		(pin "2"
-			(uuid "19f88595-987e-4d48-b71b-b7a4d7d4fe10")
-		)
-		(instances
-			(project ""
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
-					(reference "Q1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Battery_Management:MCP73831-3-OT")
 		(at 137.795 102.87 0)
 		(unit 1)
@@ -7464,92 +7527,6 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "#PWR086")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Regulator_Linear:MIC5365-3.3YC5")
-		(at 128.27 40.005 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d42a094d-9536-4ffc-a76a-de25193cc12b")
-		(property "Reference" "U2"
-			(at 128.27 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "MIC5365-3.3YC5"
-			(at 128.27 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-353_SC-70-5"
-			(at 128.27 31.115 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://ww1.microchip.com/downloads/en/DeviceDoc/mic5365.pdf"
-			(at 120.65 19.685 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 128.27 40.005 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C3021118"
-			(at 128.27 40.005 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "83e7d24f-18d7-4449-9f54-946c21474cd9")
-		)
-		(pin "1"
-			(uuid "f0afa0b2-d3b6-4e98-9c49-7abff6811642")
-		)
-		(pin "2"
-			(uuid "39e47283-8a75-4df0-b46a-272702541987")
-		)
-		(pin "4"
-			(uuid "a28a4918-3c1a-42b4-9f04-6cd08bd818f3")
-		)
-		(pin "3"
-			(uuid "a01febf4-bea7-4039-aad4-1010c37a4fb3")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
-					(reference "U2")
 					(unit 1)
 				)
 			)
@@ -8002,6 +7979,91 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "C32")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:AO3400A")
+		(at 208.28 100.965 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f205e7ad-62ad-49a4-aae8-055dc767217e")
+		(property "Reference" "Q1"
+			(at 214.63 99.6949 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "AO3400A"
+			(at 214.63 102.2349 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 213.36 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
+			(at 213.36 104.775 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "30V Vds, 5.7A Id, N-Channel MOSFET, SOT-23"
+			(at 208.28 100.965 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSCv" "C344010"
+			(at 208.28 100.965 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "daac2f20-663a-46ad-898f-46a6d26dab4f")
+		)
+		(pin "3"
+			(uuid "853afbe9-4f73-4db3-ad1d-de7705c38e45")
+		)
+		(pin "1"
+			(uuid "2bbdad68-14b8-491a-91fe-c4b726b36246")
+		)
+		(instances
+			(project ""
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "Q1")
 					(unit 1)
 				)
 			)

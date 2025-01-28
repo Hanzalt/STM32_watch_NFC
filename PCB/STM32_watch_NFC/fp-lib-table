@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Buzzer_SMD")(type "KiCad")(uri "/home/vakhaib/Desktop/aplikace/STM32_watch_NFC/PCB/Library/Buzzer_SMD.pretty")(options "")(descr ""))
+)

@@ -65,14 +65,18 @@ void Error_Handler(void);
 #define Button_LB_Pin GPIO_PIN_1
 #define Button_LB_GPIO_Port GPIOA
 #define Button_LB_EXTI_IRQn EXTI0_1_IRQn
-#define Tecka_J_Pin GPIO_PIN_2
-#define Tecka_J_GPIO_Port GPIOA
-#define Tecka_D_Pin GPIO_PIN_3
-#define Tecka_D_GPIO_Port GPIOA
-#define CLK_TM_Pin GPIO_PIN_7
-#define CLK_TM_GPIO_Port GPIOA
-#define DIO_TM_Pin GPIO_PIN_0
-#define DIO_TM_GPIO_Port GPIOB
+#define Row1_Pin GPIO_PIN_2
+#define Row1_GPIO_Port GPIOA
+#define Row2_Pin GPIO_PIN_3
+#define Row2_GPIO_Port GPIOA
+#define Row3_Pin GPIO_PIN_4
+#define Row3_GPIO_Port GPIOA
+#define Row4_Pin GPIO_PIN_5
+#define Row4_GPIO_Port GPIOA
+#define Row5_Pin GPIO_PIN_6
+#define Row5_GPIO_Port GPIOA
+#define Row6_Pin GPIO_PIN_7
+#define Row6_GPIO_Port GPIOA
 #define BATT_Pin GPIO_PIN_1
 #define BATT_GPIO_Port GPIOB
 #define CHRG_Pin GPIO_PIN_8
@@ -83,6 +87,10 @@ void Error_Handler(void);
 #define Button_R_Pin GPIO_PIN_10
 #define Button_R_GPIO_Port GPIOA
 #define Button_R_EXTI_IRQn EXTI4_15_IRQn
+#define DIN_STM_Pin GPIO_PIN_15
+#define DIN_STM_GPIO_Port GPIOA
+#define Buzzer_Pin GPIO_PIN_3
+#define Buzzer_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

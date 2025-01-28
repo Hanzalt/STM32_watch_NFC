@@ -501,6 +501,11 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
@@ -541,10 +546,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, Tecka_J_Pin|Tecka_D_Pin|CLK_TM_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(DIO_TM_GPIO_Port, DIO_TM_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, Row1_Pin|Row2_Pin|Row4_Pin|Row5_Pin
+                          |Row6_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : Button_LT_Pin Button_LB_Pin CHRG_Pin Button_R_Pin */
   GPIO_InitStruct.Pin = Button_LT_Pin|Button_LB_Pin|CHRG_Pin|Button_R_Pin;
@@ -552,26 +555,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Tecka_J_Pin Tecka_D_Pin */
-  GPIO_InitStruct.Pin = Tecka_J_Pin|Tecka_D_Pin;
+  /*Configure GPIO pins : Row1_Pin Row2_Pin Row4_Pin Row5_Pin
+                           Row6_Pin */
+  GPIO_InitStruct.Pin = Row1_Pin|Row2_Pin|Row4_Pin|Row5_Pin
+                          |Row6_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : CLK_TM_Pin */
-  GPIO_InitStruct.Pin = CLK_TM_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  /*Configure GPIO pin : Row3_Pin */
+  GPIO_InitStruct.Pin = Row3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(CLK_TM_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : DIO_TM_Pin */
-  GPIO_InitStruct.Pin = DIO_TM_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(DIO_TM_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(Row3_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : DONE_Pin */
   GPIO_InitStruct.Pin = DONE_Pin;

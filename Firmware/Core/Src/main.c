@@ -94,8 +94,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	rgb_color hour_color = {200, 10, 0, 4};
-	rgb_color minut_color = {0, 50, 200, 4};
+	rgb_color hour_color = {255, 0, 0, 4};
+	rgb_color minut_color = {0, 0, 200, 4};
 	rgb_color red = {250, 0, 0, 4};
 	rgb_color blue = {0, 0, 250, 4};
 	rgb_color green = {0, 250, 0, 4};

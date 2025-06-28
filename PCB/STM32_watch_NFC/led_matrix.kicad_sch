@@ -993,6 +993,12 @@
 		(uuid "4a364761-1ac7-4070-81d9-9b2ccf46ed67")
 	)
 	(junction
+		(at 61.595 180.34)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4b61000e-1837-4e80-8ed3-552e98a7268b")
+	)
+	(junction
 		(at 99.695 120.65)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1197,12 +1203,6 @@
 		(uuid "c9e288d0-75cc-487b-8d95-77e33840dbd9")
 	)
 	(junction
-		(at 61.595 180.34)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "cc54b439-a257-462f-81ee-e383dbd74699")
-	)
-	(junction
 		(at 74.295 149.86)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1287,16 +1287,6 @@
 			(type default)
 		)
 		(uuid "00bc5176-5c6c-4bcf-816a-f6a812572780")
-	)
-	(wire
-		(pts
-			(xy 59.055 180.34) (xy 61.595 180.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0254173c-2221-46b8-8ff2-ef8628887b43")
 	)
 	(wire
 		(pts
@@ -2250,16 +2240,6 @@
 	)
 	(wire
 		(pts
-			(xy 61.595 180.34) (xy 61.595 181.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "93dcddfe-1429-433e-9b7b-f5ee7c4d9dcc")
-	)
-	(wire
-		(pts
 			(xy 61.595 149.86) (xy 59.055 149.86)
 		)
 		(stroke
@@ -2427,6 +2407,16 @@
 			(type default)
 		)
 		(uuid "a77d8026-1d1d-4e1b-b42a-982253733755")
+	)
+	(wire
+		(pts
+			(xy 61.595 180.34) (xy 61.595 181.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aa9acb27-6f98-44fa-b84b-764ee6a09d91")
 	)
 	(wire
 		(pts
@@ -2830,6 +2820,16 @@
 	)
 	(wire
 		(pts
+			(xy 59.055 180.34) (xy 61.595 180.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e9765854-cb61-41e5-a6ab-15bea17451be")
+	)
+	(wire
+		(pts
 			(xy 86.995 165.1) (xy 84.455 165.1)
 		)
 		(stroke
@@ -3023,7 +3023,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 109.855 116.84 0)
 			(effects
 				(font
@@ -3043,6 +3043,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 109.855 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 109.855 116.84 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3093,7 +3102,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 59.055 146.05 0)
 			(effects
 				(font
@@ -3113,6 +3122,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 59.055 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 59.055 146.05 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3379,7 +3397,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 71.755 104.14 0)
 			(effects
 				(font
@@ -3399,6 +3417,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 71.755 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 71.755 104.14 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3750,7 +3777,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 109.855 146.05 0)
 			(effects
 				(font
@@ -3770,6 +3797,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 109.855 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 109.855 146.05 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4419,7 +4455,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 71.755 161.29 0)
 			(effects
 				(font
@@ -4439,6 +4475,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 71.755 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 71.755 161.29 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4489,7 +4534,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 84.455 161.29 0)
 			(effects
 				(font
@@ -4509,6 +4554,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 84.455 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 84.455 161.29 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4559,7 +4613,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 59.055 130.81 0)
 			(effects
 				(font
@@ -4579,6 +4633,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 59.055 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 59.055 130.81 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4748,7 +4811,8 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 59.055 176.53 270)
+		(at 59.055 176.53 90)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4757,7 +4821,7 @@
 		(fields_autoplaced yes)
 		(uuid "4107d616-911b-4997-9a45-e15c2f3c0b7a")
 		(property "Reference" "D38"
-			(at 61.595 173.6724 90)
+			(at 56.515 173.6724 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4766,7 +4830,7 @@
 			)
 		)
 		(property "Value" "LED"
-			(at 61.595 176.2124 90)
+			(at 56.515 176.2124 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4774,7 +4838,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 59.055 176.53 0)
 			(effects
 				(font
@@ -4794,6 +4858,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 59.055 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 59.055 176.53 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4976,7 +5049,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 122.555 104.14 0)
 			(effects
 				(font
@@ -4996,6 +5069,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 122.555 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 122.555 104.14 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5245,7 +5327,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 84.455 176.53 0)
 			(effects
 				(font
@@ -5265,6 +5347,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 84.455 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 84.455 176.53 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5315,7 +5406,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 84.455 146.05 0)
 			(effects
 				(font
@@ -5519,7 +5610,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 97.155 104.14 0)
 			(effects
 				(font
@@ -5539,6 +5630,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 97.155 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 97.155 104.14 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6030,7 +6130,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 122.555 116.84 0)
 			(effects
 				(font
@@ -6050,6 +6150,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 122.555 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 122.555 116.84 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6100,7 +6209,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 109.855 130.81 0)
 			(effects
 				(font
@@ -6120,6 +6229,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 109.855 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 109.855 130.81 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6170,7 +6288,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 59.055 116.84 0)
 			(effects
 				(font
@@ -6190,6 +6308,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 59.055 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 59.055 116.84 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6307,7 +6434,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 84.455 104.14 0)
 			(effects
 				(font
@@ -6327,6 +6454,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 84.455 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 84.455 104.14 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6645,7 +6781,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 71.755 176.53 0)
 			(effects
 				(font
@@ -6665,6 +6801,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 71.755 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 71.755 176.53 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6927,7 +7072,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 71.755 146.05 0)
 			(effects
 				(font
@@ -7461,7 +7606,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 97.155 116.84 0)
 			(effects
 				(font
@@ -7481,6 +7626,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 97.155 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 97.155 116.84 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7809,7 +7963,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 122.555 161.29 0)
 			(effects
 				(font
@@ -7829,6 +7983,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 122.555 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 122.555 161.29 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7879,7 +8042,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 122.555 146.05 0)
 			(effects
 				(font
@@ -7899,6 +8062,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 122.555 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 122.555 146.05 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8033,7 +8205,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 84.455 116.84 0)
 			(effects
 				(font
@@ -8053,6 +8225,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 84.455 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 84.455 116.84 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8187,7 +8368,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 122.555 130.81 0)
 			(effects
 				(font
@@ -8207,6 +8388,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 122.555 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 122.555 130.81 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8617,7 +8807,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 97.155 130.81 0)
 			(effects
 				(font
@@ -8637,6 +8827,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 97.155 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 97.155 130.81 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8687,7 +8886,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 71.755 130.81 0)
 			(effects
 				(font
@@ -8707,6 +8906,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 71.755 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" ""
+			(at 71.755 130.81 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8757,7 +8965,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 109.855 104.14 0)
 			(effects
 				(font
@@ -8777,6 +8985,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 109.855 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 109.855 104.14 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8984,7 +9201,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C103085"
+		(property "LCSC" "C25123"
 			(at 27.94 40.005 90)
 			(effects
 				(font
@@ -9120,7 +9337,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 59.055 161.29 0)
 			(effects
 				(font
@@ -9140,6 +9357,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 59.055 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 59.055 161.29 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9334,7 +9560,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+		(property "Footprint" "LED_SMD:LED_0402_1005Metric"
 			(at 97.155 161.29 0)
 			(effects
 				(font
@@ -9354,6 +9580,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 97.155 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 97.155 161.29 90)
 			(effects
 				(font
 					(size 1.27 1.27)

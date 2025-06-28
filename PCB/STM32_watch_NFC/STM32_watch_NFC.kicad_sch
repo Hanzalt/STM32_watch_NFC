@@ -5610,7 +5610,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C509322"
+		(property "LCSC" "C25879"
 			(at 153.67 17.78 0)
 			(effects
 				(font
@@ -5900,7 +5900,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C412453"
+		(property "LCSC" "C52923"
 			(at 149.225 123.19 0)
 			(effects
 				(font
@@ -6337,7 +6337,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C323592"
+		(property "LCSC" "C15195"
 			(at 138.43 123.19 0)
 			(effects
 				(font
@@ -6626,7 +6626,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C103085"
+		(property "LCSC" "C25123"
 			(at 102.87 43.18 0)
 			(effects
 				(font
@@ -6918,6 +6918,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C52801"
+			(at 251.46 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "dcd26473-aa4b-40ba-9615-1ec3ca9dc8c9")
 		)
@@ -6991,7 +7000,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C327787"
+		(property "LCSC" "C1548"
 			(at 75.565 168.275 0)
 			(effects
 				(font
@@ -7414,7 +7423,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C145179"
+		(property "LCSC" "C727120"
 			(at 248.285 40.005 0)
 			(effects
 				(font
@@ -7873,7 +7882,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C77040"
+		(property "LCSC" "C19702"
 			(at 88.9 122.555 0)
 			(effects
 				(font
@@ -7949,7 +7958,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C308028"
+		(property "LCSC" "C25744"
 			(at 111.76 139.065 90)
 			(effects
 				(font
@@ -8160,7 +8169,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C103085"
+		(property "LCSC" "C25123"
 			(at 102.87 57.15 0)
 			(effects
 				(font
@@ -8315,7 +8324,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C412453"
+		(property "LCSC" "C52923"
 			(at 149.225 31.115 0)
 			(effects
 				(font
@@ -8806,7 +8815,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C103085"
+		(property "LCSC" "C25123"
 			(at 102.87 29.21 0)
 			(effects
 				(font
@@ -9455,123 +9464,12 @@
 				(hide yes)
 			)
 		)
-		(property "MF" "Rohm"
+		(property "LCSC" " C78960"
 			(at 186.69 32.385 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MAXIMUM_PACKAGE_HEIGHT" "0.75mm"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Package" "SMD-6 ROHM Semiconductor"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Price" "None"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Check_prices" "https://www.snapeda.com/parts/BH1750FVI-TR/Rohm/view-part/?ref=eda"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "STANDARD" "Manufacturer recommendations"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "PARTREV" "D"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/BH1750FVI-TR/Rohm/view-part/?ref=snap"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MP" "BH1750FVI-TR"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "\n                        \n                            Optical Sensor Ambient 560nm I2C 6-SMD, Flat Lead Exposed Pad\n                        \n"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Availability" "In Stock"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MANUFACTURER" "Rohm"
-			(at 186.69 32.385 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
 				(hide yes)
 			)
 		)
@@ -9884,7 +9782,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C412453"
+		(property "LCSC" "C52923"
 			(at 166.37 123.19 0)
 			(effects
 				(font
@@ -10096,7 +9994,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C327787"
+		(property "LCSC" "C1548"
 			(at 91.44 168.275 0)
 			(effects
 				(font
@@ -10172,7 +10070,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C284599"
+		(property "LCSC" "C25905"
 			(at 235.585 53.34 90)
 			(effects
 				(font

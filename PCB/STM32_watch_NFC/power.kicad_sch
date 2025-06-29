@@ -4669,7 +4669,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_SUR_SM02B-SURS-TF_1x02-1MP_P0.80mm_Horizontal"
+		(property "Footprint" "Connector_Molex:Molex_Pico-EZmate_78171-0002_1x02-1MP_P1.20mm_Vertical"
 			(at 185.42 30.48 0)
 			(effects
 				(font
@@ -4696,7 +4696,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C566239"
+		(property "LCSC" "C505023"
 			(at 185.42 30.48 0)
 			(effects
 				(font

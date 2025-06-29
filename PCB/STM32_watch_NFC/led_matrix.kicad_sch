@@ -5433,6 +5433,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C20613596"
+			(at 84.455 146.05 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "3498d4f7-b30b-46de-a381-499a146d4066")
 		)
@@ -7092,6 +7101,15 @@
 		)
 		(property "Description" "Light emitting diode"
 			(at 71.755 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C20613596"
+			(at 71.755 146.05 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8913,7 +8931,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" ""
+		(property "LCSC" "C20613596"
 			(at 71.755 130.81 90)
 			(effects
 				(font

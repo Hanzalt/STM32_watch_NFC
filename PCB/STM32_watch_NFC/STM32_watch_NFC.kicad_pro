@@ -102,8 +102,8 @@
         "skew_out_of_range": "error",
         "solder_mask_bridge": "error",
         "starved_thermal": "error",
-        "text_height": "warning",
-        "text_thickness": "warning",
+        "text_height": "ignore",
+        "text_thickness": "ignore",
         "through_hole_pad_without_hole": "error",
         "too_many_vias": "error",
         "track_dangling": "warning",
@@ -133,7 +133,7 @@
         "min_via_diameter": 0.25,
         "solder_mask_clearance": 0.0,
         "solder_mask_min_width": 0.0,
-        "solder_mask_to_copper_clearance": 0.0,
+        "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -219,6 +219,10 @@
         {
           "diameter": 0.3,
           "drill": 0.175
+        },
+        {
+          "diameter": 0.45,
+          "drill": 0.3
         },
         {
           "diameter": 0.5,

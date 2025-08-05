@@ -29,14 +29,12 @@ typedef struct {
 #define T0H  5
 
 //USABLE
-void clear_LEDs(LEDs* leds, uint16_t num_LEDs); // Looks ugly on oscilloscope - do not use
-void set_LED(LEDs* leds, uint16_t pos_LED, rgb_color color);
+void clear_LEDs(LEDs* leds); // Looks ugly on oscilloscope - do not use
 void turn_spec_LEDs(LEDs* leds, rgb_color* colors);
 
 //DEBUG
 void turn_LEDs(LEDs* leds, uint16_t num_LEDs);
 
 //PRIVATE
-static void led_manager();
 static int decToBinary(int n);
 #endif /* INC_DIN_LED_H_ */

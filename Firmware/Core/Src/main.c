@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "Din_LED.h"
 #include "stdbool.h"
+#include <math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,7 +33,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define CHARLIE_START_PIN 2
+#define CHARLIE_PIN_COUNT 6
+#define PWM_CYCLE_LENGTH 255  // Max brightness
 
+// Map index 0–5 to PA2–PA7
+#define GET_PIN(index) (1 << (CHARLIE_START_PIN + (index)))
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,17 +54,19 @@ I2C_HandleTypeDef hi2c1;
 RTC_HandleTypeDef hrtc;
 
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim21;
 DMA_HandleTypeDef hdma_tim2_ch1;
 
 /* USER CODE BEGIN PV */
 #define MAX_LED 12
 LEDs leds [MAX_LED + 3];
-rgb_color led_pattern[MAX_LED];
+//rgb_color led_pattern[MAX_LED];
 rgb_color time_pattern[MAX_LED];
-rgb_color all_pattern[MAX_LED];
-rgb_color null_pattern[MAX_LED];
+rgb_color charging_pattern[MAX_LED];
+//rgb_color all_pattern[MAX_LED];
+//rgb_color null_pattern[MAX_LED];
 rgb_color none = {0, 0, 0, 0};
-rgb_color all = {255, 255, 255, 0};
+//rgb_color all = {255, 255, 255, 0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,21 +77,33 @@ static void MX_ADC_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_TIM21_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Charlieplex_Reset_All(void);
+void Charlieplex_Light_LED(uint8_t highIndex, uint8_t lowIndex);
+void Digital_show(uint8_t hours, uint8_t minutes, bool date);
+void Init_BH1750FVI(void);
+uint16_t BH1750_ReadLightLevel(void);
+void delay_us (uint16_t us);
+void beep(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint16_t minutes = 30;
-uint16_t hours = 6;
+uint8_t minutes = 30;
+uint8_t hours = 6;
 uint8_t am = 0;
-uint16_t shifted_hours = 0;
+uint8_t shifted_hours = 0;
 uint16_t batteryVal = 0;
-uint16_t shifted_minutes = 6;
+uint8_t shifted_minutes = 6;
 bool showingLeds = false;
+bool showingDigital = false;
 bool changeTime = false;
-bool toggler = false;
+bool charging = false;
+uint8_t toggler = false;
+uint8_t RX_Buffer [1];
+uint16_t lightLevel = 0;
+
 /* USER CODE END 0 */
 
 /**
@@ -94,10 +114,10 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	rgb_color hour_color = {255, 0, 0, 4};
-	rgb_color minut_color = {0, 0, 200, 4};
-	rgb_color red = {250, 0, 0, 4};
-	rgb_color blue = {0, 0, 250, 4};
+	rgb_color hour_color = {255, 0, 0, 1};
+	rgb_color minut_color = {255, 0, 0, 255};
+	//rgb_color red = {250, 0, 0, 4};
+	//rgb_color blue = {0, 0, 250, 4};
 	rgb_color green = {0, 250, 0, 4};
   /* USER CODE END 1 */
 
@@ -124,22 +144,14 @@ int main(void)
   MX_I2C1_Init();
   MX_RTC_Init();
   MX_TIM2_Init();
+  MX_TIM21_Init();
   /* USER CODE BEGIN 2 */
-	for (int i = 0; i < 12; i++) {
-	  led_pattern[i] = none;
-	  time_pattern[i] = none;
-	  null_pattern[i] = none;
-	  all_pattern[i] = all;
-	  if (i%3==0) {
-		  led_pattern[i] = blue;
-	  } else if (i%3==1) {
-		  led_pattern[i] = green;
-	  } else {
-		  led_pattern[i] = red;
-	  }
-	}
-	time_pattern[shifted_hours] = hour_color;
-	time_pattern[shifted_minutes] = minut_color;
+  HAL_TIM_Base_Start(&htim21); // KDYZTAK ODSTRAN - ZATIM NIC NEDELA
+  //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+  Charlieplex_Reset_All();
+  Init_BH1750FVI();
+  time_pattern[shifted_hours] = hour_color;
+  time_pattern[shifted_minutes] = minut_color;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -159,10 +171,13 @@ int main(void)
 	  HAL_ResumeTick();
   */
 
+	  // RGB LEDS --------------------------------------------------------
 	  if (showingLeds) {
+		  TIM2 ->CCR1 = 60;
+		  beep();
 		  int x = 0;
 		  bool shouldExitIf = false;
-
+		  //TIM2->CCR2=55;
 		  while (HAL_GPIO_ReadPin(Button_R_GPIO_Port, Button_R_Pin)) {
 			  x++;
 			  if (x >= 200) {
@@ -176,26 +191,30 @@ int main(void)
 		  }
 		  if (!shouldExitIf) {
 			  if (shifted_hours==shifted_minutes) {
+				  hour_color.a = BH1750_ReadLightLevel();
+				  minut_color.a = BH1750_ReadLightLevel();
 				  for (int i = 0; i < 5; i++) {
 					  if (toggler) {
 						  time_pattern[shifted_hours] = hour_color;
 					  } else {
 						  time_pattern[shifted_minutes] = minut_color;
-					  }
+					  }HAL_GPIO_TogglePin(Buzzer_GPIO_Port, Buzzer_Pin);
+					  HAL_Delay(100);
 					  toggler = !toggler;
 
 					  turn_spec_LEDs(leds, time_pattern);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 					  HAL_Delay(500);
-					  turn_spec_LEDs(leds, null_pattern);
+					  clear_LEDs(leds);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 					  HAL_Delay(500);
-
-					  clear_LEDs(leds, MAX_LED);
+					  clear_LEDs(leds);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 					  HAL_Delay(50);
 				  }
 			  } else {
+				  hour_color.a = BH1750_ReadLightLevel();
+				  minut_color.a = BH1750_ReadLightLevel();
 				  time_pattern[shifted_hours] = hour_color;
 				  time_pattern[shifted_minutes] = minut_color;
 
@@ -203,15 +222,52 @@ int main(void)
 				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 				  HAL_Delay(5000);
 
-				  turn_spec_LEDs(leds, null_pattern);
+				  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
 				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 				  HAL_Delay(50);
 			  }
+
 			  showingLeds = false;
 		  }
 	  }
+	  // DIGITAL LEDS ------------------------------------------------
+	  if (showingDigital) {
+		  beep();
+		  for(int i = 0; i < 3000; i++){
+			  Digital_show(hours, minutes,0);
+		  }
+		  Charlieplex_Reset_All();
+		  showingDigital = false;
+	  }
+	  // CHARGING WATCH ----------------------------------------------
+	  if (charging) {
+		  beep();
+		  uint8_t chargedLEDnum = 0;
+		  batteryVal = HAL_ADC_GetValue(&hadc);
+		  HAL_ADC_Stop(&hadc);
+		  HAL_Delay(10);
+		  batteryVal = HAL_ADC_GetValue(&hadc);
+		  HAL_ADC_Stop(&hadc);
+		  HAL_Delay(10);
+		  batteryVal = HAL_ADC_GetValue(&hadc);
+		  HAL_ADC_Stop(&hadc);
+		  HAL_Delay(10);
+		  if (batteryVal > 2550) batteryVal = 2550;
+		  if (batteryVal < 1550) batteryVal = 1550;
+		  chargedLEDnum = (int)((batteryVal - 1550) * 12 / (2550 - 1550));
+		  green.a = BH1750_ReadLightLevel();
+		  for (int i = 0; i < chargedLEDnum; i++) {
+			  charging_pattern[i] = green;
+		  }
+		  turn_spec_LEDs(leds, charging_pattern);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  }
 
 	  while(changeTime) {
+		  TIM2 ->CCR1 = 60;
+		  beep();
+		  hour_color.a = BH1750_ReadLightLevel();
+		  minut_color.a = BH1750_ReadLightLevel();
 		  time_pattern[shifted_hours] = hour_color;
 		  time_pattern[shifted_minutes] = minut_color;
 		  if (shifted_hours==shifted_minutes) {
@@ -225,19 +281,20 @@ int main(void)
 		  turn_spec_LEDs(leds, time_pattern);
 		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 		  HAL_Delay(500);
-		  clear_LEDs(leds, MAX_LED);
+		  clear_LEDs(leds);
 		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 		  HAL_Delay(500);
 	  }
+	  if (charging==false) {
+		  // Enter Stop Mode
+		  __HAL_RCC_DMA1_CLK_DISABLE();
+	  	  TIM2 ->CCR1 = 0;
+	  	  HAL_SuspendTick();
 
-	  // Enter Stop Mode
-	  __HAL_RCC_DMA1_CLK_DISABLE();
-	  TIM2 ->CCR1 = 0;
-	  HAL_SuspendTick();
+	  	  HAL_PWR_EnableSleepOnExit();
 
-	  HAL_PWR_EnableSleepOnExit();
-
-	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+	  	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -501,15 +558,55 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
   HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
+  * @brief TIM21 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM21_Init(void)
+{
+
+  /* USER CODE BEGIN TIM21_Init 0 */
+
+  /* USER CODE END TIM21_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM21_Init 1 */
+
+  /* USER CODE END TIM21_Init 1 */
+  htim21.Instance = TIM21;
+  htim21.Init.Prescaler = 0;
+  htim21.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim21.Init.Period = 65535;
+  htim21.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim21.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim21) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim21, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim21, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM21_Init 2 */
+
+  /* USER CODE END TIM21_Init 2 */
 
 }
 
@@ -537,8 +634,8 @@ static void MX_DMA_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -546,35 +643,45 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, Row1_Pin|Row2_Pin|Row4_Pin|Row5_Pin
-                          |Row6_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, Row1_Pin|Row2_Pin|Row3_Pin|Row4_Pin
+                          |Row5_Pin|Row6_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : Button_LT_Pin Button_LB_Pin CHRG_Pin Button_R_Pin */
-  GPIO_InitStruct.Pin = Button_LT_Pin|Button_LB_Pin|CHRG_Pin|Button_R_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : Button_LT_Pin Button_LB_Pin Button_R_Pin */
+  GPIO_InitStruct.Pin = Button_LT_Pin|Button_LB_Pin|Button_R_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Row1_Pin Row2_Pin Row4_Pin Row5_Pin
-                           Row6_Pin */
-  GPIO_InitStruct.Pin = Row1_Pin|Row2_Pin|Row4_Pin|Row5_Pin
-                          |Row6_Pin;
+  /*Configure GPIO pins : Row1_Pin Row2_Pin Row3_Pin Row4_Pin
+                           Row5_Pin Row6_Pin */
+  GPIO_InitStruct.Pin = Row1_Pin|Row2_Pin|Row3_Pin|Row4_Pin
+                          |Row5_Pin|Row6_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : Row3_Pin */
-  GPIO_InitStruct.Pin = Row3_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  /*Configure GPIO pin : CHRG_Pin */
+  GPIO_InitStruct.Pin = CHRG_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(Row3_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(CHRG_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : DONE_Pin */
   GPIO_InitStruct.Pin = DONE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(DONE_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Buzzer_Pin */
+  GPIO_InitStruct.Pin = Buzzer_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(Buzzer_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
@@ -583,8 +690,8 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -595,9 +702,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	HAL_ResumeTick();
 	HAL_PWR_DisableSleepOnExit();
 	__HAL_RCC_DMA1_CLK_ENABLE();
-	TIM2 ->CCR1 = 60;
+
 	if (GPIO_Pin == Button_LB_Pin) {
-		showingLeds = true;
+		showingDigital = true;
 		if (changeTime) {
 			hours++;
 			if (hours >= 12) {
@@ -633,11 +740,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     		showingLeds = false;
     		/** Enable the WakeUp
     		 */
-    		if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 299, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
+    		if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 59, RTC_WAKEUPCLOCK_CK_SPRE_16BITS) != HAL_OK)
     		{
     			Error_Handler();
     		}
     	}
+	}
+    if (GPIO_Pin == CHRG_Pin) {
+		charging = !charging;
+		if (charging==false) {
+			clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
+			HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+		}
 	}
 
     //HAL_SuspendTick();
@@ -652,7 +766,7 @@ void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc) {
 	HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 	HAL_Delay(50);
 	*/
-    minutes+=5;
+    minutes+=1;
 	if (minutes >= 60) {
 		minutes = 0;
 
@@ -677,6 +791,162 @@ void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc) {
 	} else {
 		shifted_minutes = minutes/5;
 		time_pattern[shifted_minutes-1] = none;
+	}
+}
+
+void Charlieplex_Reset_All(void) {
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+
+    for (uint8_t i = 0; i < CHARLIE_PIN_COUNT; i++) {
+        GPIO_InitStruct.Pin = GET_PIN(i);
+        HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    }
+}
+
+void Charlieplex_Light_LED(uint8_t highIndex, uint8_t lowIndex) {
+    if (highIndex == lowIndex || highIndex >= CHARLIE_PIN_COUNT || lowIndex >= CHARLIE_PIN_COUNT)
+        return;  // Invalid input
+
+    Charlieplex_Reset_All();
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    // Set high pin: output, high
+    GPIO_InitStruct.Pin = GET_PIN(highIndex);
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(GPIOA, GET_PIN(highIndex), GPIO_PIN_SET);
+
+    // Set low pin: output, low
+    GPIO_InitStruct.Pin = GET_PIN(lowIndex);
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(GPIOA, GET_PIN(lowIndex), GPIO_PIN_RESET);
+}
+
+void Digital_show(uint8_t hoursD, uint8_t minutesD, bool date) {
+	typedef struct {
+		uint8_t x;
+		uint8_t y;
+	} Pair;
+
+	static const Pair hour2[10][7] = {
+		{ {1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {0,1} },		// number 0
+	    { {2,0}, {3,0} },									// number 1
+	    { {1,0}, {2,0}, {2,1}, {5,0}, {4,0} },				// number 2
+	    { {1,0}, {2,0}, {2,1}, {3,0}, {4,0} },				// number 3
+	    { {0,1}, {2,0}, {2,1}, {3,0} },						// number 4
+	    { {1,0}, {0,1}, {2,1}, {3,0}, {4,0} },				// number 5
+	    { {1,0}, {0,1}, {2,1}, {5,0}, {4,0}, {3,0} },		// number 6
+	    { {1,0}, {2,0}, {3,0} },							// number 7
+	    { {1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {0,1}, {2,1} },// number 8
+	    { {1,0}, {2,0}, {3,0}, {4,0}, {0,1}, {2,1} }		// number 9
+	};
+	static const Pair hour1[10][7] = {
+		{ {3,1}, {4,1}, {5,1}, {0,2}, {1,2}, {3,2} },		// number 0
+		{ {4,1}, {5,1} },									// number 1
+		{ {3,1}, {4,1}, {4,2}, {1,2}, {0,2} },				// number 2
+		{ {3,1}, {4,1}, {4,2}, {5,1}, {0,2} },				// number 3
+		{ {3,2}, {4,1}, {4,2}, {5,1} },						// number 4
+		{ {3,1}, {3,2}, {4,2}, {5,1}, {0,2} },				// number 5
+		{ {3,1}, {5,1}, {0,2}, {1,2}, {3,2}, {4,2} },		// number 6
+		{ {3,1}, {4,1}, {5,1} },							// number 7
+		{ {3,1}, {4,1}, {5,1}, {0,2}, {1,2}, {3,2}, {4,2} },// number 8
+		{ {3,1}, {4,1}, {5,1}, {0,2}, {3,2}, {4,2} }		// number 9
+	};
+	static const Pair minute2[10][7] = {
+		{ {5,2}, {0,3}, {1,3}, {2,3}, {4,3}, {5,3} },		// number 0
+		{ {0,3}, {1,3} },									// number 1
+		{ {5,2}, {0,3}, {0,4}, {4,3}, {2,3} },				// number 2
+		{ {5,2}, {0,3}, {0,4}, {1,3}, {2,3} },				// number 3
+		{ {5,3}, {0,3}, {0,4}, {1,3} },						// number 4
+		{ {5,2}, {5,3}, {0,4}, {1,3}, {2,3} },				// number 5
+		{ {5,2}, {5,3}, {0,4}, {4,3}, {1,3}, {2,3} },		// number 6
+		{ {5,2}, {0,3}, {1,3} },							// number 7
+		{ {5,2}, {0,3}, {1,3}, {2,3}, {4,3}, {5,3}, {0,4} },// number 8
+		{ {5,2}, {0,3}, {1,3}, {2,3}, {5,3}, {0,4} }		// number 9
+	};
+	static const Pair minute1[10][7] = {
+		{ {1,4}, {2,4}, {3,4}, {5,4}, {0,5}, {1,5} },		// number 0
+		{ {2,4}, {3,4} },									// number 1
+		{ {1,4}, {2,4}, {2,5}, {0,5}, {5,4} },				// number 2
+		{ {1,4}, {2,4}, {2,5}, {3,4}, {5,4} },				// number 3
+		{ {1,5}, {2,4}, {2,5}, {3,4} },						// number 4
+		{ {1,4}, {1,5}, {2,5}, {3,4}, {5,4} },				// number 5
+		{ {1,4}, {1,5}, {2,5}, {0,5}, {3,4}, {5,4} },		// number 6
+		{ {1,4}, {2,4}, {3,4} },							// number 7
+		{ {1,4}, {2,4}, {3,4}, {5,4}, {0,5}, {1,5}, {2,5} },// number 8
+		{ {1,4}, {2,4}, {3,4}, {5,4}, {1,5}, {2,5} }		// number 9
+	};
+	static const uint8_t LED_len[10] = {6, 2, 5, 5, 4, 5, 6, 3, 7, 6};
+	uint8_t hour_tens = hoursD / 10;
+	uint8_t hour_ones = hoursD % 10;
+	uint8_t minute_tens = minutesD / 10;
+	uint8_t minute_ones = minutesD % 10;
+
+	for (int i = 0; i < LED_len[hour_tens]; i++) {
+	    Charlieplex_Light_LED(hour2[hour_tens][i].x, hour2[hour_tens][i].y);
+	}
+	for (int i = 0; i < LED_len[hour_ones]; i++) {
+		Charlieplex_Light_LED(hour1[hour_ones][i].x, hour1[hour_ones][i].y);
+	}
+	for (int i = 0; i < LED_len[minute_tens]; i++) {
+		Charlieplex_Light_LED(minute2[minute_tens][i].x, minute2[minute_tens][i].y);
+	}
+	for (int i = 0; i < LED_len[minute_ones]; i++) {
+		Charlieplex_Light_LED(minute1[minute_ones][i].x, minute1[minute_ones][i].y);
+	}
+	Charlieplex_Reset_All();
+}
+
+#define BH1750_ADDRESS         (0x23 << 1) // I2C 7-bit address shifted for HAL
+#define BH1750_POWER_ON        0x01
+#define BH1750_RESET           0x07
+#define BH1750_CONT_H_RES_MODE 0x10 // Continuous high-res mode (1 lx resolution)
+void Init_BH1750FVI(void) {
+    uint8_t cmd;
+
+    cmd = BH1750_POWER_ON;
+    HAL_I2C_Master_Transmit(&hi2c1, BH1750_ADDRESS, &cmd, 1, HAL_MAX_DELAY);
+    HAL_Delay(10);
+
+    cmd = BH1750_RESET;
+    HAL_I2C_Master_Transmit(&hi2c1, BH1750_ADDRESS, &cmd, 1, HAL_MAX_DELAY);
+    HAL_Delay(10);
+
+    cmd = BH1750_CONT_H_RES_MODE;
+    HAL_I2C_Master_Transmit(&hi2c1, BH1750_ADDRESS, &cmd, 1, HAL_MAX_DELAY);
+    HAL_Delay(200);  // Allow first reading to stabilize
+}
+uint16_t BH1750_ReadLightLevel(void) {
+    uint8_t data[2];
+    float lux_min = 50.0f;
+	float lux_max = 60000.0f;
+    HAL_I2C_Master_Receive(&hi2c1, BH1750_ADDRESS, data, 2, HAL_MAX_DELAY);
+
+
+    float lux = (data[0] << 8) | data[1];
+    lux = lux / 1.2; // Convert to lux according to datasheet: value / 1.2
+    if (lux < lux_min) lux = lux_min;
+    if (lux > lux_max) lux = lux_max;
+
+
+    float b = (logf(lux) - logf(lux_min)) / (logf(lux_max) - logf(lux_min));
+	return 1 + (uint8_t)(b * 254.0f);
+}
+void delay_us (uint16_t us) {
+	__HAL_TIM_SET_COUNTER(&htim21,0);
+	while (__HAL_TIM_GET_COUNTER(&htim21) < us);
+}
+void beep(void) {
+	for(unsigned int i = 0; i < 10000; i++) {
+	  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 1);
+	  delay_us(185);
+	  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 0);
+	  delay_us(185);
 	}
 }
 /* USER CODE END 4 */

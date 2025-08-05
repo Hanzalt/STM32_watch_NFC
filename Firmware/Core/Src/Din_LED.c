@@ -7,7 +7,7 @@
 
 #include "Din_LED.h"
 
-void clear_LEDs(LEDs* leds, uint16_t num_LEDs) {
+void clear_LEDs(LEDs* leds) {
 
 	for (int i = 0; i < 12; i++) {
 
@@ -31,47 +31,27 @@ void clear_LEDs(LEDs* leds, uint16_t num_LEDs) {
 	//memset(leds -> pause, 0x00, 35);
 
 
-void set_LED(LEDs* leds, uint16_t pos_LED, rgb_color color) {
-	for (int i = 0; i < pos_LED; i++) {
-		for (int j = 0; j < 8; j++) {
-			if (i==(pos_LED-1)) {
-				(leds + i) ->r[j] = T1H;
-				(leds + i) ->g[j] = T1H;
-				(leds + i) ->b[j] = T1H;
-			} else {
-				(leds + i) ->r[j] = T0H;
-				(leds + i) ->g[j] = T0H;
-				(leds + i) ->b[j] = T0H;
-			}
-			if (i >= 0 && i <= 2) {
-				(leds + pos_LED + i) ->r[j] = 0;
-				(leds + pos_LED + i) ->g[j] = 0;
-				(leds + pos_LED + i) ->b[j] = 0;
-			}
-		}
-	}
-}
 
 void turn_spec_LEDs(LEDs* leds, rgb_color* colors) {
 	for (int i = 0; i < 12; i++) {
-		int r = decToBinary(colors[i].r);
-		int g = decToBinary(colors[i].g);
-		int b = decToBinary(colors[i].b);
-		int a = decToBinary(colors[i].a);
+		uint8_t brightness = colors[i].a; // 0–255
+		uint8_t r = (colors[i].r * brightness) / 255;
+		uint8_t g = (colors[i].g * brightness) / 255;
+		uint8_t b = (colors[i].b * brightness) / 255;
+
 		for (int j = 0; j < 8; j++) {
-			(leds + i) -> r[j] = (r%10==0) ? T0H : T1H;
-			(leds + i) -> g[j] = (g%10==0) ? T0H : T1H;
-			(leds + i) -> b[j] = (b%10==0) ? T0H : T1H;
-			r = r/10;
-			g = g/10;
-			b = b/10;
+			uint8_t mask = 1 << (7 - j); // MSB first
+
+			(leds + i)->g[j] = (g & mask) ? T1H : T0H;
+			(leds + i)->r[j] = (r & mask) ? T1H : T0H;
+			(leds + i)->b[j] = (b & mask) ? T1H : T0H;
+
 			if (i >= 0 && i <= 2) {
-				(leds + 12 + i) ->r[j] = 0;
-				(leds + 12 + i) ->g[j] = 0;
-				(leds + 12 + i) ->b[j] = 0;
+				(leds + 12 + i)->r[j] = 0;
+				(leds + 12 + i)->g[j] = 0;
+				(leds + 12 + i)->b[j] = 0;
 			}
 		}
-
 	}
 }
 
@@ -126,7 +106,4 @@ static int decToBinary(int n) {
 	return result;
 }
 
-static void led_manager() {
-
-}
 

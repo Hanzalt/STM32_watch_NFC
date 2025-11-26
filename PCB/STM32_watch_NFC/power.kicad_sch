@@ -4018,6 +4018,16 @@
 		)
 		(uuid e42c2ba7-ac5e-469b-a9fc-926f80b66b84)
 	)
+	(text "Zkontroluj"
+		(exclude_from_sim no)
+		(at 66.675 90.17 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "2e9769e7-8473-418c-98d3-c7944054a33e")
+	)
 	(text "Voltage cutoff"
 		(exclude_from_sim no)
 		(at 103.505 177.8 0)
@@ -4049,6 +4059,16 @@
 			(justify left bottom)
 		)
 		(uuid "59f0818f-d6b8-4aec-81fa-210838b10eba")
+	)
+	(text "Zkontroluj"
+		(exclude_from_sim no)
+		(at 107.315 74.93 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "69f1c18b-e6f7-408e-9b94-18edaa943941")
 	)
 	(text "Bacha at power gnd nerusi analog gnd.\nspojit zase pomoci via.\nKdyztak se podivej do datasheetu"
 		(exclude_from_sim no)
@@ -4110,6 +4130,26 @@
 			(justify left bottom)
 		)
 		(uuid "9c0f30a1-ca60-4a06-b874-382392c859e7")
+	)
+	(text "0.55A"
+		(exclude_from_sim no)
+		(at 103.505 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "9d40a62b-8f19-4ded-b509-03396a33261c")
+	)
+	(text "1.5A"
+		(exclude_from_sim no)
+		(at 74.295 86.995 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "b145be18-1b6e-4919-a241-0cd22f8c30d8")
 	)
 	(text "2A"
 		(exclude_from_sim no)
@@ -4206,6 +4246,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5369efb9-e21e-4ecd-9c81-3588e7e2c3ce")
+	)
+	(junction
+		(at 38.735 95.25)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "542baf42-c589-4317-82ef-2fa968ef512a")
 	)
 	(junction
 		(at 80.645 97.79)
@@ -4450,6 +4496,16 @@
 			(type default)
 		)
 		(uuid "1a71bb52-73ad-4a96-9860-8f9d8b841ecd")
+	)
+	(wire
+		(pts
+			(xy 38.735 85.725) (xy 38.735 84.455)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ac6a09f-def4-425e-8dcf-8d66775b5007")
 	)
 	(wire
 		(pts
@@ -5113,6 +5169,16 @@
 	)
 	(wire
 		(pts
+			(xy 38.735 95.25) (xy 42.545 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cc02a922-d3dd-4e37-8c6d-b1987644de56")
+	)
+	(wire
+		(pts
 			(xy 111.125 38.1) (xy 111.125 40.005)
 		)
 		(stroke
@@ -5253,6 +5319,16 @@
 	)
 	(wire
 		(pts
+			(xy 38.735 93.345) (xy 38.735 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e4855b73-e20d-410d-a2d7-d9d0de0de747")
+	)
+	(wire
+		(pts
 			(xy 71.755 36.195) (xy 65.405 36.195)
 		)
 		(stroke
@@ -5273,7 +5349,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 95.25) (xy 42.545 95.25)
+			(xy 35.56 95.25) (xy 38.735 95.25)
 		)
 		(stroke
 			(width 0)
@@ -5751,7 +5827,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 153.162 49.53 90)
 			(effects
 				(font
@@ -5770,6 +5846,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 154.94 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2930114"
 			(at 154.94 49.53 0)
 			(effects
 				(font
@@ -6097,7 +6182,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 81.6102 97.79 0)
 			(effects
 				(font
@@ -6116,6 +6201,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 80.645 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C59461"
 			(at 80.645 93.98 0)
 			(effects
 				(font
@@ -6371,7 +6465,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "510k"
+		(property "Value" "511k"
 			(at 100.33 155.5749 0)
 			(effects
 				(font
@@ -6380,7 +6474,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 96.012 154.305 90)
 			(effects
 				(font
@@ -6399,6 +6493,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 97.79 154.305 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2930114"
 			(at 97.79 154.305 0)
 			(effects
 				(font
@@ -7287,6 +7390,84 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 38.735 89.535 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "50f99d63-14ba-4218-89a2-53b71ee161be")
+		(property "Reference" "R26"
+			(at 40.64 86.995 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "511k"
+			(at 40.64 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 36.957 89.535 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 38.735 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 38.735 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2930114"
+			(at 38.735 89.535 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "24964824-144e-4e36-97b8-affce92edc1a")
+		)
+		(pin "1"
+			(uuid "6c701fac-0536-4001-9ce9-b2b5bad69a68")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "R26")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 75.565 110.49 90)
 		(unit 1)
@@ -7515,7 +7696,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
 			(at 107.315 67.31 0)
 			(effects
 				(font
@@ -7534,6 +7715,15 @@
 			)
 		)
 		(property "Description" "Inductor"
+			(at 107.315 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C370012"
 			(at 107.315 67.31 0)
 			(effects
 				(font
@@ -7831,7 +8021,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 148.2852 43.18 0)
 			(effects
 				(font
@@ -7850,6 +8040,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 147.32 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C59461"
 			(at 147.32 39.37 0)
 			(effects
 				(font
@@ -7958,8 +8157,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "PMOS"
-			(at 96.52 145.415 90)
+		(property "Value" "LP2317DT2AG"
+			(at 103.505 145.415 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7967,7 +8166,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_DFN_QFN:Diodes_UDFN2020-6_Type-F"
 			(at 87.63 146.05 0)
 			(effects
 				(font
@@ -7994,26 +8193,8 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Device" "PMOS"
-			(at 107.315 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" "VDMOS"
-			(at 109.22 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=D 2=G 3=S"
-			(at 105.41 151.13 0)
+		(property "LCSC" "C383254"
+			(at 90.17 151.13 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8034,6 +8215,91 @@
 			(project ""
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "Q3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:AO3400A")
+		(at 87.63 165.1 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "846633ff-0179-4183-ad31-2f8c4e887d53")
+		(property "Reference" "Q4"
+			(at 93.98 163.8299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "YJQ10N02A"
+			(at 93.98 166.3699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_DFN_QFN:Diodes_UDFN2020-6_Type-F"
+			(at 92.71 167.005 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
+			(at 92.71 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "30V Vds, 5.7A Id, N-Channel MOSFET, SOT-23"
+			(at 87.63 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSCv" "C919558"
+			(at 87.63 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "00b6d246-8ebe-473b-9696-cab1899aa987")
+		)
+		(pin "3"
+			(uuid "eed4d2bf-8dc6-4368-988a-bbdbf49cd71d")
+		)
+		(pin "1"
+			(uuid "eceaa565-a138-4ea5-9a18-9d68bbff822d")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "Q4")
 					(unit 1)
 				)
 			)
@@ -8275,7 +8541,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
 			(at 69.215 88.9 0)
 			(effects
 				(font
@@ -8295,6 +8561,15 @@
 		)
 		(property "Description" "Inductor"
 			(at 69.215 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C76795"
+			(at 69.215 88.9 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8336,7 +8611,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "510k"
+		(property "Value" "511k"
 			(at 76.2 160.6549 0)
 			(effects
 				(font
@@ -8345,7 +8620,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 72.517 159.385 90)
 			(effects
 				(font
@@ -8372,6 +8647,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2930114"
+			(at 74.295 159.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "9fb0c721-6fd4-44f4-bd2b-d2c473ceea6b")
 		)
@@ -8382,6 +8666,73 @@
 			(project ""
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "R18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 38.735 84.455 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9002969e-655e-499b-badf-58d6979cb37c")
+		(property "Reference" "#PWR0116"
+			(at 38.735 78.105 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 38.735 79.375 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 38.735 84.455 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 38.735 84.455 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 38.735 84.455 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fb3f6465-6de3-4849-a830-cf8c7471b501")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "#PWR0116")
 					(unit 1)
 				)
 			)
@@ -8616,7 +8967,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 153.162 58.42 90)
 			(effects
 				(font
@@ -8635,6 +8986,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 154.94 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2907077"
 			(at 154.94 58.42 0)
 			(effects
 				(font
@@ -9184,7 +9544,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 152.273 62.865 90)
 			(effects
 				(font
@@ -9203,6 +9563,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 150.495 62.865 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25803"
 			(at 150.495 62.865 0)
 			(effects
 				(font
@@ -9806,7 +10175,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 87.3252 105.41 0)
 			(effects
 				(font
@@ -9825,6 +10194,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 86.36 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C59461"
 			(at 86.36 101.6 0)
 			(effects
 				(font
@@ -10341,91 +10719,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:AO3400A")
-		(at 87.63 165.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e5de7ab3-50f8-4dd9-a5b5-c2acfe9578d4")
-		(property "Reference" "Q4"
-			(at 93.98 163.8299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "AO3400A"
-			(at 93.98 166.3699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 92.71 167.005 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
-			(at 92.71 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "30V Vds, 5.7A Id, N-Channel MOSFET, SOT-23"
-			(at 87.63 165.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSCv" "C344010"
-			(at 87.63 165.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "4592af5f-a9a2-462e-bc9a-1e3ddf7abe4b")
-		)
-		(pin "3"
-			(uuid "13421d3f-3590-4a25-9751-e33ee70a40d3")
-		)
-		(pin "1"
-			(uuid "49c90c50-7ebb-4731-a07f-c818fbd6149e")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
-					(reference "Q4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 147.32 31.75 180)
 		(unit 1)
@@ -10576,10 +10869,9 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "e7fecc5d-542d-4736-a665-fac24bf41ce7")
 		(property "Reference" "C26"
-			(at 73.025 20.32 90)
+			(at 76.2 24.13 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10587,7 +10879,7 @@
 			)
 		)
 		(property "Value" "10u"
-			(at 73.025 22.86 90)
+			(at 69.85 29.845 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10817,7 +11109,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3400A"
+		(property "Value" "YJQ10N02A"
 			(at 214.63 56.5149 0)
 			(effects
 				(font
@@ -10826,7 +11118,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+		(property "Footprint" "Package_DFN_QFN:Diodes_UDFN2020-6_Type-F"
 			(at 213.36 57.15 0)
 			(effects
 				(font
@@ -10856,7 +11148,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSCv" "C344010"
+		(property "LCSCv" "C919558"
 			(at 208.28 55.245 0)
 			(effects
 				(font
@@ -10978,7 +11270,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 77.1652 105.41 0)
 			(effects
 				(font
@@ -10997,6 +11289,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 76.2 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C59461"
 			(at 76.2 101.6 0)
 			(effects
 				(font

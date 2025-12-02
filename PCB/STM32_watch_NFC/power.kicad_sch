@@ -1337,6 +1337,132 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:NetTie_2"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "NT"
+				(at 0 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "NetTie_2"
+				(at 0 -1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Net tie, 2 pins"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "net tie short"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Net*Tie*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "NetTie_2_0_1"
+				(polyline
+					(pts
+						(xy -1.27 0) (xy 1.27 0)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "NetTie_2_1_1"
+				(pin passive line
+					(at -2.54 0 0)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:R"
 			(pin_numbers
 				(hide yes)
@@ -4529,16 +4655,6 @@
 	)
 	(wire
 		(pts
-			(xy 39.37 123.19) (xy 43.815 123.19)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "28a326b1-1d6a-4a6f-b132-8857bedea196")
-	)
-	(wire
-		(pts
 			(xy 79.375 70.485) (xy 71.755 70.485)
 		)
 		(stroke
@@ -4586,16 +4702,6 @@
 			(type default)
 		)
 		(uuid "35aff129-5277-4ba5-9009-4e7a118e2af8")
-	)
-	(wire
-		(pts
-			(xy 121.285 82.55) (xy 126.365 82.55)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "393eb7e5-ed70-4a12-b050-73f3ea78fc6d")
 	)
 	(wire
 		(pts
@@ -5639,6 +5745,74 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "#PWR066")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 123.825 82.55 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0bbdf0dd-ddf4-4ba2-884b-7ee08f432eae")
+		(property "Reference" "NT2"
+			(at 123.825 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NetTie_2"
+			(at 123.825 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(at 123.825 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 123.825 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Net tie, 2 pins"
+			(at 123.825 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "aa959c58-5158-46b8-a52b-817b4c588c29")
+		)
+		(pin "1"
+			(uuid "94138332-411e-4fc4-b1e5-a64067eaf493")
+		)
+		(instances
+			(project "STM32_watch_NFC"
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "NT2")
 					(unit 1)
 				)
 			)
@@ -6946,7 +7120,7 @@
 	)
 	(symbol
 		(lib_id "power:GNDA")
-		(at 39.37 123.19 270)
+		(at 38.1 123.825 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6955,7 +7129,7 @@
 		(fields_autoplaced yes)
 		(uuid "3ff78e44-6252-4245-b274-2e24328db77a")
 		(property "Reference" "#PWR0103"
-			(at 33.02 123.19 0)
+			(at 31.75 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6964,7 +7138,7 @@
 			)
 		)
 		(property "Value" "GNDA"
-			(at 35.56 123.1899 90)
+			(at 34.29 123.8249 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6973,7 +7147,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 39.37 123.19 0)
+			(at 38.1 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6982,7 +7156,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 39.37 123.19 0)
+			(at 38.1 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6991,7 +7165,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GNDA\" , analog ground"
-			(at 39.37 123.19 0)
+			(at 38.1 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7928,7 +8102,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 43.815 123.19 90)
+		(at 43.18 123.825 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7937,7 +8111,7 @@
 		(fields_autoplaced yes)
 		(uuid "79e06714-69e2-46b7-8552-629f378778f2")
 		(property "Reference" "#PWR0104"
-			(at 50.165 123.19 0)
+			(at 49.53 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7946,7 +8120,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 48.895 123.19 0)
+			(at 48.26 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7955,7 +8129,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 43.815 123.19 0)
+			(at 43.18 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7964,7 +8138,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 43.815 123.19 0)
+			(at 43.18 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7973,7 +8147,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 43.815 123.19 0)
+			(at 43.18 123.825 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11009,6 +11183,74 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "R17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 40.64 123.825 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ec4ca258-d15b-40c4-817c-a6ed121a4610")
+		(property "Reference" "NT1"
+			(at 40.64 118.745 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NetTie_2"
+			(at 40.64 121.285 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(at 40.64 123.825 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 40.64 123.825 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Net tie, 2 pins"
+			(at 40.64 123.825 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "7fb20463-d6ce-40cf-a6b8-807f26eb9e3f")
+		)
+		(pin "1"
+			(uuid "e197eac6-8794-44f5-aa37-c1fce1cdad1f")
+		)
+		(instances
+			(project ""
+				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
+					(reference "NT1")
 					(unit 1)
 				)
 			)

@@ -1,0 +1,38 @@
+{
+    "layout": {
+        "hspace": "4mm",
+        "vspace": "2mm",
+        "rows": "2"
+    },
+    "tabs": {
+        "vwidth": "2mm",
+        "hwidth": "2mm",
+        "spacing": "15mm"
+    },
+    "cuts": {
+        "type": "mousebites",
+        "drill": "0.6mm",
+        "offset": "-0.2mm",
+        "prolong": "0.6mm"
+    },
+    "framing": {
+        "type": "frame",
+        "hspace": "3mm",
+        "vspace": "3mm",
+        "mintotalheight": "92mm",
+        "mintotalwidth": "70mm",
+        "cuts": "none",
+        "fillet": "2mm"
+    },
+    "fiducials": {
+        "type": "4fid",
+        "hoffset": "6mm",
+        "voffset": "6mm",
+        "opening": "2mm"
+    },
+    "text": {
+        "type": "simple",
+        "voffset": "2.5mm",
+        "text": "JLCJLCJLCJLC"
+    }
+}

@@ -4198,10 +4198,6 @@
 		(uuid "750e05ee-243a-492f-88a3-ebbdcbffb0c1")
 	)
 	(no_connect
-		(at 243.205 156.21)
-		(uuid "79dd0033-1a92-4263-8a01-cf167fbf045f")
-	)
-	(no_connect
 		(at 119.38 167.005)
 		(uuid "f65dab69-6903-4996-bcc5-37975212274a")
 	)
@@ -12030,7 +12026,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C151417"
+		(property "LCSC" "C350557"
 			(at 36.83 37.465 0)
 			(effects
 				(font
@@ -12274,16 +12270,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left top)
-			)
-		)
-		(pin "DONE" input
-			(at 243.205 156.21 180)
-			(uuid "ae39e982-a003-4852-a994-6a0e5bc6d071")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 			)
 		)
 		(pin "BATT" input

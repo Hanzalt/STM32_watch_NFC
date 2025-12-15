@@ -4476,12 +4476,6 @@
 		(uuid "a5f44770-5e9d-4476-ae1a-75ccbc6d1571")
 	)
 	(junction
-		(at 217.805 121.285)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "df39846a-322c-4f7e-86ab-8319adf09795")
-	)
-	(junction
 		(at 210.82 46.355)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4492,6 +4486,10 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f2c85332-c017-48bb-a93d-83d08b03d486")
+	)
+	(no_connect
+		(at 217.805 113.665)
+		(uuid "38655536-18e6-47ad-92fe-d0bb3696393b")
 	)
 	(wire
 		(pts
@@ -4895,16 +4893,6 @@
 	)
 	(wire
 		(pts
-			(xy 227.965 121.285) (xy 230.505 121.285)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6a694d7f-97a7-4b16-9e04-f52288171eed")
-	)
-	(wire
-		(pts
 			(xy 65.405 27.305) (xy 67.31 27.305)
 		)
 		(stroke
@@ -4955,16 +4943,6 @@
 	)
 	(wire
 		(pts
-			(xy 217.805 121.285) (xy 217.805 122.555)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "760ff681-822b-4822-8b38-53a2c5216f61")
-	)
-	(wire
-		(pts
 			(xy 71.755 33.655) (xy 65.405 33.655)
 		)
 		(stroke
@@ -4972,16 +4950,6 @@
 			(type default)
 		)
 		(uuid "7620b25f-8029-4cba-a820-be0843c65a1b")
-	)
-	(wire
-		(pts
-			(xy 217.805 113.665) (xy 217.805 121.285)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "76efb67d-69fa-4a11-8158-f4dd2b6c485f")
 	)
 	(wire
 		(pts
@@ -5445,16 +5413,6 @@
 	)
 	(wire
 		(pts
-			(xy 220.345 121.285) (xy 217.805 121.285)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ee112cb2-7698-4841-ac01-1eaea44b6d0c")
-	)
-	(wire
-		(pts
 			(xy 35.56 95.25) (xy 38.735 95.25)
 		)
 		(stroke
@@ -5605,17 +5563,6 @@
 			(justify right)
 		)
 		(uuid "6c987cca-03f8-4ec5-9357-0a5afa298872")
-	)
-	(hierarchical_label "DONE"
-		(shape input)
-		(at 217.805 122.555 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "c1afc4ce-b91f-43e1-af56-a201ca23efdc")
 	)
 	(symbol
 		(lib_id "power:VBUS")
@@ -5805,83 +5752,12 @@
 				(hide yes)
 			)
 		)
-		(property "MF" "Texas Instruments"
+		(property "LCSC" "C95686"
 			(at 49.53 167.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "Ultra-low power, space-saving 3-V undervoltage detector"
-			(at 49.53 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Package" "SC70-5 Texas Instruments"
-			(at 49.53 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Price" "None"
-			(at 49.53 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/LMS33460MG/NOPB/Texas+Instruments/view-part/?ref=snap"
-			(at 49.53 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MP" "LMS33460MG/NOPB"
-			(at 49.53 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Availability" "In Stock"
-			(at 49.53 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Check_prices" "https://www.snapeda.com/parts/LMS33460MG/NOPB/Texas+Instruments/view-part/?ref=eda"
-			(at 49.53 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
 				(hide yes)
 			)
 		)
@@ -7843,73 +7719,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:VBUS")
-		(at 230.505 121.285 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "71af1ea5-dab4-4074-bf5f-ef17694c3302")
-		(property "Reference" "#PWR088"
-			(at 226.695 121.285 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "VBUS"
-			(at 233.68 121.2849 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 230.505 121.285 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 230.505 121.285 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 230.505 121.285 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "125196cf-0988-4bb8-9a30-9647178cc6a6")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
-					(reference "#PWR088")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:L")
 		(at 107.315 67.31 180)
 		(unit 1)
@@ -8675,82 +8484,6 @@
 			(project "STM32_watch_NFC"
 				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
 					(reference "#PWR072")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 224.155 121.285 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "88434ba6-19c4-4a92-ab60-6cd558c1da43")
-		(property "Reference" "R21"
-			(at 223.139 116.459 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10k"
-			(at 223.139 118.999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 224.155 123.063 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 224.155 121.285 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 224.155 121.285 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25744"
-			(at 224.155 121.285 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "95230022-230c-4271-bb98-332f867c5fb1")
-		)
-		(pin "1"
-			(uuid "f48e3c48-3b74-4312-8436-1b65c4e142b4")
-		)
-		(instances
-			(project "STM32_watch_NFC"
-				(path "/e445874f-c7a3-43dd-b930-6bce1d4fa2ef/d8aa51ff-304a-4e1d-85d0-2fbe17bc154e"
-					(reference "R21")
 					(unit 1)
 				)
 			)

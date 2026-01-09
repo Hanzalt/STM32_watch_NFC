@@ -102,12 +102,12 @@ bool changeTime = false;
 bool changeColor = false;
 bool charging = false;
 bool shouldExitIf = false;
+bool soundON = true;
 uint8_t toggler = false;
 uint8_t RX_Buffer [1];
 uint8_t x = 0;
 uint8_t colorTheme = 0;
 uint16_t lightLevel = 0;
-
 /* USER CODE END 0 */
 
 /**
@@ -123,6 +123,13 @@ int main(void)
 	//rgb_color red = {250, 0, 0, 4};
 	//rgb_color blue = {0, 0, 250, 4};
 	rgb_color green = {0, 250, 0, 4};
+	__HAL_RCC_PWR_CLK_ENABLE();
+
+	/* Clear Wakeup flag */
+	__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+
+	/* Clear EXTI line 0 pending flag */
+	__HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -194,6 +201,9 @@ int main(void)
 		  }
 		  shifted_hours = hours%12;
 		  shifted_minutes = (minutes+2)/5;
+		  if (shifted_minutes==12) {
+			  shifted_minutes=0;
+		  }
 	  }
 	  // RGB LEDS --------------------------------------------------------
 	  if (showingLeds && !charging) {
@@ -217,7 +227,7 @@ int main(void)
 			  if (shifted_hours==shifted_minutes) {
 				  hour_color.a = BH1750_ReadLightLevel();
 				  minut_color.a = BH1750_ReadLightLevel();
-				  for (int i = 0; i < 5; i++) {
+				  for (int i = 0; i < 4; i++) {
 					  if (toggler) {
 						  time_pattern[shifted_hours] = hour_color;
 					  } else {
@@ -228,10 +238,10 @@ int main(void)
 
 					  turn_spec_LEDs(leds, time_pattern);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-					  HAL_Delay(500);
+					  HAL_Delay(300);
 					  clear_LEDs(leds);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-					  HAL_Delay(500);
+					  HAL_Delay(300);
 					  clear_LEDs(leds);
 					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 					  HAL_Delay(50);
@@ -294,15 +304,16 @@ int main(void)
 	  if (charging) {
 		  x++;
 		  uint8_t chargedLEDnum = 0;
-		  if (batteryVal > 2600) batteryVal = 2600;
-		  if (batteryVal < 1800) batteryVal = 1800;
-		  chargedLEDnum = (int)((batteryVal - 1800) * 12 / (2600 - 1800));
+		  if (batteryVal > 2620) batteryVal = 2620;
+		  if (batteryVal < 2000) batteryVal = 2000;
+		  chargedLEDnum = (int)((batteryVal - 2000) * 12 / (2620 - 2000));
 		  green.a = 5;
 		  for (int i = 0; i < chargedLEDnum; i++) {
 			  charging_pattern[i] = green;
 		  }
 		  turn_spec_LEDs(leds, charging_pattern);
 		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+		  HAL_Delay(25);
 		  if (x>=80) {
 			  shouldExitIf = false;
 			  charging = false;
@@ -314,7 +325,6 @@ int main(void)
 			  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
 			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 		  }
-		  HAL_Delay(10);
 	  }
 	  // CHANGING TIME ----------------------------------------------
 	  while(changeTime) {
@@ -334,13 +344,62 @@ int main(void)
 		  }
 		  turn_spec_LEDs(leds, time_pattern);
 		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-		  for(int i = 0; i < 300; i++){
+		  for(int i = 0; i < 250; i++){
 			  Digital_show(hours, minutes,0);
+		  }
+		  if (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
+			  minutes++;
+			  if (minutes >= 60) {
+				minutes = 0;
+			  }
+			  shifted_minutes = (minutes+2)/5;
+			  if (shifted_minutes==12) {
+				  shifted_minutes=0;
+			  }
+			  if (shifted_minutes == 0) {
+				  time_pattern[11] = none;
+			  } else {
+				  time_pattern[shifted_minutes-1] = none;
+			  }
+		  } else if (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
+			  hours++;
+			  if (hours >= 24) {
+				  hours = 0;
+			  }
+			  shifted_hours = hours%12;//(hours<=6) ? hours+6 : hours-6;
+			  if (shifted_hours == 0) {
+				  time_pattern[11] = none;
+			  } else {
+				  time_pattern[shifted_hours-1] = none;
+			  }
 		  }
 		  clear_LEDs(leds);
 		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-		  for(int i = 0; i < 300; i++){
+		  for(int i = 0; i < 250; i++){
 			  Digital_show(hours, minutes,0);
+		  }
+		  if (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
+			  minutes++;
+			  if (minutes >= 60) {
+				minutes = 0;
+			  }
+			  shifted_minutes = (minutes+2)/5;
+			  if (shifted_minutes == 0) {
+				  time_pattern[11] = none;
+			  } else {
+				  time_pattern[shifted_minutes-1] = none;
+			  }
+		  } else if (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
+			  hours++;
+			  if (hours >= 24) {
+				  hours = 0;
+			  }
+			  shifted_hours = hours%12;//(hours<=6) ? hours+6 : hours-6;
+			  if (shifted_hours == 0) {
+				  time_pattern[11] = none;
+			  } else {
+				  time_pattern[shifted_hours-1] = none;
+			  }
 		  }
 
 	  }
@@ -383,9 +442,10 @@ int main(void)
 	  		  turn_spec_LEDs(leds, time_pattern);
 	  		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 	  		  HAL_Delay(10);
-
 	  	  }
 	  if (charging==false) {
+		  HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 0);
+		  HAL_Delay(250);
 		  // Enter Stop Mode
 		  __HAL_RCC_DMA1_CLK_DISABLE();
 		  x=0;
@@ -576,6 +636,8 @@ static void MX_RTC_Init(void)
 
   /* USER CODE END RTC_Init 0 */
 
+  RTC_TimeTypeDef sTime = {0};
+  RTC_DateTypeDef sDate = {0};
 
   /* USER CODE BEGIN RTC_Init 1 */
 
@@ -601,7 +663,7 @@ static void MX_RTC_Init(void)
   /* USER CODE END Check_RTC_BKUP */
 
   /** Initialize RTC and set the Time and Date
-
+  */
   sTime.Hours = 0x0;
   sTime.Minutes = 0x0;
   sTime.Seconds = 0x0;
@@ -620,7 +682,6 @@ static void MX_RTC_Init(void)
   {
     Error_Handler();
   }
-  */
   /* USER CODE BEGIN RTC_Init 2 */
 
   /* USER CODE END RTC_Init 2 */
@@ -765,7 +826,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, Row1_Pin|Row2_Pin|Row3_Pin|Row4_Pin
-                          |Row5_Pin|Row6_Pin, GPIO_PIN_RESET);
+                          |Row5_Pin|Row6_Pin|EN_5V_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
@@ -777,9 +838,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Row1_Pin Row2_Pin Row3_Pin Row4_Pin
-                           Row5_Pin Row6_Pin */
+                           Row5_Pin Row6_Pin EN_5V_Pin */
   GPIO_InitStruct.Pin = Row1_Pin|Row2_Pin|Row3_Pin|Row4_Pin
-                          |Row5_Pin|Row6_Pin;
+                          |Row5_Pin|Row6_Pin|EN_5V_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -790,12 +851,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(CHRG_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : DONE_Pin */
-  GPIO_InitStruct.Pin = DONE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(DONE_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Buzzer_Pin */
   GPIO_InitStruct.Pin = Buzzer_Pin;
@@ -819,10 +874,16 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	//SystemClock_Config();
 	//HAL_ResumeTick();
-	SystemClock_Config();
-	HAL_ResumeTick();
-	//HAL_PWR_DisableSleepOnExit();
-	__HAL_RCC_DMA1_CLK_ENABLE();
+	if (!changeTime || !changeColor) {
+		SystemClock_Config();
+		HAL_ResumeTick();
+		RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+		PWR->CR |= PWR_CR_CWUF;
+		EXTI->PR = EXTI_PR_PR0;
+		//HAL_PWR_DisableSleepOnExit();
+		__HAL_RCC_DMA1_CLK_ENABLE();
+	}
+
 //	HAL_ADC_Start(&hadc);
 //	HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
 //	batteryVal = HAL_ADC_GetValue(&hadc);
@@ -836,18 +897,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	HAL_Delay(10);
 	if (GPIO_Pin == Button_LB_Pin) {
 		showingDigital = true;
-		if (changeTime) {
-			hours++;
-			if (hours >= 24) {
-				hours = 0;
-			}
-			shifted_hours = hours%12;//(hours<=6) ? hours+6 : hours-6;
-			if (shifted_hours == 0) {
-				time_pattern[11] = none;
-			} else {
-				time_pattern[shifted_hours-1] = none;
-			}
-		} else if (changeColor) {
+		if (changeColor) {
 			beep();
 			colorTheme-=1;
 			colorTheme=colorTheme%4;
@@ -855,18 +905,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     }
     if (GPIO_Pin == Button_LT_Pin) {
     	showingDigital = true;
-		if (changeTime) {
-			minutes+=1;
-			if (minutes >= 60) {
-				minutes = 0;
-			}
-			shifted_minutes = (minutes+2)/5;
-			if (shifted_minutes == 0) {
-				time_pattern[11] = none;
-			} else {
-				time_pattern[shifted_minutes-1] = none;
-			}
-		} else if (changeColor) {
+		if (changeColor) {
 			beep();
 			colorTheme+=1;
 			colorTheme=colorTheme%4;
@@ -1093,11 +1132,13 @@ void delay_us (uint16_t us) {
 	while (__HAL_TIM_GET_COUNTER(&htim21) < us);
 }
 void beep(void) {
-	for(unsigned int i = 0; i < 10000; i++) {
-	  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 1);
-	  delay_us(185);
-	  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 0);
-	  delay_us(185);
+	if (soundON) {
+		for(unsigned int i = 0; i < 10000; i++) {
+		  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 1);
+		  delay_us(189);//185);
+		  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 0);
+		  delay_us(189);//185);
+		}
 	}
 }
 /* USER CODE END 4 */

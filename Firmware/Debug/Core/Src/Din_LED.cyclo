@@ -1,3 +1,3 @@
 ../Core/Src/Din_LED.c:10:6:clear_LEDs	4
-../Core/Src/Din_LED.c:35:6:turn_spec_LEDs	7
-../Core/Src/Din_LED.c:58:6:turn_LEDs	7
+../Core/Src/Din_LED.c:36:6:turn_spec_LEDs	7
+../Core/Src/Din_LED.c:61:6:turn_LEDs	7

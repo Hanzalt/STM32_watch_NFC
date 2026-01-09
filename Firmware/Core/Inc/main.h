@@ -82,8 +82,8 @@ void Error_Handler(void);
 #define CHRG_Pin GPIO_PIN_8
 #define CHRG_GPIO_Port GPIOA
 #define CHRG_EXTI_IRQn EXTI4_15_IRQn
-#define DONE_Pin GPIO_PIN_9
-#define DONE_GPIO_Port GPIOA
+#define EN_5V_Pin GPIO_PIN_9
+#define EN_5V_GPIO_Port GPIOA
 #define Button_R_Pin GPIO_PIN_10
 #define Button_R_GPIO_Port GPIOA
 #define Button_R_EXTI_IRQn EXTI4_15_IRQn

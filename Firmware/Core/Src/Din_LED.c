@@ -8,7 +8,8 @@
 #include "Din_LED.h"
 
 void clear_LEDs(LEDs* leds) {
-
+	//HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 1);
+	//HAL_Delay(250);
 	for (int i = 0; i < 12; i++) {
 
 		for (int j = 0; j < 8; j++) {
@@ -33,6 +34,8 @@ void clear_LEDs(LEDs* leds) {
 
 
 void turn_spec_LEDs(LEDs* leds, rgb_color* colors) {
+	HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 1);
+	HAL_Delay(1);
 	for (int i = 0; i < 12; i++) {
 		uint8_t brightness = colors[i].a; // 0–255
 		uint8_t r = (colors[i].r * brightness) / 255;
@@ -56,7 +59,8 @@ void turn_spec_LEDs(LEDs* leds, rgb_color* colors) {
 }
 
 void turn_LEDs(LEDs* leds, uint16_t num_LEDs) {
-
+	HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 1);
+	HAL_Delay(1);
 	for (int i = 0; i < num_LEDs; i++) {
 		for (int j = 0; j < 8; j++) {
 			if (j>=2) {

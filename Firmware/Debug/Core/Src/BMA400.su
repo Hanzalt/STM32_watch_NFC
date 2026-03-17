@@ -1,0 +1,9 @@
+../Core/Src/BMA400.c:70:26:bma400_read	32	static
+../Core/Src/BMA400.c:82:26:bma400_write_u8	40	static
+../Core/Src/BMA400.c:87:26:bma400_update_bits	40	static
+../Core/Src/BMA400.c:106:6:BMA400_Orient_Init	0	static
+../Core/Src/BMA400.c:113:19:BMA400_Orient_EnableInt1	24	static
+../Core/Src/BMA400.c:202:19:BMA400_Orient_ReadIntStatus	16	static
+../Core/Src/BMA400.c:214:19:BMA400_Orient_RearmReference	24	static
+../Core/Src/BMA400.c:234:19:BMA400_ReadXYZ_Raw12	32	static
+../Core/Src/BMA400.c:248:6:BMA400_IsFaceToMe	16	static

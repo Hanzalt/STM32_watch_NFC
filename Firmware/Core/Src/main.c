@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Din_LED.h"
+#include "BMA400.h"
 #include "stdbool.h"
 #include <math.h>
 /* USER CODE END Includes */
@@ -63,10 +64,12 @@ LEDs leds [MAX_LED + 3];
 //rgb_color led_pattern[MAX_LED];
 rgb_color time_pattern[MAX_LED];
 rgb_color charging_pattern[MAX_LED];
-//rgb_color all_pattern[MAX_LED];
+rgb_color all_pattern[MAX_LED];
 //rgb_color null_pattern[MAX_LED];
 rgb_color none = {0, 0, 0, 0};
-//rgb_color all = {255, 255, 255, 0};
+rgb_color all = {255, 255, 255, 190};
+
+BMA400_Orient_t bma;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -82,8 +85,10 @@ static void MX_TIM21_Init(void);
 void Charlieplex_Reset_All(void);
 void Charlieplex_Light_LED(uint8_t highIndex, uint8_t lowIndex);
 void Digital_show(uint8_t hours, uint8_t minutes, bool date);
+void Digital_OnOff_show(uint8_t value);
 void Init_BH1750FVI(void);
 uint16_t BH1750_ReadLightLevel(void);
+void BMA400_App_Init(void);
 void delay_us (uint16_t us);
 void beep(void);
 /* USER CODE END PFP */
@@ -92,7 +97,7 @@ void beep(void);
 /* USER CODE BEGIN 0 */
 uint8_t minutes = 15;
 uint8_t hours = 6;
-uint8_t am = 0;
+uint8_t wrist_move = 0;
 uint8_t shifted_hours = 6;
 uint16_t batteryVal = 0;
 uint8_t shifted_minutes = 3;
@@ -106,6 +111,9 @@ bool soundON = true;
 uint8_t toggler = false;
 uint8_t RX_Buffer [1];
 uint8_t x = 0;
+uint8_t numPresses1 = 0;
+uint8_t numPresses2 = 0;
+uint8_t wristWake = 1;
 uint8_t colorTheme = 0;
 uint16_t lightLevel = 0;
 /* USER CODE END 0 */
@@ -122,7 +130,9 @@ int main(void)
 	rgb_color minut_color = {20, 90, 255, 255};
 	//rgb_color red = {250, 0, 0, 4};
 	//rgb_color blue = {0, 0, 250, 4};
-	rgb_color green = {0, 250, 0, 4};
+	for (int i = 0; i < MAX_LED; i++) {
+		all_pattern[i] = all;
+	}
 	__HAL_RCC_PWR_CLK_ENABLE();
 
 	/* Clear Wakeup flag */
@@ -161,6 +171,7 @@ int main(void)
   //HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
   Charlieplex_Reset_All();
   Init_BH1750FVI();
+  BMA400_App_Init();
   time_pattern[shifted_hours] = hour_color;
   time_pattern[shifted_minutes] = minut_color;
 
@@ -172,8 +183,222 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1) {
+	/* HAL_SuspendTick();
+	HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+	HAL_ResumeTick();
+	*/
+    HAL_ADC_Start(&hadc);
+
+    HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
+
+    batteryVal = HAL_ADC_GetValue(&hadc);
+
+    HAL_ADC_Stop(&hadc);
+
+    if (batteryVal<=2100) {
+    	showingLeds = false;
+    	showingDigital = false;
+    	charging = false;
+    	changeTime = false;
+    	changeColor = false;
+    	wristWake = 0;
+    	// Clear any pending EXTI0 before enabling
+    	__HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+    	HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0);
+    }
+
+	// CALCULATING TIME FROM MINUTE STACK --------------------
+	if (showingLeds || showingDigital) {
+	  RTC_TimeTypeDef time;
+	  RTC_DateTypeDef date;
+	  HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
+	  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
+	  minutes = time.Minutes;
+	  hours = time.Hours;
+
+	  for (int i = 0; i < 12; i++) {
+		  time_pattern[i] = none;
+	  }
+	  // Hodina nesedi u 58,59
+	  if (minutes>=58) {
+		  hours+=1;
+	  }
+	  shifted_hours = hours%12;
+	  if (minutes>=58) {
+		  hours-=1;
+	  }
+	  shifted_minutes = (minutes+2)/5;
+	  if (shifted_minutes==12) {
+		  shifted_minutes=0;
+	  }
+	}
+	// RGB LEDS --------------------------------------------------------
+	if (showingLeds && !charging) {
+	  if (wrist_move==0) {
+		  beep();
+	  }
+	  shouldExitIf = false;
+	  while (HAL_GPIO_ReadPin(Button_R_GPIO_Port, Button_R_Pin)) {
+		  x++;
+		  if (x >= 100) {
+			  changeTime = true;
+			  shouldExitIf = true;
+			  HAL_RTCEx_DeactivateWakeUpTimer(&hrtc);
+			  __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(&hrtc, RTC_FLAG_WUTF);
+			  break;
+		  }
+		  HAL_Delay(10);
+	  }
+	  HAL_Delay(250);
+	  if (numPresses1>=2) {
+		  soundON=!soundON;
+		  beep();
+		  for(int i = 0; i < 1000; i++){
+			  Digital_OnOff_show(soundON);
+		  }
+		  Charlieplex_Reset_All();
+
+		  showingLeds = false;
+	  }
+	  if (!shouldExitIf && showingLeds) {
+		  if (shifted_hours==shifted_minutes) {
+			  hour_color.a = BH1750_ReadLightLevel();
+			  minut_color.a = BH1750_ReadLightLevel();
+			  for (int i = 0; i < 4; i++) {
+				  if (toggler) {
+					  time_pattern[shifted_hours] = hour_color;
+				  } else {
+					  time_pattern[shifted_minutes] = minut_color;
+				  }
+				  HAL_Delay(100);
+				  toggler = !toggler;
+
+				  turn_spec_LEDs(leds, time_pattern);
+				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+				  HAL_Delay(300);
+				  clear_LEDs(leds);
+				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+				  HAL_Delay(300);
+				  clear_LEDs(leds);
+				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+				  HAL_Delay(50);
+			  }
+		  } else {
+			  hour_color.a = BH1750_ReadLightLevel();
+			  minut_color.a = BH1750_ReadLightLevel();
+			  time_pattern[shifted_hours] = hour_color;
+			  time_pattern[shifted_minutes] = minut_color;
+
+			  turn_spec_LEDs(leds, time_pattern);
+			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+			  HAL_Delay(2200);
+
+			  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
+			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+			  HAL_Delay(50);
+		  }
+
+		  showingLeds = false;
+	  }
+	}
+
+	// WRIST DIGITAL -------------------------------------
+	if (showingDigital && wrist_move==1) {
+	  for(int i = 0; i < 1000; i++){
+		  Digital_show(hours, minutes,0);
+	  }
+	  showingDigital = false;
+	  wrist_move = 0;
+	}
+	// DIGITAL LEDS ------------------------------------------------
+	if (showingDigital && !charging) {
+	  shouldExitIf = false;
+	  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
+	  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  HAL_Delay(20);
+	  while (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
+		  x++;
+		  if (x >= 100) {
+			  charging = true;
+			  shouldExitIf = true;
+			  x=0;
+			  break;
+		  }
+		  HAL_Delay(10);
+	  }
+	  while (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
+		  x++;
+		  if (x >= 100) {
+			  changeColor = true;
+			  shouldExitIf = true;
+			  x=0;
+			  break;
+		  }
+		  HAL_Delay(10);
+	  }
+	  numPresses1=0;
+	  HAL_Delay(250);
+	  if (wrist_move==0) {
+		  beep();
+	  }
+	  if (numPresses1>=1) {
+		  HAL_Delay(100);
+		  numPresses1=0;
+		  numPresses2=0;
+		  while(numPresses1==0 && numPresses2==0) {
+			  turn_spec_LEDs(leds, all_pattern);
+			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+			  HAL_Delay(10);
+		  }
+		  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+		  HAL_Delay(150);
+
+		  showingDigital=false;
+
+	  } else if (numPresses2>=2) {
+		  wristWake+=1;
+		  wristWake=wristWake%3;
+		  beep();
+		  if (wristWake==1) {
+			  GPIO_InitTypeDef GPIO_InitStruct = {0};
+			  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+			  // Clear any pending EXTI0 before enabling
+			  __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+
+			  GPIO_InitStruct.Pin  = GPIO_PIN_0;
+			  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+			  GPIO_InitStruct.Pull = GPIO_NOPULL;
+
+			  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+		  } else if (wristWake==0) {
+
+			  // Clear any pending EXTI0 before enabling
+			  __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
+			  HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0);
+		  }
+		  for(int i = 0; i < 1000; i++){
+			  Digital_OnOff_show(wristWake);
+		  }
+		  Charlieplex_Reset_All();
+
+		  showingDigital = false;
+	  }
+	  if (!shouldExitIf && showingDigital) {
+		  for(int i = 0; i < 1200; i++){
+			  Digital_show(hours, minutes,0);
+		  }
+		  Charlieplex_Reset_All();
+	  }
+	  showingDigital = false;
+	}
+	// CHARGING WATCH ----------------------------------------------
+	uint8_t prev_chargedLEDnum = 0xFF;
+	while (charging) {
+	  x++;
+	  uint8_t chargedLEDnum = 0;
 	  HAL_ADC_Start(&hadc);
 
 	  HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
@@ -181,281 +406,186 @@ int main(void)
 	  batteryVal = HAL_ADC_GetValue(&hadc);
 
 	  HAL_ADC_Stop(&hadc);
-
-	 /* HAL_SuspendTick();
-	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
-	  HAL_ResumeTick();
-  */
-
-	  // CALCULATING TIME FROM MINUTE STACK --------------------
-	  if (showingLeds || showingDigital) {
-		  RTC_TimeTypeDef time;
-		  RTC_DateTypeDef date;
-		  HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
-		  HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
-		  minutes = time.Minutes;
-		  hours = time.Hours;
-
-		  for (int i = 0; i < 12; i++) {
-			  time_pattern[i] = none;
+	  if (batteryVal > 2600) batteryVal = 2600;
+	  if (batteryVal < 2100) batteryVal = 2100;
+	  chargedLEDnum = (int)((batteryVal - 2100) * 12 / (2620 - 2100));
+	  if (chargedLEDnum != prev_chargedLEDnum) {
+		  prev_chargedLEDnum = chargedLEDnum;
+		  rgb_color bat_color;
+		  if (chargedLEDnum >= 10) {
+			  bat_color = (rgb_color){0, 250, 0, 5};       // green
+		  } else if (chargedLEDnum >= 7) {
+			  bat_color = (rgb_color){250, 200, 0, 5};     // yellow
+		  } else if (chargedLEDnum >= 4) {
+			  bat_color = (rgb_color){255, 100, 0, 5};     // orange
+		  } else {
+			  bat_color = (rgb_color){255, 0, 0, 5};       // red
 		  }
-		  shifted_hours = hours%12;
+		  for (int i = 0; i < MAX_LED; i++) {
+			  charging_pattern[i] = (i < chargedLEDnum) ? bat_color : none;
+		  }
+		  turn_spec_LEDs(leds, charging_pattern);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  }
+	  HAL_Delay(25);
+	  if (x>=100) {
+		  shouldExitIf = false;
+		  charging = false;
+		  showingDigital = false;
+		  showingLeds = false;
+		  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+		  HAL_Delay(10);
+		  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
+		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  }
+	}
+	// CHANGING TIME ----------------------------------------------
+	while(changeTime) {
+	  //TIM2 ->CCR1 = 60;
+	  //beep();
+	/*
+	  //TEST FOR POSITION X,Y,Z
+	  int16_t x,y,z;
+	  if (BMA400_ReadXYZ_Raw12(&bma, &x, &y, &z) == HAL_OK) {
+
+	  }
+	*/
+	  hour_color.a = BH1750_ReadLightLevel();
+	  minut_color.a = BH1750_ReadLightLevel();
+	  time_pattern[shifted_hours] = hour_color;
+	  time_pattern[shifted_minutes] = minut_color;
+	  if (shifted_hours==shifted_minutes) {
+		  if (toggler) {
+			  time_pattern[shifted_hours] = hour_color;
+		  } else {
+			  time_pattern[shifted_minutes] = minut_color;
+		  }
+		  toggler = !toggler;
+	  }
+	  turn_spec_LEDs(leds, time_pattern);
+	  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  for(int i = 0; i < 250; i++){
+		  Digital_show(hours, minutes,0);
+	  }
+	  if (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
+		  minutes++;
+		  if (minutes >= 60) {
+			minutes = 0;
+		  }
 		  shifted_minutes = (minutes+2)/5;
 		  if (shifted_minutes==12) {
 			  shifted_minutes=0;
 		  }
-	  }
-	  // RGB LEDS --------------------------------------------------------
-	  if (showingLeds && !charging) {
-		  //TIM2 ->CCR1 = 60;
-		  beep();
-		  x = 0;
-		  shouldExitIf = false;
-		  //TIM2->CCR2=55;
-		  while (HAL_GPIO_ReadPin(Button_R_GPIO_Port, Button_R_Pin)) {
-			  x++;
-			  if (x >= 100) {
-				  changeTime = true;
-				  shouldExitIf = true;
-				  HAL_RTCEx_DeactivateWakeUpTimer(&hrtc);
-				  __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(&hrtc, RTC_FLAG_WUTF);
-				  break;
-			  }
-			  HAL_Delay(10);
+		  if (shifted_minutes == 0) {
+			  time_pattern[11] = none;
+		  } else {
+			  time_pattern[shifted_minutes-1] = none;
 		  }
-		  if (!shouldExitIf) {
-			  if (shifted_hours==shifted_minutes) {
-				  hour_color.a = BH1750_ReadLightLevel();
-				  minut_color.a = BH1750_ReadLightLevel();
-				  for (int i = 0; i < 4; i++) {
-					  if (toggler) {
-						  time_pattern[shifted_hours] = hour_color;
-					  } else {
-						  time_pattern[shifted_minutes] = minut_color;
-					  }
-					  HAL_Delay(100);
-					  toggler = !toggler;
-
-					  turn_spec_LEDs(leds, time_pattern);
-					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-					  HAL_Delay(300);
-					  clear_LEDs(leds);
-					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-					  HAL_Delay(300);
-					  clear_LEDs(leds);
-					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-					  HAL_Delay(50);
-				  }
-			  } else {
-				  hour_color.a = BH1750_ReadLightLevel();
-				  minut_color.a = BH1750_ReadLightLevel();
-				  time_pattern[shifted_hours] = hour_color;
-				  time_pattern[shifted_minutes] = minut_color;
-
-				  turn_spec_LEDs(leds, time_pattern);
-				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-				  HAL_Delay(2500);
-
-				  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
-				  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-				  HAL_Delay(50);
-			  }
-
-			  showingLeds = false;
+	  } else if (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
+		  hours++;
+		  if (hours >= 24) {
+			  hours = 0;
+		  }
+		  shifted_hours = hours%12;//(hours<=6) ? hours+6 : hours-6;
+		  if (shifted_hours == 0) {
+			  time_pattern[11] = none;
+		  } else {
+			  time_pattern[shifted_hours-1] = none;
 		  }
 	  }
-	  // DIGITAL LEDS ------------------------------------------------
-	  if (showingDigital && !charging) {
-		  x=0;
-		  shouldExitIf = false;
-		  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-		  HAL_Delay(50);
-		  while (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
-			  x++;
-			  if (x >= 100) {
-				  charging = true;
-				  shouldExitIf = true;
-				  x=0;
-				  break;
-			  }
-			  HAL_Delay(10);
-		  }
-		  while (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
-			  x++;
-			  if (x >= 100) {
-				  changeColor = true;
-				  shouldExitIf = true;
-				  x=0;
-				  break;
-			  }
-			  HAL_Delay(10);
-		  }
-		  beep();
-		  if (!shouldExitIf) {
-			  for(int i = 0; i < 1500; i++){
-				  Digital_show(hours, minutes,0);
-			  }
-			  Charlieplex_Reset_All();
-		  }
-		  showingDigital = false;
+	  clear_LEDs(leds);
+	  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  for(int i = 0; i < 250; i++){
+		  Digital_show(hours, minutes,0);
 	  }
-	  // CHARGING WATCH ----------------------------------------------
-	  if (charging) {
-		  x++;
-		  uint8_t chargedLEDnum = 0;
-		  if (batteryVal > 2620) batteryVal = 2620;
-		  if (batteryVal < 2000) batteryVal = 2000;
-		  chargedLEDnum = (int)((batteryVal - 2000) * 12 / (2620 - 2000));
-		  green.a = 5;
-		  for (int i = 0; i < chargedLEDnum; i++) {
-			  charging_pattern[i] = green;
+	  if (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
+		  minutes++;
+		  if (minutes >= 60) {
+			minutes = 0;
 		  }
-		  turn_spec_LEDs(leds, charging_pattern);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-		  HAL_Delay(25);
-		  if (x>=80) {
-			  shouldExitIf = false;
-			  charging = false;
-			  showingDigital = false;
-			  showingLeds = false;
-			  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
-			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-			  HAL_Delay(10);
-			  clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
-			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+		  shifted_minutes = (minutes+2)/5;
+		  if (shifted_minutes == 0) {
+			  time_pattern[11] = none;
+		  } else {
+			  time_pattern[shifted_minutes-1] = none;
+		  }
+	  } else if (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
+		  hours++;
+		  if (hours >= 24) {
+			  hours = 0;
+		  }
+		  shifted_hours = hours%12;//(hours<=6) ? hours+6 : hours-6;
+		  if (shifted_hours == 0) {
+			  time_pattern[11] = none;
+		  } else {
+			  time_pattern[shifted_hours-1] = none;
 		  }
 	  }
-	  // CHANGING TIME ----------------------------------------------
-	  while(changeTime) {
-		  //TIM2 ->CCR1 = 60;
-		  //beep();
-		  hour_color.a = BH1750_ReadLightLevel();
-		  minut_color.a = BH1750_ReadLightLevel();
-		  time_pattern[shifted_hours] = hour_color;
-		  time_pattern[shifted_minutes] = minut_color;
-		  if (shifted_hours==shifted_minutes) {
-			  if (toggler) {
-				  time_pattern[shifted_hours] = hour_color;
-			  } else {
-				  time_pattern[shifted_minutes] = minut_color;
-			  }
-			  toggler = !toggler;
-		  }
-		  turn_spec_LEDs(leds, time_pattern);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-		  for(int i = 0; i < 250; i++){
-			  Digital_show(hours, minutes,0);
-		  }
-		  if (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
-			  minutes++;
-			  if (minutes >= 60) {
-				minutes = 0;
-			  }
-			  shifted_minutes = (minutes+2)/5;
-			  if (shifted_minutes==12) {
-				  shifted_minutes=0;
-			  }
-			  if (shifted_minutes == 0) {
-				  time_pattern[11] = none;
-			  } else {
-				  time_pattern[shifted_minutes-1] = none;
-			  }
-		  } else if (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
-			  hours++;
-			  if (hours >= 24) {
-				  hours = 0;
-			  }
-			  shifted_hours = hours%12;//(hours<=6) ? hours+6 : hours-6;
-			  if (shifted_hours == 0) {
-				  time_pattern[11] = none;
-			  } else {
-				  time_pattern[shifted_hours-1] = none;
-			  }
-		  }
-		  clear_LEDs(leds);
-		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-		  for(int i = 0; i < 250; i++){
-			  Digital_show(hours, minutes,0);
-		  }
-		  if (HAL_GPIO_ReadPin(Button_LT_GPIO_Port, Button_LT_Pin)) {
-			  minutes++;
-			  if (minutes >= 60) {
-				minutes = 0;
-			  }
-			  shifted_minutes = (minutes+2)/5;
-			  if (shifted_minutes == 0) {
-				  time_pattern[11] = none;
-			  } else {
-				  time_pattern[shifted_minutes-1] = none;
-			  }
-		  } else if (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin)) {
-			  hours++;
-			  if (hours >= 24) {
-				  hours = 0;
-			  }
-			  shifted_hours = hours%12;//(hours<=6) ? hours+6 : hours-6;
-			  if (shifted_hours == 0) {
-				  time_pattern[11] = none;
-			  } else {
-				  time_pattern[shifted_hours-1] = none;
-			  }
-		  }
 
-	  }
+	}
 	  // CHANGING COLOR ----------------------------------------------
-	  while(changeColor) {
-	  		  //TIM2 ->CCR1 = 60;
-	  		  //beep();
-	  		  shouldExitIf = false;
-	  		  if (colorTheme == 0) {
-				  hour_color = (rgb_color){80, 255, 70, 255};
-				  minut_color = (rgb_color){20, 90, 255, 255};
-	  		  } else if (colorTheme == 1) {
-				  hour_color = (rgb_color){255, 10, 0, 255};
-				  minut_color = (rgb_color){255, 100, 0, 255};
-	  		  } else if (colorTheme == 2) {
-				  hour_color = (rgb_color){144, 10, 255, 255};
-				  minut_color = (rgb_color){255, 15, 50, 255};
-	  		  } else {
-				  hour_color = (rgb_color){255, 10, 0, 255};
-				  minut_color = (rgb_color){20, 90, 255, 255};
-	  		  }
-	  		  hour_color.a = BH1750_ReadLightLevel();
-	  		  minut_color.a = BH1750_ReadLightLevel();
-	  		  time_pattern[shifted_hours] = hour_color;
-	  		  time_pattern[shifted_minutes] = minut_color;
-	  		  if (shifted_hours==shifted_minutes) {
-	  			  if (toggler) {
-	  				  time_pattern[shifted_hours] = hour_color;
-	  				  turn_spec_LEDs(leds, time_pattern);
-					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-					  HAL_Delay(250);
-	  			  } else {
-	  				  time_pattern[shifted_minutes] = minut_color;
-	  				  turn_spec_LEDs(leds, time_pattern);
-					  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-					  HAL_Delay(250);
-	  			  }
-	  			  toggler = !toggler;
-	  		  }
-	  		  turn_spec_LEDs(leds, time_pattern);
-	  		  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
-	  		  HAL_Delay(10);
-	  	  }
-	  if (charging==false) {
-		  HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 0);
-		  HAL_Delay(250);
-		  // Enter Stop Mode
-		  __HAL_RCC_DMA1_CLK_DISABLE();
-		  x=0;
-	  	  TIM2 ->CCR1 = 0;
-	  	  HAL_SuspendTick();
-
-	  	  //HAL_PWR_EnableSleepOnExit();
-
-	  	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+	while(changeColor) {
+	  //TIM2 ->CCR1 = 60;
+	  //beep();
+	  shouldExitIf = false;
+	  if (colorTheme == 0) {
+		  hour_color = (rgb_color){80, 255, 70, 250}; // green/cyan
+		  minut_color = (rgb_color){20, 50, 255, 250}; // blue
+	  } else if (colorTheme == 1) {
+		  hour_color = (rgb_color){255, 10, 0, 250}; // red
+		  minut_color = (rgb_color){250, 200, 0, 250}; // yellow
+	  } else if (colorTheme == 2) {
+		  hour_color = (rgb_color){255, 15, 50, 250}; // pink
+		  minut_color = (rgb_color){144, 10, 255, 250}; // purple
+	  } else if (colorTheme == 3) {
+		  hour_color = (rgb_color){255, 10, 0, 250}; // red
+		  minut_color = (rgb_color){20, 50, 255, 250}; // blue
+	  } else if (colorTheme == 4) {
+		  hour_color = (rgb_color){250, 200, 0, 250}; // yellow
+		  minut_color = (rgb_color){20, 50, 255, 250}; // blue
+	  } else {
+		  hour_color = (rgb_color){144, 10, 255, 250}; // purple
+		  minut_color = (rgb_color){0, 204, 0, 250}; // green
 	  }
+	  hour_color.a = BH1750_ReadLightLevel();
+	  minut_color.a = BH1750_ReadLightLevel();
+	  time_pattern[shifted_hours] = hour_color;
+	  time_pattern[shifted_minutes] = minut_color;
+	  if (shifted_hours==shifted_minutes) {
+		  if (toggler) {
+			  time_pattern[shifted_hours] = hour_color;
+			  turn_spec_LEDs(leds, time_pattern);
+			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+			  HAL_Delay(250);
+		  } else {
+			  time_pattern[shifted_minutes] = minut_color;
+			  turn_spec_LEDs(leds, time_pattern);
+			  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+			  HAL_Delay(250);
+		  }
+		  toggler = !toggler;
+	  }
+	  turn_spec_LEDs(leds, time_pattern);
+	  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+	  HAL_Delay(10);
+	}
+
+	// TURN OFF - POWER SAVE MODE
+	HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 0);
+	HAL_Delay(50);
+	// Enter Stop Mode
+	__HAL_RCC_DMA1_CLK_DISABLE();
+	x=0;
+	wrist_move=0;
+	numPresses1=0;
+	numPresses2=0;
+	TIM2 ->CCR1 = 0;
+	HAL_SuspendTick();
+
+	//HAL_PWR_EnableSleepOnExit();
+
+	HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -831,8 +961,8 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : Button_LT_Pin Button_LB_Pin Button_R_Pin */
-  GPIO_InitStruct.Pin = Button_LT_Pin|Button_LB_Pin|Button_R_Pin;
+  /*Configure GPIO pins : Button_LB_Pin Button_R_Pin */
+  GPIO_InitStruct.Pin = Button_LB_Pin|Button_R_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -846,11 +976,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : CHRG_Pin */
-  GPIO_InitStruct.Pin = CHRG_Pin;
+  /*Configure GPIO pin : Accel_Pin */
+  GPIO_InitStruct.Pin = Accel_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Accel_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Button_LT_Pin */
+  GPIO_InitStruct.Pin = Button_LT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(CHRG_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(Button_LT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Buzzer_Pin */
   GPIO_InitStruct.Pin = Buzzer_Pin;
@@ -874,12 +1010,12 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	//SystemClock_Config();
 	//HAL_ResumeTick();
-	if (!changeTime || !changeColor) {
+	if (!changeTime && !changeColor) {
 		SystemClock_Config();
 		HAL_ResumeTick();
-		RCC->APB1ENR |= RCC_APB1ENR_PWREN;
-		PWR->CR |= PWR_CR_CWUF;
-		EXTI->PR = EXTI_PR_PR0;
+		//RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+		//PWR->CR |= PWR_CR_CWUF;
+		//EXTI->PR = EXTI_PR_PR0;
 		//HAL_PWR_DisableSleepOnExit();
 		__HAL_RCC_DMA1_CLK_ENABLE();
 	}
@@ -896,25 +1032,48 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	HAL_ADC_Stop(&hadc);
 //	HAL_Delay(10);
 	if (GPIO_Pin == Button_LB_Pin) {
+		numPresses2++;
 		showingDigital = true;
-		if (changeColor) {
-			beep();
-			colorTheme-=1;
-			colorTheme=colorTheme%4;
-		}
-    }
-    if (GPIO_Pin == Button_LT_Pin) {
-    	showingDigital = true;
+
 		if (changeColor) {
 			beep();
 			colorTheme+=1;
-			colorTheme=colorTheme%4;
+			colorTheme=colorTheme%6;
+		}
+    }
+
+    if (GPIO_Pin == Button_LT_Pin) {
+    	numPresses1++;
+    	showingDigital = true;
+	}
+
+	if (GPIO_Pin == Accel_Pin) {
+		bool orient = false;
+
+		if (BMA400_Orient_ReadIntStatus(&bma, &orient) == HAL_OK && orient) {
+
+			int16_t x,y,z;
+			if (BMA400_ReadXYZ_Raw12(&bma, &x, &y, &z) == HAL_OK) {
+
+				// Choose which axis/sign corresponds to "screen toward me"
+				// Example: Z positive. If your board shows negative, use _Z_NEG.
+				if (BMA400_IsFaceToMe(x, y, z, BMA400_FACE_AXIS_Z_NEG, 800)) {
+					if (wristWake==1) {
+						showingDigital = true;
+					} else {
+						showingLeds = true;
+					}
+					wrist_move = 1;
+				}
+			}
+			(void)BMA400_Orient_RearmReference(&bma, true);
 		}
 	}
+
     if (GPIO_Pin == Button_R_Pin) {
-    	//if (batteryVal>=2250) {
-    		showingLeds = true;
-    	//}
+    	numPresses1++;
+		showingLeds = true;
+
     	if (changeTime) {
     		changeTime = false;
     		showingLeds = false;
@@ -959,12 +1118,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     		HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
     	}
 	}
+    /*
     if (GPIO_Pin == CHRG_Pin) {
 		charging = true;
 		showingLeds = false;
 		showingDigital = false;
 		beep();
 	}
+	*/
 
     //HAL_SuspendTick();
     //HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
@@ -1092,6 +1253,70 @@ void Digital_show(uint8_t hoursD, uint8_t minutesD, bool date) {
 	Charlieplex_Reset_All();
 }
 
+void Digital_OnOff_show(uint8_t value) {
+	typedef struct {
+		uint8_t x;
+		uint8_t y;
+	} Pair;
+
+	static const Pair O_slot0[] = {
+		{1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {0,1}
+	};
+
+	// "F" in slot1 (adjust if needed)
+	static const Pair F_slot1[] = {
+		{3,1}, {1,2},   // top bar
+		{3,2},                 // left stem
+		{4,2}                  // mid bar (small)
+	};
+
+	// "F" in slot2 (adjust if needed)
+	static const Pair F_slot2[] = {
+		{5,2}, {0,4},   // top bar
+		{5,3},                 // left stem continuation
+		{4,3}                  // mid bar (small)
+	};
+
+	// "N" in slot1 (adjust if needed)
+	static const Pair N_slot1[] = {
+		{1,2}, {3,1},          // left vertical
+		{5,1}, {4,1},          // right vertical
+		{3,2}                  // diagonal hint
+	};
+
+	// "L" in slot3 (adjust if needed)
+	static const Pair L_slot3[] = {
+		{5,4}, {0,5},
+		{1,5}
+	};
+	static const uint8_t LED_len[10] = {6, 2, 5, 5, 4, 5, 6, 3, 7, 6}; // Pocet operaci na cislo - 0,1,2,3...
+
+	if (value==0) {
+		for (int i = 0; i < LED_len[0]; i++) {
+			Charlieplex_Light_LED(O_slot0[i].x, O_slot0[i].y);
+		}
+		for (int i = 0; i < LED_len[4]; i++) { // F stejne LED jako 4
+			Charlieplex_Light_LED(F_slot1[i].x, F_slot1[i].y);
+		}
+		for (int i = 0; i < LED_len[4]; i++) { // F stejne LED jako 4
+			Charlieplex_Light_LED(F_slot2[i].x, F_slot2[i].y);
+		}
+	} else {
+		for (int i = 0; i < LED_len[0]; i++) {
+			Charlieplex_Light_LED(O_slot0[i].x, O_slot0[i].y);
+		}
+		for (int i = 0; i < LED_len[3]; i++) { // N stejne LED jako 3
+			Charlieplex_Light_LED(N_slot1[i].x, N_slot1[i].y);
+		}
+		if (value==2) {
+			for (int i = 0; i < LED_len[7]; i++) { // N stejne LED jako 3
+				Charlieplex_Light_LED(L_slot3[i].x, L_slot3[i].y);
+			}
+		}
+	}
+	Charlieplex_Reset_All();
+}
+
 #define BH1750_ADDRESS         (0x23 << 1) // I2C 7-bit address shifted for HAL
 #define BH1750_POWER_ON        0x01
 #define BH1750_RESET           0x07
@@ -1125,7 +1350,24 @@ uint16_t BH1750_ReadLightLevel(void) {
 
 
     float b = (logf(lux) - logf(lux_min)) / (logf(lux_max) - logf(lux_min));
-	return 2 + (uint8_t)(b * 253.0f);
+	return 2 + (uint8_t)(b * 250.0f);
+}
+
+void BMA400_App_Init(void)
+{
+    BMA400_Orient_Init(&bma, &hi2c1, 0x14);
+
+    BMA400_OrientCfg_t cfg = {
+        .threshold_lsb = 55,        // 32*8mg = 256mg (32)
+        .duration_lsb  = 8,         // 5*10ms = 50ms (5)
+        .use_lowpass_1hz = true,   // fast response (false)
+        .int1_active_high = true,
+        .int1_push_pull   = true,
+        .non_latched      = true,
+		.axis_mask = BMA400_AXIS_Z
+    };
+
+    (void)BMA400_Orient_EnableInt1(&bma, &cfg);
 }
 void delay_us (uint16_t us) {
 	__HAL_TIM_SET_COUNTER(&htim21,0);
@@ -1135,9 +1377,9 @@ void beep(void) {
 	if (soundON) {
 		for(unsigned int i = 0; i < 10000; i++) {
 		  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 1);
-		  delay_us(189);//185);
+		  delay_us(185);//185);
 		  HAL_GPIO_WritePin(Buzzer_GPIO_Port, Buzzer_Pin, 0);
-		  delay_us(189);//185);
+		  delay_us(185);//185);
 		}
 	}
 }

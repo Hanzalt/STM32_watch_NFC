@@ -35,6 +35,4 @@ void turn_spec_LEDs(LEDs* leds, rgb_color* colors);
 //DEBUG
 void turn_LEDs(LEDs* leds, uint16_t num_LEDs);
 
-//PRIVATE
-static int decToBinary(int n);
 #endif /* INC_DIN_LED_H_ */

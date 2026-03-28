@@ -2,14 +2,16 @@
 
 A smartwatch designed and engineered from scratch by Czech students. This is a hobby project intended to help others build their own PCB-based watches.
 
-![Watch PCB](Fotos/tisk_PCB_watch.png)
+| Front | Back |
+|:-----:|:----:|
+| ![Front](Fotos/Front.png) | ![Back](Fotos/Back.png) |
 
 ---
 
 ## Features
 
 - **Analog clock** — 12 addressable RGB LEDs (WS2812B) arranged in a clock ring
-- **Digital clock** — Charlieplexed 7-segment display (HH:MM)
+- **Digital clock** — HH:MM shown on a custom 7-segment display built using **Charlieplexing** (6 GPIO pins drive a 4-digit matrix with no external drivers)
 - **Wrist-wake** — BMA400 accelerometer detects wrist raise, wakes the watch from sleep
 - **Auto-brightness** — BH1750FVI ambient light sensor adjusts LED brightness automatically
 - **6 color themes** — cycle through hour/minute color combinations
@@ -45,12 +47,20 @@ STM32_watch_NFC/
 |-----------|------|-------|
 | MCU | STM32L031G6U6 | Cortex-M0+, 32KB Flash, 8KB RAM |
 | RGB LEDs | 12× WS2812B | Driven via TIM2 PWM + DMA |
-| Display | Charlieplex matrix | 6 pins → 4-digit 7-segment |
+| Display | Charlieplex matrix | 6 pins → 4-digit 7-segment (no external drivers) |
 | Accelerometer | BMA400 | Wrist-wake via orientation interrupt |
 | Light sensor | BH1750FVI | Auto-brightness (I2C) |
 | Power converter | TPS63802 | Buck-boost regulator |
 | RTC crystal | 32.768 kHz LSE | Accurate timekeeping in sleep |
 | Buzzer | Passive | ~2.7 kHz tone |
+
+The HH:MM display is built entirely with Charlieplexing — 6 GPIO pins control a 4-digit 7-segment matrix with no shift registers or external display drivers.
+
+![Charlieplex digital display](Fotos/Charlieplex_digital.png)
+
+### Power Schematic
+
+![Power schematic](Fotos/Power_watch.png)
 
 > **Note:** The PCB has NFC hardware footprints (ST25R3916B antenna area), but NFC functionality was scrapped during development. No NFC code exists in the firmware.
 

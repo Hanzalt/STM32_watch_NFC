@@ -108,6 +108,29 @@ bool changeColor = false;
 bool charging = false;
 bool shouldExitIf = false;
 bool soundON = true;
+bool simultaneousRB = false;
+bool simulGuard = false;
+volatile bool gameMoveUp   = false;
+volatile bool gameMoveDown = false;
+volatile bool gameShooting = false;
+
+#define GAME_MAX_ENEMIES 3
+typedef struct {
+	int8_t  pos;
+	int8_t  dir;       /* -1 = RIGHT type (toward LED 0), +1 = LEFT type (toward LED 6) */
+	uint8_t colorIdx;
+	bool    active;
+} GameEnemy;
+
+static const uint8_t rightArc[7] = {0, 11, 10, 9, 8, 7, 6};
+
+/* Forward declarations for game functions */
+static void     game_shoot_animation(uint8_t playerArcIdx);
+static void     game_draw(uint8_t playerArcIdx, GameEnemy *enemies);
+static void     game_spawn_enemy(GameEnemy *enemies, uint8_t *typeToggle, uint8_t *colorIdx);
+static bool     game_tick_enemies(GameEnemy *enemies);
+static void     game_shoot(uint8_t playerArcIdx, GameEnemy *enemies, uint8_t *killCount, uint16_t *score);
+static uint32_t game_get_tick_rate(uint8_t killCount);
 uint8_t toggler = false;
 uint8_t RX_Buffer [1];
 uint8_t x = 0;
@@ -406,9 +429,9 @@ int main(void)
 	  batteryVal = HAL_ADC_GetValue(&hadc);
 
 	  HAL_ADC_Stop(&hadc);
-	  if (batteryVal > 2600) batteryVal = 2600;
+	  if (batteryVal > 2550) batteryVal = 2550;
 	  if (batteryVal < 2100) batteryVal = 2100;
-	  chargedLEDnum = (int)((batteryVal - 2100) * 12 / (2620 - 2100));
+	  chargedLEDnum = (int)((batteryVal - 2100) * 12 / (2550 - 2100));
 	  if (chargedLEDnum != prev_chargedLEDnum) {
 		  prev_chargedLEDnum = chargedLEDnum;
 		  rgb_color bat_color;
@@ -570,6 +593,68 @@ int main(void)
 	  HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
 	  HAL_Delay(10);
 	}
+
+	// SIMULTANEOUS Button_R + Button_LB press — GAME
+	while (simultaneousRB) {
+		/* --- INIT --- */
+		beep(); HAL_Delay(150); beep();
+
+		GameEnemy gameEnemies[GAME_MAX_ENEMIES];
+		for (int i = 0; i < GAME_MAX_ENEMIES; i++) gameEnemies[i].active = false;
+
+		uint8_t playerArcIdx  = 3;   /* start at LED 9 */
+		uint8_t  killCount    = 0;
+		uint16_t score        = 0;
+		uint8_t typeToggle    = 0;
+		uint8_t colorCycleIdx = 0;
+		bool    gameOver      = false;
+
+		gameMoveUp   = false;
+		gameMoveDown = false;
+		gameShooting = false;
+
+		HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 1);
+		__HAL_RCC_DMA1_CLK_ENABLE();
+
+		uint32_t lastEnemyTick = HAL_GetTick();
+		uint32_t lastSpawnTick = HAL_GetTick();
+
+		game_spawn_enemy(gameEnemies, &typeToggle, &colorCycleIdx);
+
+		/* --- LOOP --- */
+		while (simultaneousRB && !gameOver) {
+			uint32_t now = HAL_GetTick();
+
+			if (gameMoveUp)   { gameMoveUp   = false; if (playerArcIdx > 1) playerArcIdx--; }
+			if (gameMoveDown) { gameMoveDown = false; if (playerArcIdx < 5) playerArcIdx++; }
+			if (gameShooting) { gameShooting = false; game_shoot(playerArcIdx, gameEnemies, &killCount, &score); }
+
+			if (now - lastEnemyTick >= game_get_tick_rate(killCount)) {
+				lastEnemyTick = now;
+				gameOver = game_tick_enemies(gameEnemies);
+			}
+
+			if (now - lastSpawnTick >= 5000) {
+				lastSpawnTick = now;
+				game_spawn_enemy(gameEnemies, &typeToggle, &colorCycleIdx);
+				if (killCount >= 10)
+					game_spawn_enemy(gameEnemies, &typeToggle, &colorCycleIdx);
+			}
+
+			game_draw(playerArcIdx, gameEnemies);
+			HAL_Delay(10);
+		}
+
+		/* --- GAME OVER --- */
+		if (gameOver) {
+			clear_LEDs(leds);
+			HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+			HAL_Delay(200);
+			beep(); HAL_Delay(150); beep();
+			simultaneousRB = false;
+		}
+	}
+	simulGuard = false;
 
 	// TURN OFF - POWER SAVE MODE
 	HAL_GPIO_WritePin(EN_5V_GPIO_Port, EN_5V_Pin, 0);
@@ -1007,10 +1092,126 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+static void game_shoot_animation(uint8_t playerArcIdx) {
+	typedef struct { uint8_t x; uint8_t y; } Pair;
+
+	static const Pair p11[] = { {3,1},{4,1},{5,1},{2,3} };
+	static const Pair p10[] = { {1,0},{3,1},{4,1},{5,1},{2,3},{5,4} };
+	static const Pair p9[]  = { {2,1},{4,2},{0,4},{2,5} };
+	static const Pair p8[]  = { {5,2},{1,4},{4,1},{5,1},{4,0},{0,2} };
+	static const Pair p7[]  = { {5,2},{4,1},{5,1},{0,2} };
+
+	const Pair *pattern;
+	uint8_t len;
+
+	switch (playerArcIdx) {
+		case 1: pattern = p11; len = 4; break;
+		case 2: pattern = p10; len = 6; break;
+		case 3: pattern = p9;  len = 4; break;
+		case 4: pattern = p8;  len = 6; break;
+		case 5: pattern = p7;  len = 4; break;
+		default: return;
+	}
+
+	for (int iter = 0; iter < 300; iter++) {
+		for (uint8_t i = 0; i < len; i++) {
+			Charlieplex_Light_LED(pattern[i].x, pattern[i].y);
+		}
+	}
+	Charlieplex_Reset_All();
+}
+
+static void game_draw(uint8_t playerArcIdx, GameEnemy *enemies) {
+	rgb_color game_pattern[MAX_LED];
+	uint8_t brightness = BH1750_ReadLightLevel();
+
+	for (int i = 0; i < MAX_LED; i++) game_pattern[i] = none;
+
+	/* Borders — purple */
+	rgb_color border;
+	border.r = 144; border.g = 10; border.b = 255; border.a = brightness;
+	game_pattern[0] = border;
+	game_pattern[6] = border;
+
+	/* Enemies — red, pink */
+	static const uint8_t enemy_r[2] = {255, 255};
+	static const uint8_t enemy_g[2] = { 10,  15};
+	static const uint8_t enemy_b[2] = {  0,  50};
+	for (int i = 0; i < GAME_MAX_ENEMIES; i++) {
+		if (enemies[i].active) {
+			uint8_t ci = enemies[i].colorIdx % 2;
+			rgb_color ec;
+			ec.r = enemy_r[ci]; ec.g = enemy_g[ci]; ec.b = enemy_b[ci]; ec.a = brightness;
+			game_pattern[(uint8_t)enemies[i].pos] = ec;
+		}
+	}
+
+	/* Player — blue (overrides border if standing on it) */
+	rgb_color player;
+	player.r = 20; player.g = 50; player.b = 255; player.a = brightness;
+	game_pattern[rightArc[playerArcIdx]] = player;
+
+	turn_spec_LEDs(leds, game_pattern);
+	HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
+}
+
+static void game_spawn_enemy(GameEnemy *enemies, uint8_t *typeToggle, uint8_t *colorIdx) {
+	for (int i = 0; i < GAME_MAX_ENEMIES; i++) {
+		if (!enemies[i].active) {
+			enemies[i].pos      = (int8_t)(HAL_GetTick() % 3) + 2;
+			enemies[i].dir      = (*typeToggle % 2 == 0) ? 1 : -1;
+			enemies[i].colorIdx = *colorIdx % 2;
+			enemies[i].active   = true;
+			(*typeToggle)++;
+			(*colorIdx)++;
+			return;
+		}
+	}
+}
+
+/* Returns true if any enemy reached a border — game over */
+static bool game_tick_enemies(GameEnemy *enemies) {
+	for (int i = 0; i < GAME_MAX_ENEMIES; i++) {
+		if (enemies[i].active) {
+			enemies[i].pos += enemies[i].dir;
+			if (enemies[i].pos == 0 || enemies[i].pos == 6) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+static void game_shoot(uint8_t playerArcIdx, GameEnemy *enemies, uint8_t *killCount, uint16_t *score) {
+	uint8_t targetLED = (rightArc[playerArcIdx] + 6) % 12;
+	beep();
+	game_shoot_animation(playerArcIdx);
+	for (int i = 0; i < GAME_MAX_ENEMIES; i++) {
+		if (enemies[i].active && (uint8_t)enemies[i].pos == targetLED) {
+			enemies[i].active = false;
+			(*killCount)++;
+			*score += 10;
+			game_draw(playerArcIdx, enemies);
+			for (int j = 0; j < 500; j++) {
+				Digital_show(*score / 100, *score % 100, 0);
+			}
+			Charlieplex_Reset_All();
+			return;
+		}
+	}
+}
+
+static uint32_t game_get_tick_rate(uint8_t killCount) {
+	uint32_t reductions = (killCount / 5) * 250;
+	if (reductions >= 1000) return 2000;
+	return 3000 - reductions;
+}
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	//SystemClock_Config();
 	//HAL_ResumeTick();
-	if (!changeTime && !changeColor) {
+	if (!changeTime && !changeColor && !simultaneousRB) {
 		SystemClock_Config();
 		HAL_ResumeTick();
 		//RCC->APB1ENR |= RCC_APB1ENR_PWREN;
@@ -1032,19 +1233,32 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //	HAL_ADC_Stop(&hadc);
 //	HAL_Delay(10);
 	if (GPIO_Pin == Button_LB_Pin) {
-		numPresses2++;
-		showingDigital = true;
+		if (HAL_GPIO_ReadPin(Button_R_GPIO_Port, Button_R_Pin) && !changeTime && !changeColor) {
+			if (!simulGuard) {
+				simulGuard = true;
+				simultaneousRB = !simultaneousRB;
+			}
+		} else if (simultaneousRB) {
+			gameMoveDown = true;
+		} else {
+			numPresses2++;
+			showingDigital = true;
 
-		if (changeColor) {
-			beep();
-			colorTheme+=1;
-			colorTheme=colorTheme%6;
+			if (changeColor) {
+				beep();
+				colorTheme+=1;
+				colorTheme=colorTheme%6;
+			}
 		}
     }
 
     if (GPIO_Pin == Button_LT_Pin) {
-    	numPresses1++;
-    	showingDigital = true;
+    	if (simultaneousRB) {
+    		gameMoveUp = true;
+    	} else {
+    		numPresses1++;
+    		showingDigital = true;
+    	}
 	}
 
 	if (GPIO_Pin == Accel_Pin) {
@@ -1071,6 +1285,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	}
 
     if (GPIO_Pin == Button_R_Pin) {
+    	if (HAL_GPIO_ReadPin(Button_LB_GPIO_Port, Button_LB_Pin) && !changeTime && !changeColor) {
+    		if (!simulGuard) {
+    			simulGuard = true;
+    			simultaneousRB = !simultaneousRB;
+    		}
+    	} else if (simultaneousRB && !changeTime && !changeColor) {
+    		gameShooting = true;
+    	} else {
     	numPresses1++;
 		showingLeds = true;
 
@@ -1117,6 +1339,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     		clear_LEDs(leds);//turn_spec_LEDs(leds, null_pattern);
     		HAL_TIM_PWM_Start_DMA(&htim2, TIM_CHANNEL_1, (uint32_t *)leds, (MAX_LED * 24) + 72);
     	}
+    	} // end else (not simultaneous)
 	}
     /*
     if (GPIO_Pin == CHRG_Pin) {

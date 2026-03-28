@@ -131,7 +131,7 @@ Each iteration of the main `while(1)` loop:
 4. Run the appropriate display block based on flags:
    - `showingLeds` → RGB analog clock display
    - `showingDigital` → Charlieplex digital time display
-   - `charging` → Green LEDs showing battery level
+   - `charging` → Color-coded LED ring showing battery level (green/yellow/orange/red)
    - `changeTime` → Simultaneous analog + digital time-setting UI
    - `changeColor` → Analog display cycling through color themes
 5. Turn off 5 V rail, disable DMA clock, enter **STOP mode** (`WFI`)
@@ -196,6 +196,17 @@ Brightness (alpha) is always overridden by the BH1750 reading.
 - Raw threshold values (not converted to volts — divider ratio unknown):
   - `≤ 2100`: critically low — disables all features
   - `2100–2600`: mapped linearly to 0–12 LEDs for charging indicator
+
+### Charging display LED colors
+
+| LEDs lit | Color |
+|----------|-------|
+| 10–12 | Green `(0,250,0)` |
+| 7–9 | Yellow `(250,200,0)` |
+| 4–6 | Orange `(255,100,0)` |
+| 1–3 | Red `(255,0,0)` |
+
+LED frame is only re-sent when `chargedLEDnum` changes (`prev_chargedLEDnum = 0xFF` sentinel before the loop). This prevents flicker from repeated DMA restarts every 25 ms.
 
 ---
 
@@ -278,9 +289,126 @@ This polling only runs while a display mode is already active (inside `showingLe
 
 ---
 
+## rgb_color struct field order
+
+`rgb_color` fields are `{R, G, B, A}` where A is the alpha/brightness channel overridden by the BH1750 reading. All color literals in the codebase follow this order (e.g. `{255, 10, 0, 250}` = red).
+
+---
+
 ## Known Gaps
 
 - **NFC**: Scrapped during development; PCB has NFC hardware but no firmware code exists. Project name was not updated.
 - **Battery ADC calibration**: Raw thresholds (2100, 2600) are used with no documented resistor divider ratio, so exact voltage levels are unknown.
-- **`decToBinary()` in Din_LED.c**: Dead code — defined but never called.
-- **Charlieplex physical layout**: The mapping between `{high, low}` pin index pairs and physical LED positions is not documented in firmware.
+- **Charlieplex physical layout**: The mapping between `{high, low}` pin index pairs and physical LED positions is now partially documented — see Charlieplex segment map below.
+
+---
+
+## Charlieplex Segment Map (4-digit display)
+
+The display has 4 digit slots driven by 6 Charlieplex pins (indices 0–5). Each slot uses the 7-segment pairs below (standard a–g labeling):
+
+| Segment | Slot 0 (H-tens) | Slot 1 (H-ones) | Slot 2 (M-tens) | Slot 3 (M-ones) |
+|---------|-----------------|-----------------|-----------------|-----------------|
+| a (top) | `{1,0}` | `{3,1}` | `{5,2}` | `{1,4}` |
+| b (top-right) | `{2,0}` | `{4,1}` | `{0,3}` | `{2,4}` |
+| c (bot-right) | `{3,0}` | `{5,1}` | `{1,3}` | `{3,4}` |
+| d (bottom) | `{4,0}` | `{0,2}` | `{2,3}` | `{5,4}` |
+| e (bot-left) | `{5,0}` | `{1,2}` | `{4,3}` | `{0,5}` |
+| f (top-left) | `{0,1}` | `{3,2}` | `{5,3}` | `{1,5}` |
+| g (middle) | `{2,1}` | `{4,2}` | `{0,4}` | `{2,5}` |
+
+Display rows in ASCII art map to:
+- Row 1 (tops): `{1,0}` `{3,1}` `{5,2}` `{1,4}`
+- Row 2 (upper verticals L/R per slot): `{0,1}` `{2,0}` | `{3,2}` `{4,1}` | `{5,3}` `{0,3}` | `{1,5}` `{2,4}`
+- Row 3 (middles): `{2,1}` `{4,2}` `{0,4}` `{2,5}`
+- Row 4 (lower verticals L/R per slot): `{5,0}` `{3,0}` | `{1,2}` `{5,1}` | `{4,3}` `{1,3}` | `{0,5}` `{3,4}`
+- Row 5 (bottoms): `{4,0}` `{0,2}` `{2,3}` `{5,4}`
+
+---
+
+## Simultaneous Button Press (Button_R + Button_LB)
+
+Pressing Button_R and Button_LB together enters/exits the **shooting game**. Implemented in `HAL_GPIO_EXTI_Callback`:
+
+- When one EXTI fires and sees the other button held: toggles `simultaneousRB` (bool), sets `simulGuard = true` to prevent the second EXTI from double-toggling.
+- `simulGuard` is reset in the main loop after `while(simultaneousRB)` exits.
+- **Guard condition**: simultaneous detection is blocked when `changeTime` or `changeColor` is active (`&& !changeTime && !changeColor`), preventing hardlock where both flags are set simultaneously.
+- The `else if (simultaneousRB)` game branch also checks `!changeTime && !changeColor` so Button_R can always exit those modes even if `simultaneousRB` was set.
+
+### Game-specific interrupt flags (volatile)
+| Flag | Set by | Consumed by |
+|------|--------|-------------|
+| `gameMoveUp` | Button_LT EXTI (when `simultaneousRB`) | game loop |
+| `gameMoveDown` | Button_LB EXTI (when `simultaneousRB`) | game loop |
+| `gameShooting` | Button_R EXTI (when `simultaneousRB && !changeTime && !changeColor`) | game loop |
+
+---
+
+## Shooting Game
+
+Entered via Button_R + Button_LB simultaneous press. Lives in `while(simultaneousRB)` in the main loop.
+
+### Field layout (RGB ring)
+- **Left arc** (enemy territory): LEDs 1–5
+- **Right arc** (player territory): LEDs 7–11 (player clamped to arc indices 1–5 = LEDs 11,10,9,8,7)
+- **Borders**: LED 0 and LED 6 — always purple `{144,10,255}`, game over if any enemy reaches them
+- **Player**: starts at LED 9, color blue `{20,50,255}`
+
+### Enemy types (GameEnemy struct: pos, dir, colorIdx, active)
+- **RIGHT type** (`dir = -1`): spawns at random LED 2–4, moves toward LED 0
+- **LEFT type** (`dir = +1`): spawns at random LED 2–4, moves toward LED 6
+- Types alternate predictably (`typeToggle % 2`); colors cycle red/pink (`colorIdx % 2`)
+- Max 3 enemies on field (`GAME_MAX_ENEMIES`)
+- Spawn position: `(HAL_GetTick() % 3) + 2` — pseudo-random LED 2, 3, or 4
+
+### Timing / difficulty
+- Enemy movement tick: starts 3000 ms, reduces by 250 ms per 5 kills, floor at 2000 ms (`game_get_tick_rate()`)
+- Spawn timer: every 5000 ms; after 10 kills, two enemies spawn per tick
+- Spawn timer and movement timer are independent
+
+### Controls in game
+| Button | Action |
+|--------|--------|
+| Button_LT | Move player toward LED 0 (up) |
+| Button_LB | Move player toward LED 6 (down) |
+| Button_R | Shoot |
+| Button_R + Button_LB | Exit game |
+
+### Shooting
+- Target LED: `(rightArc[playerArcIdx] + 6) % 12`
+- Sequence: `beep()` → `game_shoot_animation()` → hit check → if hit: deactivate enemy, `game_draw()`, show score on Charlieplex (500 POV iterations), return
+- Score: +10 per kill, displayed as `Digital_show(score/100, score%100, 0)`
+
+### Bullet animation (Charlieplex)
+Each player position maps to a diagonal line pattern on the 4-digit display:
+
+| Player LED | Arc index | Pairs |
+|------------|-----------|-------|
+| LED 11 | 1 | `{3,1}{4,1}{5,1}{2,3}` |
+| LED 10 | 2 | `{1,0}{3,1}{4,1}{5,1}{2,3}{5,4}` |
+| LED 9  | 3 | `{2,1}{4,2}{0,4}{2,5}` (horizontal) |
+| LED 8  | 4 | `{5,2}{1,4}{4,1}{5,1}{4,0}{0,2}` |
+| LED 7  | 5 | `{5,2}{4,1}{5,1}{0,2}` |
+
+Animation: 300 POV iterations then `Charlieplex_Reset_All()`.
+
+### Game over
+Enemy reaches LED 0 or LED 6 → clear LEDs → `beep(); HAL_Delay(150); beep()` → `simultaneousRB = false` (exits game loop back to watch).
+
+### `rightArc` array
+```c
+static const uint8_t rightArc[7] = {0, 11, 10, 9, 8, 7, 6};
+```
+Player arc index 0 = LED 0 (border), index 6 = LED 6 (border). Player is clamped to indices 1–5.
+
+---
+
+## Bug fixes applied (2026-03-20)
+
+- **`HAL_GPIO_EXTI_Callback` clock restore condition** (`main.c:1001`): was `!changeTime || !changeColor` (always true, called `SystemClock_Config()` on every interrupt even during I2C-active changeTime/changeColor loops). Fixed to `!changeTime && !changeColor`.
+- **Wrong GPIO clock enable for wristWake re-arm** (`main.c:367`): was `__HAL_RCC_GPIOA_CLK_ENABLE()`. Accel INT1 is on PB0 (GPIOB). Fixed to `__HAL_RCC_GPIOB_CLK_ENABLE()`.
+- **`decToBinary()` removed** from `Din_LED.c` and `Din_LED.h`: dead code with `int binaryNum[1000]` (4 KB stack allocation) on a device with 8 KB total RAM.
+
+## Bug fixes applied (2026-03-20, session 2)
+
+- **Simultaneous press hardlock**: holding Button_R + Button_LB could set `simultaneousRB = true` while also triggering `changeTime` or `changeColor` via long-press polling. Button_R's `else if (simultaneousRB)` branch would then handle the exit press instead of the `else` branch that clears `changeTime`/`changeColor`. Fixed by adding `&& !changeTime && !changeColor` to both the simultaneous detection condition and the `else if (simultaneousRB)` branch in Button_R's handler.

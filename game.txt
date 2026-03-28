@@ -1,0 +1,15 @@
+Left arc (enemy territory): LEDs 1→2→3→4→5
+  - RIGHT type: spawns LED 3, moves 3→2→1→0. Game over if reaches LED 0.
+  - LEFT type: spawns LED 3, moves 3→4→5→6. Game over if reaches LED 6.
+
+  Right arc (player territory): LEDs 11→10→9→8→7 (between the two borders)
+
+  Borders: LED 0 and LED 6, always lit in a distinct color — enemies reaching these = game over.
+
+  Shooting: player fires to (playerPos + 6) % 12, instantly checks if an enemy sits at that LED. Charlieplex animates the bullet visually while the shot resolves.
+
+  Controls inside the game:
+  - Button_LT → move player toward LED 0 (up the right arc)
+  - Button_LB → move player toward LED 6 (down the right arc)
+  - Button_R → shoot
+  - Button_R + Button_LB → exit game

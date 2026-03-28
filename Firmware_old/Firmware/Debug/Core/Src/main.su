@@ -1,0 +1,13 @@
+../Core/Src/main.c:600:6:SystemClock_Config	104	static,ignoring_inline_asm
+../Core/Src/main.c:1146:6:Charlieplex_Reset_All	40	static
+../Core/Src/main.c:1158:6:Charlieplex_Light_LED	40	static
+../Core/Src/main.c:1179:6:Digital_show	40	static
+../Core/Src/main.c:1256:6:Digital_OnOff_show	16	static
+../Core/Src/main.c:1324:6:Init_BH1750FVI	32	static
+../Core/Src/main.c:1339:10:BH1750_ReadLightLevel	24	static
+../Core/Src/main.c:1356:6:BMA400_App_Init	16	static
+../Core/Src/main.c:1372:6:delay_us	0	static
+../Core/Src/main.c:1376:6:beep	16	static
+../Core/Src/main.c:125:5:main	128	static,ignoring_inline_asm
+../Core/Src/main.c:1010:6:HAL_GPIO_EXTI_Callback	64	static,ignoring_inline_asm
+../Core/Src/main.c:1392:6:Error_Handler	0	static,ignoring_inline_asm

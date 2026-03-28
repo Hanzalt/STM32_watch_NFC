@@ -104,7 +104,7 @@ Alternatively, flash the compiled `.elf` / `.bin` from `Firmware/Debug/` using *
 | Button_R | Show RGB analog clock | Enter time-set mode |
 | Button_LT | Show digital clock | Enter charging display |
 | Button_LB | Show digital clock | Cycle color theme |
-| Button_R + Button_LB | Enter/exit shooting game | — |
+| Button_R + Button_LB | Enter shooting game | — |
 
 ---
 

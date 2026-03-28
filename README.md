@@ -62,7 +62,7 @@ The HH:MM display is built entirely with Charlieplexing — 6 GPIO pins control 
 
 ![Power schematic](Fotos/Power_watch.png)
 
-> **Note:** The PCB has NFC hardware footprints (ST25R3916B antenna area), but NFC functionality was scrapped during development. No NFC code exists in the firmware.
+> **Note:** The PCB had NFC hardware (ST25R3916B antenna area), but NFC functionality was scrapped during development. No NFC code exists in the firmware.
 
 ---
 
